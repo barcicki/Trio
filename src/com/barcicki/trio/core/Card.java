@@ -1,18 +1,16 @@
 package com.barcicki.trio.core;
 
-import android.util.Log;
-
 public class Card {
 	
 	public final static int SHAPE_SQUARE = 0,
-							SHAPE_TRIANGE = 1,
-							SHAPE_CIRCLE = 2,
-							COLOR_GREEN = 0,
-							COLOR_BLUE = 1,
-							COLOR_RED = 2,
-							FILL_EMPTY = 0,
-							FILL_HALF = 1,
-							FILL_FULL = 2,
+							SHAPE_TRIANGE = 2,
+							SHAPE_CIRCLE = 1,
+							COLOR_GREEN = 2,
+							COLOR_BLUE = 0,
+							COLOR_RED = 1,
+							FILL_EMPTY = 1,
+							FILL_HALF = 2,
+							FILL_FULL = 0,
 							NUMBER_ONE = 0,
 							NUMBER_TWO = 1,
 							NUMBER_THREE = 2;
@@ -67,9 +65,9 @@ public class Card {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getColor());
+		sb.append(getFill());
 		sb.append(getShape());
 		sb.append(getNumber());
-		sb.append(getFill());
 		return sb.toString();
 	}
 

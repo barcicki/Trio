@@ -5,7 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardList extends ArrayList<Card> {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8960343953643831424L;
+	private int position = 0;
+
 	public CardList(List<Card> subList) {
 		addAll(subList);
 	}
@@ -21,6 +26,16 @@ public class CardList extends ArrayList<Card> {
 	public CardList getRandomRange(int number) {
 		shuffle();
 		return subList(0, number);
+	}
+	
+	public CardList getNext(int number) {
+		CardList set = subList(position, position + number);
+		position += number;
+		return set;
+	}
+	
+	public boolean hasNext() {
+		return size() > position;
 	}
 	
 	public boolean hasTrio() {

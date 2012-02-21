@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.barcicki.trio.core.Card;
@@ -12,40 +14,33 @@ import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 
 public class TrioActivity extends Activity {
-    /** Called when the activity is first created. */
+	private Trio game = new Trio();
+    
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Trio trio = new Trio();
-        TextView[] cardsButtons = {
-        		(TextView) findViewById(R.id.card1),
-        		(TextView) findViewById(R.id.card2),
-        		(TextView) findViewById(R.id.card3),
-        		(TextView) findViewById(R.id.card4),
-        		(TextView) findViewById(R.id.card5),
-        		(TextView) findViewById(R.id.card6),
-        		(TextView) findViewById(R.id.card7),
-        		(TextView) findViewById(R.id.card8),
-        		(TextView) findViewById(R.id.card9),
-        		(TextView) findViewById(R.id.card10),
-        		(TextView) findViewById(R.id.card11),
-        		(TextView) findViewById(R.id.card12),
-        };
+        game.shuffle();
+        CardList table = game.getTable();
         
+        redrawCards(table);      	
         
-        CardList table;
-        do {
-        	table = trio.getCards().getRandomRange(12);
-        } while (!table.hasTrio());
+    }
+    
+    private void redrawCards(final CardList table) {
+    	GridLayout grid = (GridLayout) findViewById(R.id.cardsContainer);
+    	final CardList selected = new CardList();
+    	
+    	grid.removeAllViews();
+    	
+    	for (int i = 0; i < table.size(); i++) {
         	
-        final CardList selected = new CardList();
-        
-        for (int i = 0; i < 12; i++) {
-        	cardsButtons[i].setText(table.get(i).toString());
-        	cardsButtons[i].setTag(table.get(i));
-        	cardsButtons[i].setOnClickListener(new OnClickListener() {
+        	ImageButton btn = new ImageButton(this);
+        	btn.setImageResource(getResources().getIdentifier("card" + table.get(i).toString(), "drawable", getPackageName()));
+        	btn.setTag(table.get(i));
+        	btn.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -61,6 +56,16 @@ public class TrioActivity extends Activity {
 						
 						if (selected.hasTrio()) {
 							Toast.makeText(getApplicationContext(), "Trio found", Toast.LENGTH_SHORT).show();
+							
+							CardList new_table = game.updateTable(table, selected);
+							
+							if (!new_table.hasTrio()) {
+								Toast.makeText(getApplicationContext(), "Trio Game has ended", Toast.LENGTH_SHORT);
+							} else {
+								redrawCards( new_table );
+							}
+							
+							
 						} else {
 							Toast.makeText(getApplicationContext(), "You're wrong!", Toast.LENGTH_SHORT).show();
 						}
@@ -72,8 +77,7 @@ public class TrioActivity extends Activity {
 				
 			});
         
+        	grid.addView(btn);
         }
-        
-        
     }
 }
