@@ -14,7 +14,7 @@ import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 
 public class TrioActivity extends Activity {
-	private Trio game = new Trio();
+	final private Trio trio = new Trio();
     
 	/** Called when the activity is first created. */
     @Override
@@ -22,15 +22,15 @@ public class TrioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        game.shuffle();
-        CardList table = game.getTable();
-        
-        redrawCards(table);      	
+        trio.newGame();
+        redrawCards();      	
         
     }
     
-    private void redrawCards(final CardList table) {
+    private void redrawCards() {
+    	
     	GridLayout grid = (GridLayout) findViewById(R.id.cardsContainer);
+    	CardList table = trio.getTable(); 
     	final CardList selected = new CardList();
     	
     	grid.removeAllViews();
@@ -57,14 +57,13 @@ public class TrioActivity extends Activity {
 						if (selected.hasTrio()) {
 							Toast.makeText(getApplicationContext(), "Trio found", Toast.LENGTH_SHORT).show();
 							
-							CardList new_table = game.updateTable(table, selected);
+							trio.foundTrio(selected);
 							
-							if (!new_table.hasTrio()) {
-								Toast.makeText(getApplicationContext(), "Trio Game has ended", Toast.LENGTH_SHORT);
+							if (trio.getGame().hasNext()) {
+								redrawCards();
 							} else {
-								redrawCards( new_table );
+								Toast.makeText(getApplicationContext(), "Trio Game has ended", Toast.LENGTH_SHORT);
 							}
-							
 							
 						} else {
 							Toast.makeText(getApplicationContext(), "You're wrong!", Toast.LENGTH_SHORT).show();

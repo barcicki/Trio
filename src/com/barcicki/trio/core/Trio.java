@@ -6,8 +6,9 @@ public class Trio {
 	public static int DEFAULT_TABLE_ADDON = 1;
 	
 	private CardList deck;
+	private CardList game;
+	private CardList table;
 	
-
 	public Trio() {
 		generateCards();
 	}
@@ -24,12 +25,47 @@ public class Trio {
 		this.deck = cards;
 	}
 	
-	public CardList getTable() {
-		CardList table = getDeck().getNext(DEFUALT_TABLE_SIZE);
+	public CardList getGame() {
+		if (null == game) this.game = getDeck();
+		return game;
+	}
+	
+	public void setGame(CardList game) {
+		this.game = game;
+	}
+	
+	/*
+	 * Game logic
+	 */
+	
+	public void newGame() {
+		getDeck().shuffle();
+		setGame(getDeck());
+		prepareTable();
+	}
+	
+	public void prepareTable() {
+		if (null == table) table = new CardList(getGame().getNext(DEFUALT_TABLE_SIZE));
+	
+		int missing = DEFUALT_TABLE_SIZE - table.size();
+		table.addAll(getGame().getNext(missing));
+		
 		while (!table.hasTrio()) {
-			table.addAll(getDeck().getNext(DEFAULT_TABLE_ADDON));
+			table.addAll(getGame().getNext(DEFAULT_TABLE_ADDON));
 		}
+		
+	}
+	
+	public CardList getTable() {
 		return table;
+	}
+	
+	public CardList foundTrio(CardList trio) {
+		
+		getTable().removeAll(trio);
+		prepareTable();
+		return getTable();
+		
 	}
 		
 	/*
@@ -40,8 +76,6 @@ public class Trio {
 	public void shuffle() {
 		getDeck().shuffle();
 	}
-	
-	
 	
 	public static boolean isTrio(CardList cards) {
 		if (cards.size() == 3) {
@@ -68,18 +102,18 @@ public class Trio {
 		}
 	}
 
-	public CardList updateTable(CardList table, CardList selected) {
-		
-		table.removeAll(selected);
-		table.addAll(getDeck().getNext(3));
-		
-		while (!table.hasTrio() && getDeck().hasNext()) {
-			table.addAll(getDeck().getNext(DEFAULT_TABLE_ADDON));
-		}
-		
-		return table;
-		
-	}
+//	public CardList updateTable(CardList table, CardList selected) {
+//		
+//		table.removeAll(selected);
+//		table.addAll(getDeck().getNext(3));
+//		
+//		while (!table.hasTrio() && getDeck().hasNext()) {
+//			table.addAll(getDeck().getNext(DEFAULT_TABLE_ADDON));
+//		}
+//		
+//		return table;
+//		
+//	}
 	
 	
 	

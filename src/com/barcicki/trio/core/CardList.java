@@ -9,7 +9,6 @@ public class CardList extends ArrayList<Card> {
 	 * 
 	 */
 	private static final long serialVersionUID = 8960343953643831424L;
-	private int position = 0;
 
 	public CardList(List<Card> subList) {
 		addAll(subList);
@@ -28,14 +27,15 @@ public class CardList extends ArrayList<Card> {
 		return subList(0, number);
 	}
 	
-	public CardList getNext(int number) {
-		CardList set = subList(position, position + number);
-		position += number;
-		return set;
+	public CardList getNext(int max_number) {
+		int limit = max_number > size() ? size() : max_number;
+		CardList next = subList(0, limit);
+		removeRange(0, limit);
+		return next;
 	}
 	
 	public boolean hasNext() {
-		return size() > position;
+		return size() > 0;
 	}
 	
 	public boolean hasTrio() {
@@ -53,6 +53,24 @@ public class CardList extends ArrayList<Card> {
 			
 		}
 		return false;
+	}
+	
+	public int numberOfTrios() {
+		int size = size();
+		int count = 0;
+		if (size > 2) {
+			for (int i = 0; i < size; i++) {
+				for (int j = (i + 1); j < size; j++) {
+					for (int k = (j + 1); k < size; k++) {
+						if (Trio.isTrio(get(i), get(j), get(k))) {
+							count += 1;
+						}
+					}
+				}
+			}
+			
+		}
+		return count;
 	}
 	
 	@Override
