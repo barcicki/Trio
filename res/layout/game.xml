@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 	xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.barcicki.trio" 
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <com.markupartist.android.widget.ActionBar
+	    android:id="@+id/actionbar"
+	    app:title="test"
+	    style="@style/ActionBar"
+    />
+
+    <GridView
+        android:id="@+id/cardContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numColumns="3" >
+
+        <!-- Preview: listitem=@android:layout/simple_list_item_2 -->
+
+    </GridView>
+
+</LinearLayout>
