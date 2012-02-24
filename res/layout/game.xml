@@ -5,14 +5,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <com.markupartist.android.widget.ActionBar
         android:id="@+id/gameStatusActionBar"
         style="@style/BottomActionBar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:gravity="right"
-	>
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/timePassedTextView"
@@ -21,9 +20,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:textColor="@color/actionbar_title"
-            android:text="TextView" />
-
+            android:text="TextView"
+            android:textColor="@color/actionbar_title" />
+
         <TextView
             android:id="@+id/gameStatusTextView"
             android:layout_width="wrap_content"
@@ -32,29 +31,34 @@
             android:layout_alignBottom="@+id/timePassedTextView"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/timePassedTextView"
-            android:textColor="@color/actionbar_title"
-            android:text="@string/solo_game_status" />
+            android:text="@string/solo_game_status"
+            android:textColor="@color/actionbar_title" />
 
         <TextView
             android:id="@+id/hintTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/gameStatusTextView"
-            android:layout_alignBottom="@+id/gameStatusTextView"
+            android:layout_height="@dimen/bottom_actionbar_item_height"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/actionbar_title"
-            android:text="@string/hint" />
-
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:text="@string/hint"
+            android:textColor="@color/actionbar_title" />
+
         <TextView
             android:id="@+id/restartTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/hintTextView"
-            android:layout_marginLeft="20dp"
+            android:layout_height="@dimen/bottom_actionbar_item_height"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_toRightOf="@+id/hintTextView"
-            android:textColor="@color/actionbar_title"
-            android:text="@string/solo_game_restart" />
+            android:gravity="center"
+            android:text="@string/solo_game_restart"
+            android:textColor="@color/actionbar_title" />
 
     </com.markupartist.android.widget.ActionBar>
 

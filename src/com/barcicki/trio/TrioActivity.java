@@ -85,9 +85,8 @@ public class TrioActivity extends Activity {
 
 	private void updateGameStatus() {
     	
-		if (!mTrio.getGame().hasNext()) {
+		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
 			mGameStatus.setText(getString(R.string.solo_game_ended));
-			
 		} else {
 			mGameStatus.setText(getString(R.string.solo_game_status, mTrio.getGame().size()));
 		}
@@ -103,9 +102,9 @@ public class TrioActivity extends Activity {
 			public void onClick(View v) {
 				
 				ArrayList<CardList> trios = mTrio.getTable().getTrios();
+				
 				int selectedSize = mSelectedCards.size();
-				
-				
+								
 				if (trios.size() > 0) {
 
 					// if no cards were selected before, select the first card possible - it is being done in the end of method
@@ -148,6 +147,8 @@ public class TrioActivity extends Activity {
 					Card firstCard = trios.get(0).get(0);
 					
 					mSelectedCards.add(firstCard);
+					
+					markAllViewsDeslected();
 					markViewSelected(mGrid.findViewWithTag(firstCard));
 
 					if (Trio.LOCAL_LOGV) Log.v("Single Game Hint", "Hint showed first card");
@@ -199,6 +200,12 @@ public class TrioActivity extends Activity {
 	
 	private void markViewDeselected(View view) {
 		view.setBackgroundColor(getResources().getColor(R.color.card_standby));
+	}
+	
+	private void markAllViewsDeslected() {
+		for (Card c : mTrio.getTable()) {
+			markViewDeselected(mGrid.findViewWithTag(c));
+		}
 	}
 	
 	private void onTrioFound() {

@@ -61,8 +61,17 @@ public class Trio {
 
 		if (getTable().size() < DEFUALT_TABLE_SIZE) {
 			int missing = DEFUALT_TABLE_SIZE - getTable().size();
-			getTable().addAll(getGame().getNext(missing));	
-			if (LOCAL_LOGV) Log.v("Table", "Table replenished to DEFAULT number");
+			
+			if (missing > getGame().size()) {
+				missing = getGame().size();
+			}
+			
+			if (missing > 0) {
+				getTable().addAll(getGame().getNext(missing));	
+				if (LOCAL_LOGV) Log.v("Table", "Table replenished to DEFAULT number");
+			} else {
+				if (LOCAL_LOGV) Log.v("Table", "No more cards to replenish");
+			}
 		}
 		
 		
