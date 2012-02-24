@@ -5,24 +5,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.barcicki.trio.R;
 
 public class CardAdapter extends ArrayAdapter<Card> {
 	
-	private CardList cards;
-
+	private CardList mCards;
+	
 	public CardAdapter(Context context, int textViewResourceId,
 			CardList objects) {
 		super(context, textViewResourceId, objects);
-		cards = objects;
+		mCards = objects;
+	}
+	
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return mCards.size();
+	}
+	
+	@Override
+	public Card getItem(int position) {
+		// TODO Auto-generated method stub
+		return mCards.get(position);
+	}
+	
+	@Override
+	public long getItemId(int position) {
+//		if (position > 5 && position < 12) return 1;
+//		if (position == 12) return 0;
+//		if (position == 14) return 0;
+		return super.getItemId(position);
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		Card card = cards.get(position);
+		Card card = mCards.get(position);			 
 		
 		if (null == convertView) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -3,5 +3,20 @@
 
     <string name="hello">Hello World, TrioActivity!</string>
     <string name="app_name">Trio</string>
+    <string name="solo_game">Trio Solo</string>
+    
+    <string name="hint">Hint</string>
+    <string name="hints_ended">No more hints</string>
+    
+    <string name="trio_found">Trio found!</string>
+    <string name="not_trio">This is not a trio</string>
+    <string name="error_shape">Shape doesn\'t match</string>
+    <string name="error_color">Color doesn\'t match</string>
+    <string name="error_fill">Fill doesn\'t match</string>
+    <string name="error_number">Number doesn\'t match</string>
+    
+    <string name="solo_game_status">Remained %1$d cards</string>
+    <string name="solo_game_ended">Game ended. No more sets</string>
+    <string name="solo_game_restart">Restart game</string>
 
 </resources>

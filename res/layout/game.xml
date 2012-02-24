@@ -1,25 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 	xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.barcicki.trio" 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.barcicki.trio"
     android:id="@+id/container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
+
     <com.markupartist.android.widget.ActionBar
-	    android:id="@+id/actionbar"
-	    app:title="test"
-	    style="@style/ActionBar"
-    />
+        android:id="@+id/gameStatusActionBar"
+        style="@style/BottomActionBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="right"
+	>
+
+        <TextView
+            android:id="@+id/timePassedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/actionbar_title"
+            android:text="TextView" />
 
-    <GridView
+        <TextView
+            android:id="@+id/gameStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/timePassedTextView"
+            android:layout_alignBottom="@+id/timePassedTextView"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/timePassedTextView"
+            android:textColor="@color/actionbar_title"
+            android:text="@string/solo_game_status" />
+
+        <TextView
+            android:id="@+id/hintTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/gameStatusTextView"
+            android:layout_alignBottom="@+id/gameStatusTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/actionbar_title"
+            android:text="@string/hint" />
+
+        <TextView
+            android:id="@+id/restartTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hintTextView"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/hintTextView"
+            android:textColor="@color/actionbar_title"
+            android:text="@string/solo_game_restart" />
+
+    </com.markupartist.android.widget.ActionBar>
+
+    <com.barcicki.trio.widgets.TrioCardTableView
         android:id="@+id/cardContainer"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:numColumns="3" >
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="0px"
+        android:layout_weight="0.87"
+        android:columnWidth="67dp"
+        android:horizontalSpacing="0px"
+        android:listSelector="@null"
+        android:numColumns="8"
+        android:padding="0px"
+        android:stretchMode="none"
+        android:verticalSpacing="0px" >
+        <!-- Preview: listitem=@layout/single_card -->
+    </com.barcicki.trio.widgets.TrioCardTableView>
 
-        <!-- Preview: listitem=@android:layout/simple_list_item_2 -->
+    <com.markupartist.android.widget.ActionBar
+        android:id="@+id/actionbar"
+        style="@style/ActionBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        app:title="@string/solo_game" >
+    </com.markupartist.android.widget.ActionBar>
 
-    </GridView>
-
-</LinearLayout>
+</RelativeLayout>

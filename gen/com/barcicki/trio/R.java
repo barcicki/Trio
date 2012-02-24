@@ -32,6 +32,9 @@ containing a value of this type.
         public static final int actionbar_height=0x7f050000;
         public static final int actionbar_item_height=0x7f050001;
         public static final int actionbar_item_width=0x7f050002;
+        public static final int bottom_actionbar_height=0x7f050003;
+        public static final int bottom_actionbar_item_height=0x7f050004;
+        public static final int bottom_actionbar_item_width=0x7f050005;
     }
     public static final class drawable {
         public static final int actionbar_back_indicator=0x7f020000;
@@ -124,7 +127,7 @@ containing a value of this type.
         public static final int icon=0x7f020057;
     }
     public static final class id {
-        public static final int actionbar=0x7f08000b;
+        public static final int actionbar=0x7f080011;
         public static final int actionbar_actions=0x7f080006;
         public static final int actionbar_home=0x7f080001;
         public static final int actionbar_home_bg=0x7f080003;
@@ -134,10 +137,15 @@ containing a value of this type.
         public static final int actionbar_item=0x7f080009;
         public static final int actionbar_progress=0x7f080007;
         public static final int actionbar_title=0x7f080008;
-        public static final int cardContainer=0x7f08000c;
-        public static final int cardImage=0x7f08000d;
+        public static final int cardContainer=0x7f080010;
+        public static final int cardImage=0x7f080012;
         public static final int container=0x7f08000a;
+        public static final int gameStatusActionBar=0x7f08000b;
+        public static final int gameStatusTextView=0x7f08000d;
+        public static final int hintTextView=0x7f08000e;
+        public static final int restartTextView=0x7f08000f;
         public static final int screen=0x7f080000;
+        public static final int timePassedTextView=0x7f08000c;
     }
     public static final class layout {
         public static final int actionbar=0x7f030000;
@@ -149,7 +157,19 @@ containing a value of this type.
     public static final class string {
         public static final int actionbar_activity_not_found=0x7f060002;
         public static final int app_name=0x7f060001;
+        public static final int error_color=0x7f060009;
+        public static final int error_fill=0x7f06000a;
+        public static final int error_number=0x7f06000b;
+        public static final int error_shape=0x7f060008;
         public static final int hello=0x7f060000;
+        public static final int hint=0x7f060004;
+        public static final int hints_ended=0x7f060005;
+        public static final int not_trio=0x7f060007;
+        public static final int solo_game=0x7f060003;
+        public static final int solo_game_ended=0x7f06000d;
+        public static final int solo_game_restart=0x7f06000e;
+        public static final int solo_game_status=0x7f06000c;
+        public static final int trio_found=0x7f060006;
     }
     public static final class style {
         public static final int ActionBar=0x7f070000;
@@ -157,6 +177,8 @@ containing a value of this type.
         public static final int ActionBarHomeLogo=0x7f070003;
         public static final int ActionBarItem=0x7f070001;
         public static final int ActionBarProgressBar=0x7f070004;
+        public static final int BottomActionBar=0x7f070005;
+        public static final int BottomActionBarItem=0x7f070006;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionBar.
