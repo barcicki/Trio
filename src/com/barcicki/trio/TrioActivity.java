@@ -3,15 +3,18 @@ package com.barcicki.trio;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +25,14 @@ import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.widgets.TrioCardTableView;
 
 public class TrioActivity extends Activity {
+	
 	final private Trio mTrio = new Trio();
 	
 	private Handler mHandler = new Handler();
 	private long mTimerStart = 0L;
 	private TextView mTimer;
 	TrioCardTableView mGrid;
+	RelativeLayout mContainer;
 	CardAdapter mAdapter;
 	TextView mGameStatus;
 	TextView mRestart;
@@ -43,6 +48,7 @@ public class TrioActivity extends Activity {
 //        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
                 
         mTrio.newGame();
+        mContainer = (RelativeLayout) findViewById(R.id.container);
         mGrid = (TrioCardTableView) findViewById(R.id.cardContainer);
         mGameStatus = (TextView) findViewById(R.id.gameStatusTextView);
         mRestart = (TextView) findViewById(R.id.restartTextView);
@@ -209,15 +215,30 @@ public class TrioActivity extends Activity {
 	}
 	
 	private void onTrioFound() {
-		Toast.makeText(getApplicationContext(), "Trio found", Toast.LENGTH_SHORT).show();
-		mTrio.foundTrio(mSelectedCards);
+
+		// reset animation
+		mContainer.setBackgroundResource(R.drawable.basic);
+		mContainer.setBackgroundResource(R.drawable.success_transition);
 		
+		AnimationDrawable successAnimation = (AnimationDrawable) mContainer.getBackground();
+		successAnimation.start();
+				
+//		Toast.makeText(getApplicationContext(), "Trio found", Toast.LENGTH_SHORT).show();
+
+		mTrio.foundTrio(mSelectedCards);
 		updateGameStatus();
 		
 	}
 	
 	private void onTrioNotFound() {
-		Toast.makeText(getApplicationContext(), "You're wrong!", Toast.LENGTH_SHORT).show();
+		
+		// reset animation
+		mContainer.setBackgroundResource(R.drawable.basic);
+		mContainer.setBackgroundResource(R.drawable.failure_transition);
+		
+		AnimationDrawable successAnimation = (AnimationDrawable) mContainer.getBackground();
+		successAnimation.start();
+		
 	}
     
     private void handleCards() {
@@ -257,4 +278,25 @@ public class TrioActivity extends Activity {
     		
 		});
     }
+    
+//    private class AnimationStopper implements AnimationListener {
+//
+//		@Override
+//		public void onAnimationEnd(Animation animation) {
+////			animation.
+//		}
+//
+//		@Override
+//		public void onAnimationRepeat(Animation animation) {
+//			// TODO Auto-generated method stub
+//			animation.cancel();
+//		}
+//
+//		@Override
+//		public void onAnimationStart(Animation animation) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//    	
+//    }
 }

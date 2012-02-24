@@ -44,10 +44,15 @@ public class CardList extends ArrayList<Card> {
 	 * @return Extracted cards
 	 */
 	public CardList getNext(int max_number) {
-		int limit = max_number > size() ? size() : max_number;
-		CardList next = subList(0, limit);
-		removeRange(0, limit);
-		if (Trio.LOCAL_LOGV) Log.v("CardList", "Extracted " + limit + " cards");
+		CardList next = new CardList();
+		
+		if (size() > 0) {
+			int limit = max_number > size() ? size() : max_number;
+			next = subList(0, limit);
+			removeRange(0, limit);
+		}
+		
+		if (Trio.LOCAL_LOGV) Log.v("CardList", "Extracted " + next.size() + " cards");
 		return next;
 	}
 	

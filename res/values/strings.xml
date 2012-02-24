@@ -16,7 +16,7 @@
     <string name="error_number">Number doesn\'t match</string>
     
     <string name="solo_game_status">Remained %1$d cards</string>
-    <string name="solo_game_ended">Game ended. No more sets</string>
+    <string name="solo_game_ended">Game ended. No more trios</string>
     <string name="solo_game_restart">Restart game</string>
 
 </resources>

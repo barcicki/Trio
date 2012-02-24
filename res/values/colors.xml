@@ -8,4 +8,6 @@
     <color name="actionbar_background_item_pressed_end">#EE7600</color>
     <color name="card_selected">#3C9DD0</color>
     <color name="card_standby">@android:color/transparent</color>
+    <color name="trio_found">#659852</color>
+    <color name="trio_not_found">#A85B67</color>
 </resources>

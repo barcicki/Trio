@@ -57,25 +57,42 @@ public class Trio {
 	 * Updates table deck of cards so it have at least DEFAULT_TABLE_SIZE cards and at least one Trio
 	 */
 	public void updateTable() {
-		if (getTable().isEmpty()) mTable = new CardList(getGame().getNext(DEFUALT_TABLE_SIZE));
-
-		if (getTable().size() < DEFUALT_TABLE_SIZE) {
-			int missing = DEFUALT_TABLE_SIZE - getTable().size();
+		
+		if (getGame().size() > 0) {
 			
-			if (missing > getGame().size()) {
-				missing = getGame().size();
+			// if empty, create new set of 12 cards
+			if (getTable().size() <= 0) {
+				mTable = new CardList(getGame().getNext(DEFUALT_TABLE_SIZE));
 			}
 			
-			if (missing > 0) {
-				getTable().addAll(getGame().getNext(missing));	
-				if (LOCAL_LOGV) Log.v("Table", "Table replenished to DEFAULT number");
-			} else {
-				if (LOCAL_LOGV) Log.v("Table", "No more cards to replenish");
+			// 
+			if (getTable().size() < DEFUALT_TABLE_SIZE) {
+				
+				int missing = DEFUALT_TABLE_SIZE - getTable().size();
+				
+				if (missing > getGame().size()) {
+					missing = getGame().size();
+				}
+				
+				if (missing > 0) {
+					getTable().addAll(getGame().getNext(missing));	
+					if (LOCAL_LOGV) Log.v("Table", "Table replenished to DEFAULT number");
+				} else {
+					if (LOCAL_LOGV) Log.v("Table", "No more cards to replenish");
+				}
+				
 			}
+			
+		} else {
+			if (LOCAL_LOGD) Log.d("Game Deck", "Game Deck is empty");
 		}
 		
 		
-		while (!getTable().hasTrio()) {
+		
+		
+		
+		
+		while (!getTable().hasTrio() && getGame().size() > 0) {
 			getTable().addAll(getGame().getNext(DEFAULT_TABLE_ADDON));
 			if (LOCAL_LOGV) Log.v("Table", "Added additional cards");
 		}
