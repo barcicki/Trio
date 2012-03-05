@@ -88,10 +88,6 @@ public class Trio {
 		}
 		
 		
-		
-		
-		
-		
 		while (!getTable().hasTrio() && getGame().size() > 0) {
 			getTable().addAll(getGame().getNext(DEFAULT_TABLE_ADDON));
 			if (LOCAL_LOGV) Log.v("Table", "Added additional cards");
@@ -103,6 +99,10 @@ public class Trio {
 	public CardList getTable() {
 		if (null == mTable) mTable = new CardList();
 		return mTable;
+	}
+	
+	public void setTable(CardList table) {
+		this.mTable = table;
 	}
 	
 	/**

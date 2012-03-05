@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 public class CardList extends ArrayList<Card> {
@@ -140,4 +141,38 @@ public class CardList extends ArrayList<Card> {
 	public CardList subList(int start, int end) {
 		return new CardList(super.subList(start, end));
 	}
+	
+	public Card find( String cardString ) {
+		for (Card c : this) {
+			if (c.toString().equals(cardString)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Gets string with cards ids  
+	 */
+	public String toString() {
+		return TextUtils.join(" ", this);
+	}
+	
+	/**
+	 * 
+	 * @param sourceDeck
+	 * @param cardListString
+	 */
+	public static CardList fromString(CardList sourceDeck, String cardListString) {
+		CardList cards = new CardList();
+		for (String cardString : TextUtils.split(cardListString, " ")) {
+			Card card = sourceDeck.find( cardString );
+			if (null != card) {
+				cards.add(card);
+			}
+		}
+		return cards;
+	}
+	
+	
 }
