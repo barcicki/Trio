@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<integer name="cloud_anim_duration">3000</integer>    
+	<integer name="logo_anim_duration">2000</integer>
+	<integer name="navigation_fade_in_duration">200</integer>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:shareInterpolator="true" >
+
+    <scale
+        android:duration="@integer/cloud_anim_duration"
+        android:fillBefore="true"
+        android:fromXScale="1.3"
+        android:fromYScale="1.5"
+        android:toXScale="1.3"
+        android:toYScale="1.5" />
+
+    <translate
+        android:duration="@integer/cloud_anim_duration"
+        android:fillBefore="true"
+        android:fromXDelta="-10%p"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:toXDelta="0" />
+
+</set>

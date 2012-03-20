@@ -18,5 +18,12 @@
     <string name="solo_game_status">Remained %1$d cards</string>
     <string name="solo_game_ended">Game ended. No more trios</string>
     <string name="solo_game_restart">Restart game</string>
+    
+    <string name="game_classic">Classic Trio</string>
+    <string name="game_classic_desc">Go through the whole deck finding trios</string>
+    <string name="game_tutorial">Tutorial</string>
+    <string name="game_tutorial_desc">Learn to find trios</string>
+    <string name="game_challenge">Daily Challenge</string>
+    <string name="game_challenge_desc">Find all hidden trios on the screen. Be quick!</string>
 
 </resources>

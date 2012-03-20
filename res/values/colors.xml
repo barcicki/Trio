@@ -10,4 +10,9 @@
     <color name="card_standby">@android:color/transparent</color>
     <color name="trio_found">#659852</color>
     <color name="trio_not_found">#A85B67</color>
+    
+    <color name="yellow">#ffff00</color>
+    <color name="green">#7cc576</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#00aeef</color>
 </resources>
