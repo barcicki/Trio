@@ -48,11 +48,18 @@ public class HomeActivity extends Activity {
 			
 			@Override
 			public void click(int id, View view) {
+				Intent intent;
 				switch (id) {
-					case GAME_TYPE_CLASSIC:
-						Intent intent = new Intent(HomeActivity.this, TrioActivity.class);
+					case GAME_TYPE_TUTORIAL:
+						intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						startActivity(intent);
+						break;
+					case GAME_TYPE_CLASSIC:
+						intent = new Intent(HomeActivity.this, TrioActivity.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						startActivity(intent);
+						break;
 				}
 			}
 		});

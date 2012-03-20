@@ -19,7 +19,7 @@
             android:screenOrientation="landscape"
              >
         </activity>
-        <activity android:name=".SingleGameActivity"></activity>
+        <activity android:name=".ClassicGameActivity"></activity>
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="landscape"
