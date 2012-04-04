@@ -1,29 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical" >
 
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/layout"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" >
-
-    <com.barcicki.trio.TrioSurface
-        android:id="@+id/layoutSurface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-    />
-
-    <greendroid.widget.PagedView
-        android:id="@+id/navigation"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
+    <ImageView
+        android:id="@+id/layoutTrio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:fadingEdge="horizontal"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/trio" />
+
+    <ImageView
+        android:id="@+id/layoutClouds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/layoutTrio"
+        android:layout_marginBottom="0dp"
+        android:scaleType="fitCenter"
+        android:scrollY="15dp"
+        android:src="@drawable/clouds" />
+
+    <RelativeLayout
+        android:id="@+id/layoutNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginBottom="30dp" >
-        <!-- Preview: listitem=@android:layout/simple_list_item_2 -->
-    </greendroid.widget.PagedView>
- 
- </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/gameTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:onClick="startGame"
+            android:src="@drawable/tutorial" />
+
+        <ImageView
+            android:id="@+id/gameChallenge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:onClick="startGame"
+            android:src="@drawable/challenge" />
 
+        <ImageView
+            android:id="@+id/gameClassic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/gameTutorial"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="70dp"
+            android:onClick="startGame"
+            android:src="@drawable/classic" />
+
+        <ImageView
+            android:id="@+id/gamePractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/gameChallenge"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="70dp"
+            android:onClick="startGame"
+            android:src="@drawable/classic" />
+
+        <TextView
+            android:id="@+id/gameTutorialDescription"
+            style="@style/navigationItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/gameTutorial"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="35dp"
+            android:text="@string/game_tutorial_desc" />
+        
+        <TextView
+            android:id="@+id/gameChallengeDescription"
+            style="@style/navigationItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/gameChallenge"
+            android:layout_marginTop="35dp"
+            android:text="@string/game_challenge_desc" />
+        
+        <TextView
+            android:id="@+id/gameClassicDescription"
+            style="@style/navigationItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/gameTutorial"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="105dp"
+            android:text="@string/game_classic_desc" />
+        
+        <TextView
+            android:id="@+id/gamePracticeDescription"
+            style="@style/navigationItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/gameChallenge"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="105dp"
+            android:text="@string/game_tutorial_desc" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

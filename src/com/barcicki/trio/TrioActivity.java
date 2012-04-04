@@ -157,7 +157,6 @@ public class TrioActivity extends Activity {
 
 		mRestart.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 
 				mTrio.newGame();
@@ -196,7 +195,6 @@ public class TrioActivity extends Activity {
 		TextView hintButton = (TextView) findViewById(R.id.hintTextView);
 		hintButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 
 				ArrayList<CardList> trios = mTrio.getTable().getTrios();
@@ -292,7 +290,6 @@ public class TrioActivity extends Activity {
 
 	private Runnable mUpdateTimer = new Runnable() {
 
-		@Override
 		public void run() {
 			final long start = mTimerStart;
 			long millis = System.currentTimeMillis() - start;
@@ -357,7 +354,6 @@ public class TrioActivity extends Activity {
 	private void handleCards() {
 		mGrid.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 

@@ -15,9 +15,10 @@
     <string name="error_fill">Fill doesn\'t match</string>
     <string name="error_number">Number doesn\'t match</string>
     
-    <string name="solo_game_status">Remained %1$d cards</string>
+    <string name="solo_game_status">%1$d cards left</string>
     <string name="solo_game_ended">Game ended. No more trios</string>
     <string name="solo_game_restart">Restart game</string>
+    
     
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Go through the whole deck finding trios</string>

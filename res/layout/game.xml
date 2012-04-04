@@ -6,9 +6,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.markupartist.android.widget.ActionBar
+    <RelativeLayout
         android:id="@+id/gameStatusActionBar"
-        style="@style/BottomActionBar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:gravity="center" >
@@ -60,7 +59,7 @@
             android:text="@string/solo_game_restart"
             android:textColor="@color/actionbar_title" />
 
-    </com.markupartist.android.widget.ActionBar>
+    </RelativeLayout>
 
     <com.barcicki.trio.widgets.TrioCardTableView
         android:id="@+id/cardContainer"
@@ -79,13 +78,5 @@
         android:verticalSpacing="0px" >
         <!-- Preview: listitem=@layout/single_card -->
     </com.barcicki.trio.widgets.TrioCardTableView>
-
-    <com.markupartist.android.widget.ActionBar
-        android:id="@+id/actionbar"
-        style="@style/ActionBar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        app:title="@string/solo_game" >
-    </com.markupartist.android.widget.ActionBar>
 
 </RelativeLayout>

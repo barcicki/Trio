@@ -5,9 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-
 import com.barcicki.trio.R;
 
 public class DynamicCardAdapter extends ArrayAdapter<Card> {

@@ -6,9 +6,7 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -66,6 +64,7 @@ public class Card {
 		this.number = number;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getColor());

@@ -154,6 +154,7 @@ public class CardList extends ArrayList<Card> {
 	/**
 	 * Gets string with cards ids  
 	 */
+	@Override
 	public String toString() {
 		return TextUtils.join(" ", this);
 	}
