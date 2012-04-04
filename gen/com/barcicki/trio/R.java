@@ -149,10 +149,12 @@ containing a value of this type.
         public static final int red_shader=0x7f020062;
         public static final int shader=0x7f020063;
         public static final int square=0x7f020064;
-        public static final int success=0x7f020065;
-        public static final int success_transition=0x7f020066;
-        public static final int trio=0x7f020067;
-        public static final int tutorial=0x7f020068;
+        public static final int square_reverse=0x7f020065;
+        public static final int square_selected=0x7f020066;
+        public static final int success=0x7f020067;
+        public static final int success_transition=0x7f020068;
+        public static final int trio=0x7f020069;
+        public static final int tutorial=0x7f02006a;
     }
     public static final class id {
         public static final int actionbar=0x7f0a0015;
@@ -168,10 +170,10 @@ containing a value of this type.
         public static final int card=0x7f0a000a;
         public static final int cardContainer=0x7f0a0014;
         public static final int cardImage=0x7f0a001d;
+        public static final int cardsContainer=0x7f0a000d;
         public static final int container=0x7f0a000e;
         public static final int gameStatusActionBar=0x7f0a000f;
         public static final int gameStatusTextView=0x7f0a0011;
-        public static final int gridView1=0x7f0a000d;
         public static final int hintTextView=0x7f0a0012;
         public static final int layout=0x7f0a000b;
         public static final int layoutClouds=0x7f0a000c;

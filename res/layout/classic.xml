@@ -15,15 +15,15 @@
         android:scaleType="fitCenter"
         android:scrollY="15dp"
         android:src="@drawable/clouds" />
-
-    <GridView
-        android:id="@+id/gridView1"
+
+    <com.barcicki.trio.core.CardGridView
+        android:id="@+id/cardsContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="100dp"
-        android:stretchMode="spacingWidth"
-        android:numColumns="auto_fit" >
+        android:layout_height="280dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+         >
 
-    </GridView>
+    </com.barcicki.trio.core.CardGridView>
 
 </RelativeLayout>
