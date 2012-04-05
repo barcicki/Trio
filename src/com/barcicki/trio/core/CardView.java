@@ -79,4 +79,8 @@ public class CardView extends ImageView  {
 		
 		
 	}
+	
+	public void  redraw() {
+		this.cardCache = null;
+	}
 }

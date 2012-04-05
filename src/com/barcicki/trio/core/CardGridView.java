@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.barcicki.trio.R;
+import com.barcicki.trio.R.anim;
+import com.barcicki.trio.animations.ReverseInterpolator;
 
 public class CardGridView extends ScrollView {
 	
@@ -104,13 +106,14 @@ public class CardGridView extends ScrollView {
 		}
 		
 		while (updated.size() > 0) {
-			Card c = updated.get(0);
+			final Card c = updated.get(0);
 			
 			if (replaceable.size() > 0) {
 				final CardView cv = replaceable.get(0);
 				cv.setTag(c);
 				
 				Animation flipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
+				final Animation reflipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
 				cv.startAnimation(flipAnimation);
 				
 				flipAnimation.setAnimationListener(new AnimationListener() {
@@ -121,16 +124,17 @@ public class CardGridView extends ScrollView {
 					}
 					
 					public void onAnimationRepeat(Animation animation) {
-						// TODO Auto-generated method stub
-						cv.setCard((Card) cv.getTag());
+						
 					}
 					
 					public void onAnimationEnd(Animation animation) {
-						cv.setCard((Card) cv.getTag());
+						cv.setCard(c);
+						cv.invalidate();
+						cv.refreshDrawableState();
+						cv.startAnimation(reflipAnimation);
 					}
 				});
-				
-				
+								
 				replaceable.remove(cv);
 			} else {
 				addCardView(c);
