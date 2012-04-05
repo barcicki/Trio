@@ -16,6 +16,7 @@ public class CardView extends ImageView  {
 
 	private Card card = null;
 	private Bitmap cardCache = null;
+	private boolean overdraw = true;
 	
 	public CardView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -40,6 +41,15 @@ public class CardView extends ImageView  {
 		this.cardCache = null;
 	}
 	
+	
+	public boolean isOverdrawn() {
+		return overdraw;
+	}
+
+	public void setOverdraw(boolean overdraw) {
+		this.overdraw = overdraw;
+	}
+
 	@Override
 	public void setSelected(boolean selected) {
 		super.setSelected(selected);
@@ -71,7 +81,9 @@ public class CardView extends ImageView  {
 												
 			}
 			
-			canvas.drawBitmap(this.cardCache, 0, 0, null);
+			if (this.overdraw) {
+				canvas.drawBitmap(this.cardCache, 0, 0, null);
+			}
 
 		} else {
 			super.onDraw(canvas);

@@ -74,6 +74,7 @@ public class CardGridView extends ScrollView {
 		CardView cardView = new CardView(getContext());
 		cardView.setBackgroundResource(R.drawable.square_reverse);
 		cardView.setCard(card);
+		cardView.setOnClickListener(this.listener);
 		
 		rows.get(row).addView(cardView);
 		cardViews.add(cardView);
@@ -103,6 +104,9 @@ public class CardGridView extends ScrollView {
 			}
 		}
 		
+		if (Trio.LOCAL_LOGV) {
+			Log.v("Classic Game", "Updated " + updated.size() + " " + updated.toString() + "; Replaceable " + replaceable.size());
+		}
 		while (updated.size() > 0) {
 			Card c = updated.get(0);
 			
