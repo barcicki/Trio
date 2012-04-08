@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barcicki.trio.core.Card;
-import com.barcicki.trio.core.CardAdapter;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.widgets.TrioCardTableView;
@@ -33,7 +32,6 @@ public class TrioActivity extends Activity {
 	private TextView mTimer;
 	TrioCardTableView mGrid;
 	RelativeLayout mContainer;
-	CardAdapter mAdapter;
 	TextView mGameStatus;
 	TextView mRestart;
 	SharedPreferences mPrefs;
@@ -58,8 +56,8 @@ public class TrioActivity extends Activity {
 		mRestart = (TextView) findViewById(R.id.restartTextView);
 		mTimer = (TextView) findViewById(R.id.timePassedTextView);
 
-		mAdapter = new CardAdapter(this, R.layout.single_card, mTrio.getTable());
-		mGrid.setAdapter(mAdapter);
+//		mAdapter = new CardAdapter(this, R.layout.single_card, mTrio.getTable());
+//		mGrid.setAdapter(mAdapter);
 
 		startTimer();
 		handleCards();
@@ -165,9 +163,9 @@ public class TrioActivity extends Activity {
 				startTimer();
 				updateGameStatus();
 
-				mAdapter = new CardAdapter(getApplicationContext(),
-						R.layout.single_card, mTrio.getTable());
-				mGrid.setAdapter(mAdapter);
+//				mAdapter = new CardAdapter(getApplicationContext(),
+//						R.layout.single_card, mTrio.getTable());
+//				mGrid.setAdapter(mAdapter);
 
 				mSelectedCards.clear();
 
@@ -382,7 +380,7 @@ public class TrioActivity extends Activity {
 					}
 
 					mSelectedCards.clear();
-					mAdapter.notifyDataSetChanged();
+//					mAdapter.notifyDataSetChanged();
 				}
 
 			}

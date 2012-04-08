@@ -12,6 +12,7 @@ public class Trio {
 	
 	private CardList mDeck;
 	private CardList mGame;
+	private String mGameString;
 	private CardList mTable;
 	
 	public Trio() {
@@ -39,16 +40,36 @@ public class Trio {
 		this.mGame = game;
 	}
 	
+	public String getGameString() {
+		return mGameString;
+	}
+	
+	public void setGameString(String gameString) {
+		this.mGameString = gameString;
+	}
+	
+	
 	/*
 	 * Game logic
 	 */
 	
+
 	/**
-	 * Resets game progress.
+	 * Starts new game
 	 */
 	public void newGame() {
 		mDeck.shuffle();
 		mGame = new CardList(mDeck); 
+		mGameString = mGame.toString();
+		mTable = new CardList();
+		updateTable();
+	}
+	
+	/**
+	 * Resets game progress.
+	 */
+	public void restartGame(String gameString) {
+		mGame = CardList.fromString(mDeck, gameString);
 		mTable = new CardList();
 		updateTable();
 	}
@@ -149,6 +170,15 @@ public class Trio {
 		if ((cardA.getFill() + cardB.getFill() + cardC.getFill()) % 3 != 0) return false; 
 		if ((cardA.getNumber() + cardB.getNumber() + cardC.getNumber()) % 3 != 0) return false; 
 		return true; 
+	}
+	
+	public CardList getSetWithTrios(int numberOfTrios) {
+		CardList set = new CardList(getDeck());
+		CardList table;
+		do {
+			table = set.getRandomRange(DEFUALT_TABLE_SIZE);
+		} while (table.numberOfTrios() != numberOfTrios);
+		return table;
 	}
 	
 	/*

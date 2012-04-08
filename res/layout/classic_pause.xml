@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pauseLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="invisible"
+    android:background="#A0000000" >
+
+    <Button
+        android:id="@+id/gameContinue"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:onClick="onPressedContinue"
+        android:text="@string/pause_continue" />
+
+    <Button
+        android:id="@+id/gameNew"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gameContinue"
+        android:layout_below="@+id/gameContinue"
+        android:onClick="onPressedNewGame"
+        android:text="@string/pause_new_game" />
+
+    <Button
+        android:id="@+id/gameRestart"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gameNew"
+        android:layout_below="@+id/gameNew"
+        android:onClick="onPressedRestartGame"
+        android:text="@string/pause_restart" />
+
+    <Button
+        android:id="@+id/gameQuit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gameRestart"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="29dp"
+        android:onClick="onPressedQuitGame"
+        android:text="@string/pause_save_quit" />
+
+    <TextView
+        android:id="@+id/gameTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/gameContinue"
+        android:layout_marginRight="35dp"
+        android:text="00:00"
+        android:textColor="@color/yellow"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/gameTrioCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/gameTime"
+        android:layout_below="@+id/gameTime"
+        android:text="@string/classic_trio_count"
+        android:textColor="@color/yellow" />
+
+    <TextView
+        android:id="@+id/gameStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/gameTrioCount"
+        android:layout_below="@+id/gameTrioCount"
+        android:layout_marginTop="5dp"
+        android:text="@string/classic_status"
+        android:textColor="@color/yellow" />
+
+    <TextView
+        android:id="@+id/gameHintCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/gameStatus"
+        android:layout_below="@+id/gameStatus"
+        android:layout_marginTop="5dp"
+        android:text="@string/classic_hint_count"
+        android:textColor="@color/yellow" />
+
+"
+
+</RelativeLayout>

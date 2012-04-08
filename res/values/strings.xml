@@ -19,6 +19,24 @@
     <string name="solo_game_ended">Game ended. No more trios</string>
     <string name="solo_game_restart">Restart game</string>
     
+    <string name="classic_trio_count">Found %1$d trios</string>
+    <string name="classic_status">%1$d cards left</string>
+    <string name="classic_hint_count">%1$d hints left</string>
+    <string name="classic_pause">Pause</string>
+    <string name="classic_hint">Hint (%1$d)</string>
+    <string name="classic_end">Congratulations! You\'ve found all trios</string>
+    
+    <string name="practice_trio_count">Found %1$d out of %2$d trios</string>
+    <string name="practice_end">Congratulations! You\'ve found all trios.</string>
+    
+    <string name="pause_continue">Continue</string>
+    <string name="pause_restart">Restart Game</string>
+    <string name="pause_new_game">New game</string>
+    <string name="pause_save_quit">Save &amp; Quit</string>
+    <string name="pause_quit">Quit</string>
+    <string name="pause_start">Start</string>
+    
+    
     
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Go through the whole deck finding trios</string>

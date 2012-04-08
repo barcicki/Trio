@@ -174,6 +174,18 @@ public class CardList extends ArrayList<Card> {
 		}
 		return cards;
 	}
+
+	public static boolean areEqual(CardList listA, CardList listB) {
+		if (listA.size() == listB.size()) {
+			for (Card c : listA) {
+				if (!listB.contains(c)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 	
 	
 }

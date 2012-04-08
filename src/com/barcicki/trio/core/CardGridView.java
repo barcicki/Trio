@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -12,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.barcicki.trio.R;
-import com.barcicki.trio.R.anim;
-import com.barcicki.trio.animations.ReverseInterpolator;
 
 public class CardGridView extends ScrollView {
 	
@@ -23,6 +23,8 @@ public class CardGridView extends ScrollView {
 	private LinearLayout container;
 	private ArrayList<LinearLayout> rows = new ArrayList<LinearLayout>();
 	private ArrayList<CardView> cardViews = new ArrayList<CardView>();
+	private int columns = 0;
+	private float cardSize = 0f;
 
 	public CardGridView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -48,7 +50,22 @@ public class CardGridView extends ScrollView {
 		this.cards.addAll(cards);
 	}
 	
-	private void addCardView(Card card) {
+	public void setCards(ArrayList<CardList> cards) {
+		this.cards.clear();
+		for (CardList cl : cards) {
+			this.cards.addAll(cl);
+		}
+	}
+	
+	public int getColumns() {
+		return columns;
+	}
+
+	public void setColumns(int columns) {
+		this.columns = columns;
+	}
+
+	private CardView addCardView(Card card) {
 	
 		int size = cardViews.size();
 		int row = getRow(size);
@@ -67,6 +84,9 @@ public class CardGridView extends ScrollView {
 			rowView.setOrientation(LinearLayout.HORIZONTAL);
 			rowView.setLayoutParams(rowParams);
 			rowView.setGravity(Gravity.CENTER);
+			rowView.setTag(R.id.tagCards, new CardList());
+			rowView.setTag(R.id.tagViews, new ArrayList<CardView>());
+			
 			
 			container.addView(rowView);
 			rows.add(rowView);
@@ -75,21 +95,54 @@ public class CardGridView extends ScrollView {
 		
 		CardView cardView = new CardView(getContext());
 		cardView.setBackgroundResource(R.drawable.square_reverse);
+		if (cardSize > 0) {
+			cardView.setLayoutParams(new LayoutParams((int) cardSize, (int) cardSize)); 
+		}
 		cardView.setCard(card);
 		cardView.setOnClickListener(this.listener);
 		
-		rows.get(row).addView(cardView);
+		LinearLayout rowView = rows.get(row);
+		((CardList) rowView.getTag(R.id.tagCards)).add(card);
+		((ArrayList<CardView>) rowView.getTag(R.id.tagViews)).add(cardView); 
+		cardView.setTag(rowView);
+		rowView.addView(cardView);
+				
 		cardViews.add(cardView);
+		
+		return cardView;
 	
 	}
 	
 	private int getRow(int position) {
-		if (position < 12) {
-			return position / 4;
-		} else if (position < 15) {
-			return position % 4;
+		if (columns > 0) {
+			return position / columns;
 		} else {
-			return position / 5;
+			if (position < 12) {
+				return position / 4;
+			} else if (position < 15) {
+				return position % 4;
+			} else {
+				return position / 5;
+			}
+		}
+	}
+	
+	public void revealCard(CardList cardList) {
+		int size = cardList.size();
+		
+		for (LinearLayout row : rows) {
+			final CardList rowCards = (CardList) row.getTag(R.id.tagCards);
+			if (CardList.areEqual( rowCards, cardList )) {
+//				final Animation reflipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+				final ArrayList<CardView> views = (ArrayList<CardView>) row.getTag(R.id.tagViews);
+				
+				for (int i = 0; i < views.size(); i++) {
+					Animation flipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
+					views.get(i).startAnimation(flipAnimation);
+					flipAnimation.setAnimationListener(new FlipperListener(views.get(i)));
+				}
+				
+			}
 		}
 	}
 	
@@ -109,12 +162,12 @@ public class CardGridView extends ScrollView {
 		if (Trio.LOCAL_LOGV) {
 			Log.v("Classic Game", "Updated " + updated.size() + " " + updated.toString() + "; Replaceable " + replaceable.size());
 		}
+		
 		while (updated.size() > 0) {
 			final Card c = updated.get(0);
 			
 			if (replaceable.size() > 0) {
 				final CardView cv = replaceable.get(0);
-				cv.setTag(c);
 				
 				Animation flipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
 				final Animation reflipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
@@ -141,19 +194,47 @@ public class CardGridView extends ScrollView {
 								
 				replaceable.remove(cv);
 			} else {
-				addCardView(c);
+				
+				final CardView cv = addCardView(c);
+				Animation showAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_appear);
+				
+				cv.startAnimation(showAnimation);
+			
 			}
 			
 			updated.remove(c);
 		}
 		
 		while (replaceable.size() > 0) {
-			CardView cv = replaceable.get(0);
+			final CardView cv = replaceable.get(0);
 			
-			removeView(cv);
+			Animation hideAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_remove);
+			cv.startAnimation(hideAnimation);
+			
+			hideAnimation.setAnimationListener(new AnimationListener() {
+				
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				public void onAnimationEnd(Animation animation) {
+					// TODO Auto-generated method stub
+					cv.setVisibility(View.GONE);
+				}
+			});
+			
 			replaceable.remove(cv);
-			cardViews.remove(cv);			
+			cardViews.remove(cv);	
+			
 		}
+
+		deselectAll();
 	
 	}
 	
@@ -161,17 +242,21 @@ public class CardGridView extends ScrollView {
 		
 		removeAllViews();
 		cardViews.clear();
+		rows.clear();
+		container = null;
 		
 		int size = cards.size();
 		if (size > 0) {
 			
 			for (Card card : cards) {
-				addCardView(card);
+				addCardView(card).refreshDrawableState();
 			}
 			
 			updateListener();
 			
 		}
+		
+		refreshDrawableState();
 		
 		
 	}
@@ -194,6 +279,74 @@ public class CardGridView extends ScrollView {
 		
 		for (CardView cv : cardViews) {
 			cv.setSelected(false);
+			cv.invalidate();
+			cv.refreshDrawableState();
+		}
+		
+	}
+
+	public void showReverse() {
+		for (CardView cv : cardViews) {
+			cv.setOverdraw(false);
+			cv.invalidate();
+			cv.refreshDrawableState();
+		}
+	}
+	
+	public void hideReverse() {
+		for (CardView cv : cardViews) {
+			cv.setOverdraw(true);
+			cv.invalidate();
+			cv.refreshDrawableState();
+		}
+	}
+
+	public CardView select(Card card) {
+		for (CardView cv : cardViews) {
+			if (cv.getCard().equals(card)) {
+				cv.setSelected(true);
+				cv.invalidate();
+				cv.refreshDrawableState();
+				return cv;
+			}
+		}
+		return null;
+	}
+
+	public void setPredefinedCardSize(float cardSize) {
+		// TODO Auto-generated method stub
+		this.cardSize = cardSize;
+	}
+	
+	public float getPredefinedCardSize() {
+		return cardSize;
+	}
+	
+	private class FlipperListener implements AnimationListener {
+		
+		CardView cardView;
+		Animation back;
+		
+		public FlipperListener(CardView cv) {
+			cardView = cv;
+			back = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+		}
+
+		public void onAnimationEnd(Animation animation) {
+			cardView.setOverdraw(true);
+			cardView.invalidate();
+			cardView.refreshDrawableState();
+			cardView.startAnimation(back);
+		}
+
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}

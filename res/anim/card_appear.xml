@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:shareInterpolator="true" >
+
+    <scale
+        android:duration="@integer/card_visibility_anim_duration"
+        android:zAdjustment="normal"
+        android:fillAfter="true"
+        android:fillEnabled="true"
+        android:fillBefore="true"
+       	android:pivotX="50%"
+       	android:pivotY="50%"
+        android:fromXScale="0.01"
+        android:fromYScale="0.01"
+        android:toXScale="1.0"
+        
+        android:toYScale="1.0" />
+
+    
+
+</set>

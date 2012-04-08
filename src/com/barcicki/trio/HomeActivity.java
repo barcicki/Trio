@@ -1,22 +1,23 @@
 package com.barcicki.trio;
 
-import greendroid.widget.PagedAdapter;
-
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.barcicki.trio.core.GameType;
+import com.barcicki.trio.core.TrioSettings;
+import com.openfeint.api.OpenFeint;
+import com.openfeint.api.OpenFeintDelegate;
+import com.openfeint.api.OpenFeintSettings;
+import com.openfeint.api.ui.Dashboard;
 
 public class HomeActivity extends Activity {
 	
@@ -31,6 +32,14 @@ public class HomeActivity extends Activity {
 
 		mNavigationLayout = (RelativeLayout) findViewById(R.id.layoutNavigation);
 		mTrioLogo = (ImageView) findViewById(R.id.layoutTrio);
+		
+		Map<String, Object> options = new HashMap<String, Object>();
+        options.put(OpenFeintSettings.SettingCloudStorageCompressionStrategy, OpenFeintSettings.CloudStorageCompressionStrategyDefault);
+        options.put(OpenFeintSettings.RequestedOrientation, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        // use the below line to set orientation
+        OpenFeintSettings settings = new OpenFeintSettings(TrioSettings.APP_NAME, TrioSettings.APP_KEY, TrioSettings.APP_SECRET, TrioSettings.APP_ID, options);
+        
+        OpenFeint.initialize(this, settings, new OpenFeintDelegate() { });
 		
 		applyAnimations();
 		
@@ -63,11 +72,20 @@ public class HomeActivity extends Activity {
 		
 			case R.id.gameClassic:
 				intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intent);
+				break;
+			
+			case R.id.gamePractice:
+				intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
 				startActivity(intent);
 				break;
 		
 		}
+	}
+	
+	public void onOpenFeintClicked(View v) {
+		Dashboard.open();
 	}
 
 	private void applyAnimations() {

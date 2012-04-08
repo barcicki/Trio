@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:shareInterpolator="true" >
+
+    
+    <translate
+        android:duration="@integer/card_fail_anim_duration"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:fromXDelta="-2%p"
+        android:repeatCount="3"
+        android:repeatMode="reverse"
+        android:toXDelta="2%p" />
+     
+    
+
+</set>

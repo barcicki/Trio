@@ -114,6 +114,16 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="105dp"
             android:text="@string/game_tutorial_desc" />
+
+        <ImageView
+            android:id="@+id/openFeintButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:onClick="onOpenFeintClicked"
+            android:src="@drawable/ic_openfeint" />
 
     </RelativeLayout>
 

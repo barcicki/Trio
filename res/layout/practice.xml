@@ -5,25 +5,36 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
+
     <ImageView
         android:id="@+id/layoutClouds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:scaleType="fitCenter"
-        android:scrollY="15dp"
+        android:scaleType="center"
         android:src="@drawable/clouds" />
-
+
     <com.barcicki.trio.core.CardGridView
         android:id="@+id/cardsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_width="380dp"
+        android:layout_height="260dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp" >
+
     </com.barcicki.trio.core.CardGridView>
+    <TextView
+        android:id="@+id/gameStatus"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/cardsContainer"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/yellow"
+        android:textSize="50dp" />
 
     <TextView
         android:id="@+id/gameTimer"
@@ -33,7 +44,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="20dp"
-        android:text="00:00" />
+        android:text="00:00" />
+
 
     <Button
         android:id="@+id/gamePauseButton"
@@ -46,20 +58,21 @@
         android:onClick="onPauseClicked"
         android:text="@string/classic_pause" />
 
-    <Button
-        android:id="@+id/gameHintButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/gamePauseButton"
-        android:layout_marginBottom="10dp"
-        android:onClick="onHintClicked"
-        android:text="@string/classic_hint" />
-
     <include
         android:id="@+id/gamePause"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        layout="@layout/classic_pause" />
+        layout="@layout/practice_pause" />
+    
+    <com.barcicki.trio.core.CardGridView
+        android:id="@+id/triosContainer"
+        android:layout_width="130dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/gameStatus" >
+    </com.barcicki.trio.core.CardGridView>
+        
 
 </RelativeLayout>
