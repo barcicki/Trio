@@ -209,5 +209,9 @@ public class Card {
 
 		return canvas;
 	}
+	
+	public boolean isEqual(Card c) {
+		return c.toString().equals(toString());
+	}
 
 }

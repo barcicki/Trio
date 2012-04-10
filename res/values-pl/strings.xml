@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Trio</string>
+    
+    <string name="hint">Podpowiedź</string>
+    <string name="hints_ended">Nie ma więcej podpowiedzi</string>
+    
+    <string name="trio_found">Trio znalezione!</string>
+    <string name="not_trio">To nie jest trio</string>
+    <string name="error_shape">Kształt się nie zgadza</string>
+    <string name="error_color">Kolor się nie zgadza</string>
+    <string name="error_fill">Wypełnienie się nie zgadza</string>
+    <string name="error_number">Ilość się nie zgadza</string>
+    
+    <string name="solo_game_status">Pozostało %1$d kart</string>
+    <string name="solo_game_ended">Gra skońcozna. Nie ma więcej Trio</string>
+    <string name="solo_game_restart">Powtórz grę</string>
+    
+    <string name="classic_trio_count">Znaleziono %1$d Trio</string>
+    <string name="classic_status">Pozostało %1$d kart</string>
+    <string name="classic_hint_count">Pozostało %1$d podpowiedzi</string>
+    <string name="classic_pause">Pauza</string>
+    <string name="classic_hint">Podpowiedź (%1$d)</string>
+    <string name="classic_end">Gratulacje! Odnalazłeś wszystkie Trio</string>
+    
+    <string name="practice_trio_count">Odnaleziono %1$d z %2$d ukrytych Trio</string>
+    <string name="practice_end">Gratulacje! Odnalazłeś wszystkie ukryte Trio</string>
+    
+    <string name="pause_continue">Kontynuuj</string>
+    <string name="pause_restart">Od początku</string>
+    <string name="pause_new_game">Nowa gra</string>
+    <string name="pause_save_quit">Zapisz i Wyjdź</string>
+    <string name="pause_quit">Wyjdź</string>
+    <string name="pause_start">Start</string>
+    
+    <string name="tutorial_next">Dalej</string>
+    <string name="tutorial_step1_header">Gra Trio składa się z 81 różnych kart. Każda karta ma 4 atrybuty: </string>
+    <string name="tutorial_shape">Kształt</string>
+    <string name="tutorial_number">Ilość elementów</string>
+    <string name="tutorial_colour">Kolor</string>
+    <string name="tutorial_fill">Wypełnienie</string>
+    <string name="tutorial_step2_header">Trio stanowią takie 3 karty, których wszystkie atrybuty są albo różne albo takie same.</string>
+    <string name="tutorial_1common">1 wspólny atrybut</string>
+    <string name="tutorial_2common">2 wspólne atrybuty</string>
+    <string name="tutorial_3common">3 wspólne atrybuty</string>
+    <string name="tutorial_no_common">Brak wspólnych atrybutów</string>
+    <string name="tutorial_wrong_shape">Kształt się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    <string name="tutorial_wrong_number">Ilość się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    <string name="tutorial_wrong_color">Kolor się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    <string name="tutorial_wrong_fill">Wypełnienie się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    
+    <string name="game_classic">Classic Trio</string>
+    <string name="game_classic_desc">Znajduj trójki Trio dopóki nie skończą się karty</string>
+    <string name="game_tutorial">Tutorial</string>
+    <string name="game_tutorial_desc">Naucz się rozpoznawać trójki Trio</string>
+    <string name="game_challenge">Daily Challenge</string>
+    <string name="game_challenge_desc">12 kart i 3 ukryte trójki Trio. Znajdź je tak szybko jak potrafisz</string>
+    <string name="tutorial_back">Wróć</string>
+    <string name="tutorial_quit">Wyjdź</string>
+    <string name="tutorial_step3_header">Skompletuj Trio. Odnajdź brakującą kartę.</string>
+    <string name="game_start">Start</string>
+
+</resources>

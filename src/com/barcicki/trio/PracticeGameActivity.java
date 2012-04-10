@@ -24,6 +24,12 @@ import com.barcicki.trio.core.CardGridView;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
+import com.barcicki.trio.core.TrioSettings;
+import com.openfeint.api.resource.Achievement;
+import com.openfeint.api.resource.Leaderboard;
+import com.openfeint.api.resource.Score;
+import com.openfeint.api.resource.Achievement.UnlockCB;
+import com.openfeint.api.resource.Score.SubmitToCB;
 
 public class PracticeGameActivity extends Activity {
 	private static int NUMBER_OF_TRIOS = 3;
@@ -115,87 +121,8 @@ public class PracticeGameActivity extends Activity {
 		showEndingPause();
 		
 		gGameEnded = true;
-		
-//		Leaderboard leaderboard = new Leaderboard(TrioSettings.LEADERBOARD_CLASSIC_ID);
-//		Score score = new Score(gElapsedTime, gElapsedTimeString);
-//		score.submitTo(leaderboard, new SubmitToCB() {
-//			
-//			public void onSuccess(boolean newHighScore) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
-//		
-//		// finish game achievement
-//		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_ENDURANCE);
-//		if (!endingAchievement.isUnlocked) {
-//			endingAchievement.unlock(new UnlockCB() {
-//				@Override
-//				public void onSuccess(boolean newUnlock) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			});
-//		}
-//		
-//		// no hints used achievement
-//		if (gHintsRemained == NUMBER_OF_HINTS) {
-//			Achievement pureAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_PURE);
-//			if (!pureAchievement.isUnlocked) {
-//				pureAchievement.unlock(new UnlockCB() {
-//					@Override
-//					public void onSuccess(boolean newUnlock) {
-//						// TODO Auto-generated method stub
-//						
-//					}
-//				});
-//			}
-//		}
-//		
-//		// turtle speed achievement
-//		if (gElapsedTime < 10L * 60 * 1000) {
-//			Achievement turtleAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_TURTLE);
-//			if (!turtleAchievement.isUnlocked) {
-//				turtleAchievement.unlock(new UnlockCB() {
-//					@Override
-//					public void onSuccess(boolean newUnlock) {
-//						// TODO Auto-generated method stub
-//						
-//					}
-//				});
-//			}
-//		}
-//			
-//		// gepard speed achievement
-//		if (gElapsedTime < 5L * 60 * 1000) {
-//			Achievement gepardAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_GEPARD);
-//			if (!gepardAchievement.isUnlocked) {
-//				gepardAchievement.unlock(new UnlockCB() {
-//					@Override
-//					public void onSuccess(boolean newUnlock) {
-//						// TODO Auto-generated method stub
-//						
-//					}
-//				});
-//			}
-//		}
-//
-//		// lighting speed achievement
-//		if (gElapsedTime < 2L * 60 * 1000) {
-//			Achievement blitzAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_LIGHTING);
-//			if (!blitzAchievement.isUnlocked) {
-//				blitzAchievement.unlock(new UnlockCB() {
-//					@Override
-//					public void onSuccess(boolean newUnlock) {
-//						// TODO Auto-generated method stub
-//						
-//					}
-//				});
-//			}
-//		}
-//		
 
-		
+		submitToOpenFeint();
 	
 	}
 	
@@ -308,6 +235,67 @@ public class PracticeGameActivity extends Activity {
 			endPractice();
 		}
 				
+	}
+	
+	private void submitToOpenFeint() {
+		
+		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_CHALLENGE_ID, gElapsedTime, gElapsedTimeString);
+		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID, TrioSettings.getChallengeGamePoints(gElapsedTime));
+		
+		
+		// finish game achievement
+		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_FINISH);
+		if (!endingAchievement.isUnlocked) {
+			endingAchievement.unlock(new UnlockCB() {
+				@Override
+				public void onSuccess(boolean newUnlock) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+				
+		// turtle speed achievement
+		if (gElapsedTime < 2L * 60 * 1000) {
+			Achievement turtleAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_GOOD);
+			if (!turtleAchievement.isUnlocked) {
+				turtleAchievement.unlock(new UnlockCB() {
+					@Override
+					public void onSuccess(boolean newUnlock) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		}
+			
+		// gepard speed achievement
+		if (gElapsedTime <= 30 * 1000) {
+			Achievement gepardAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_QUICK);
+			if (!gepardAchievement.isUnlocked) {
+				gepardAchievement.unlock(new UnlockCB() {
+					@Override
+					public void onSuccess(boolean newUnlock) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		}
+
+		// lighting speed achievement
+		if (gElapsedTime <= 10 * 1000) {
+			Achievement blitzAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_BLITZ);
+			if (!blitzAchievement.isUnlocked) {
+				blitzAchievement.unlock(new UnlockCB() {
+					@Override
+					public void onSuccess(boolean newUnlock) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		}
 	}
 //	
 //	private boolean saveGame() {
@@ -562,6 +550,7 @@ public class PracticeGameActivity extends Activity {
 		
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setText(R.string.pause_continue);
+		buttonContinue.setVisibility(View.VISIBLE);
 		
 //		Button buttonQuit = (Button) findViewById(R.id.gameQuit);
 //		buttonQuit.setText(getString(R.string.pause_save_quit));
@@ -575,6 +564,9 @@ public class PracticeGameActivity extends Activity {
 	
 	public void showEndingPause() {
 		showPause();
+		
+		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
+		buttonContinue.setVisibility(View.INVISIBLE);
 		
 		TextView statusView = (TextView) mPauseOverlay.findViewById(R.id.gameTrioCount);
 		statusView.setText(getString(R.string.practice_end));

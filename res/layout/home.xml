@@ -26,14 +26,13 @@
         android:scaleType="fitCenter"
         android:scrollY="15dp"
         android:src="@drawable/clouds" />
-
+
     <RelativeLayout
         android:id="@+id/layoutNavigation"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="160dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="30dp" >
+        android:layout_alignParentLeft="true" >
 
         <ImageView
             android:id="@+id/gameTutorial"
@@ -41,87 +40,40 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="30dp"
             android:onClick="startGame"
             android:src="@drawable/tutorial" />
-
-        <ImageView
-            android:id="@+id/gameChallenge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:onClick="startGame"
-            android:src="@drawable/challenge" />
-
+
         <ImageView
             android:id="@+id/gameClassic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/gameTutorial"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="70dp"
+            android:layout_below="@+id/gameTutorial"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
             android:onClick="startGame"
             android:src="@drawable/classic" />
-
+
         <ImageView
-            android:id="@+id/gamePractice"
+            android:id="@+id/gameChallenge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/gameChallenge"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="70dp"
+            android:layout_alignLeft="@+id/gameClassic"
+            android:layout_below="@+id/gameClassic"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
             android:onClick="startGame"
-            android:src="@drawable/classic" />
+            android:src="@drawable/challenge" />
 
-        <TextView
-            android:id="@+id/gameTutorialDescription"
-            style="@style/navigationItemDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/gameTutorial"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="35dp"
-            android:text="@string/game_tutorial_desc" />
-        
-        <TextView
-            android:id="@+id/gameChallengeDescription"
-            style="@style/navigationItemDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/gameChallenge"
-            android:layout_marginTop="35dp"
-            android:text="@string/game_challenge_desc" />
-        
-        <TextView
-            android:id="@+id/gameClassicDescription"
-            style="@style/navigationItemDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/gameTutorial"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="105dp"
-            android:text="@string/game_classic_desc" />
-        
-        <TextView
-            android:id="@+id/gamePracticeDescription"
-            style="@style/navigationItemDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/gameChallenge"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="105dp"
-            android:text="@string/game_tutorial_desc" />
-
         <ImageView
             android:id="@+id/openFeintButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="30dp"
             android:onClick="onOpenFeintClicked"
             android:src="@drawable/ic_openfeint" />
 

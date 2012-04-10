@@ -73,7 +73,7 @@ public class ClassicGameActivity extends Activity {
 			mTrio.newGame();
 		}
 		
-		applyAnimations();
+//		applyAnimations();
 		
 		attachCardListeners();
 		attachHintListener();
@@ -120,18 +120,17 @@ public class ClassicGameActivity extends Activity {
 		
 		gGameEnded = true;
 		
-		Leaderboard leaderboard = new Leaderboard(TrioSettings.LEADERBOARD_CLASSIC_ID);
-		Score score = new Score(gElapsedTime, gElapsedTimeString);
-		score.submitTo(leaderboard, new SubmitToCB() {
-			
-			public void onSuccess(boolean newHighScore) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		submitToOpenFeint();
+		
+	}
+
+	private void submitToOpenFeint() {
+
+		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_CLASSIC_ID, gElapsedTime, gElapsedTimeString);
+		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID, TrioSettings.getClassicGamePoints(gElapsedTime));
 		
 		// finish game achievement
-		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_ENDURANCE);
+		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_FINISH);
 		if (!endingAchievement.isUnlocked) {
 			endingAchievement.unlock(new UnlockCB() {
 				@Override
@@ -144,7 +143,7 @@ public class ClassicGameActivity extends Activity {
 		
 		// no hints used achievement
 		if (gHintsRemained == NUMBER_OF_HINTS) {
-			Achievement pureAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_PURE);
+			Achievement pureAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_FAIR);
 			if (!pureAchievement.isUnlocked) {
 				pureAchievement.unlock(new UnlockCB() {
 					@Override
@@ -158,7 +157,7 @@ public class ClassicGameActivity extends Activity {
 		
 		// turtle speed achievement
 		if (gElapsedTime < 10L * 60 * 1000) {
-			Achievement turtleAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_TURTLE);
+			Achievement turtleAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_GOOD);
 			if (!turtleAchievement.isUnlocked) {
 				turtleAchievement.unlock(new UnlockCB() {
 					@Override
@@ -172,7 +171,7 @@ public class ClassicGameActivity extends Activity {
 			
 		// gepard speed achievement
 		if (gElapsedTime < 5L * 60 * 1000) {
-			Achievement gepardAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_GEPARD);
+			Achievement gepardAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_QUICK);
 			if (!gepardAchievement.isUnlocked) {
 				gepardAchievement.unlock(new UnlockCB() {
 					@Override
@@ -186,7 +185,7 @@ public class ClassicGameActivity extends Activity {
 
 		// lighting speed achievement
 		if (gElapsedTime < 2L * 60 * 1000) {
-			Achievement blitzAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_LIGHTING);
+			Achievement blitzAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CLASSIC_BLITZ);
 			if (!blitzAchievement.isUnlocked) {
 				blitzAchievement.unlock(new UnlockCB() {
 					@Override
@@ -197,10 +196,6 @@ public class ClassicGameActivity extends Activity {
 				});
 			}
 		}
-		
-
-		
-	
 	}
 	
 	private void attachHintListener() {

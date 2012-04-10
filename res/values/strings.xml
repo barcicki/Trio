@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, TrioActivity!</string>
     <string name="app_name">Trio</string>
-    <string name="solo_game">Trio Solo</string>
     
     <string name="hint">Hint</string>
     <string name="hints_ended">No more hints</string>
@@ -36,13 +34,31 @@
     <string name="pause_quit">Quit</string>
     <string name="pause_start">Start</string>
     
-    
+    <string name="tutorial_next">Next</string>
+    <string name="tutorial_step1_header">Trio game consists of 81 different cards. Each card has 4 attributes: </string>
+    <string name="tutorial_shape">Shape</string>
+    <string name="tutorial_number">Number of elements</string>
+    <string name="tutorial_colour">Color</string>
+    <string name="tutorial_fill">Fill</string>
+    <string name="tutorial_step2_header">Trio is a set of three cards, for which each attribute is either the same or different.</string>
+    <string name="tutorial_1common">1 common attribute</string>
+    <string name="tutorial_2common">2 common attributes</string>
+    <string name="tutorial_3common">3 common attributes</string>
+    <string name="tutorial_no_common">No common attributes</string>
+    <string name="tutorial_wrong_shape">Shape is wrong. Shared by 2 cards</string>
+    <string name="tutorial_wrong_number">Quantity is wrong. Shared by 2 cards</string>
+    <string name="tutorial_wrong_color">Color is wrong. Shared by 2 cards</string>
+    <string name="tutorial_wrong_fill">Fill is wrong. Shared by 2 cards</string>
     
     <string name="game_classic">Classic Trio</string>
-    <string name="game_classic_desc">Go through the whole deck finding trios</string>
+    <string name="game_classic_desc">Find trios until deck runs out of cards.</string>
     <string name="game_tutorial">Tutorial</string>
-    <string name="game_tutorial_desc">Learn to find trios</string>
+    <string name="game_tutorial_desc">Learn how to find trios.</string>
     <string name="game_challenge">Daily Challenge</string>
-    <string name="game_challenge_desc">Find all hidden trios on the screen. Be quick!</string>
+    <string name="game_challenge_desc">12 cards and 3 hidden trios. Find them as fast as you can.</string>
+    <string name="tutorial_back">Back</string>
+    <string name="tutorial_quit">Quit</string>
+    <string name="tutorial_step3_header">Complete a trio. Find missing card</string>
+    <string name="game_start">Start</string>
 
 </resources>

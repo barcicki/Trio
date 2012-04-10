@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:shareInterpolator="true" >
+
+    <scale
+        android:duration="@integer/navigation_slide_duration"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fillEnabled="true"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:toXScale="0.1"
+        android:toYScale="0.1"
+        android:zAdjustment="normal" />
+
+    <translate
+        android:duration="@integer/navigation_slide_duration"
+        android:toXDelta="-300" />
+
+</set>

@@ -5,15 +5,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
+
     <ImageView
         android:id="@+id/layoutClouds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:scaleType="fitCenter"
-        android:scrollY="15dp"
+        android:scaleType="center"
         android:src="@drawable/clouds" />
 
     <com.barcicki.trio.core.CardGridView
@@ -24,15 +23,16 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp" >
     </com.barcicki.trio.core.CardGridView>
-
+
     <TextView
         android:id="@+id/gameTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@android:color/black"
         android:text="00:00" />
 
     <Button

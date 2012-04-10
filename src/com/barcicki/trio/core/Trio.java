@@ -181,6 +181,15 @@ public class Trio {
 		return table;
 	}
 	
+	public static Card getTrioCard(Card cardA, Card cardB) {
+		int sum_shape = (3 - (cardA.getShape() + cardB.getShape()) % 3) % 3;
+		int sum_color = (3 - (cardA.getColor() + cardB.getColor()) % 3) % 3;
+		int sum_number = (3 - (cardA.getNumber() + cardB.getNumber()) % 3) % 3;
+		int sum_fill = (3 - (cardA.getFill() + cardB.getFill()) % 3) % 3;
+		
+		return new Card(sum_shape, sum_color, sum_fill, sum_number);
+	}
+	
 	/*
 	 * Private methods
 	 */

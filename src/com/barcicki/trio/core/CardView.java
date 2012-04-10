@@ -39,6 +39,8 @@ public class CardView extends ImageView  {
 	public void setCard(Card card) {
 		this.card = card;
 		this.cardCache = null;
+		invalidate();
+		refreshDrawableState();
 	}
 	
 	

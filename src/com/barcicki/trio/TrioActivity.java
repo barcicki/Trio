@@ -42,7 +42,7 @@ public class TrioActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.game);
+//		setContentView(R.layout.game);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -50,11 +50,11 @@ public class TrioActivity extends Activity {
 			mTrio.newGame();
 		}
 
-		mContainer = (RelativeLayout) findViewById(R.id.container);
-		mGrid = (TrioCardTableView) findViewById(R.id.cardContainer);
-		mGameStatus = (TextView) findViewById(R.id.gameStatusTextView);
-		mRestart = (TextView) findViewById(R.id.restartTextView);
-		mTimer = (TextView) findViewById(R.id.timePassedTextView);
+//		mContainer = (RelativeLayout) findViewById(R.id.container);
+//		mGrid = (TrioCardTableView) findViewById(R.id.cardContainer);
+//		mGameStatus = (TextView) findViewById(R.id.gameStatusTextView);
+//		mRestart = (TextView) findViewById(R.id.restartTextView);
+//		mTimer = (TextView) findViewById(R.id.timePassedTextView);
 
 //		mAdapter = new CardAdapter(this, R.layout.single_card, mTrio.getTable());
 //		mGrid.setAdapter(mAdapter);
@@ -190,84 +190,84 @@ public class TrioActivity extends Activity {
 
 	private void handleHints() {
 
-		TextView hintButton = (TextView) findViewById(R.id.hintTextView);
-		hintButton.setOnClickListener(new OnClickListener() {
+//		TextView hintButton = (TextView) findViewById(R.id.hintTextView);
+//		hintButton.setOnClickListener(new OnClickListener() {
 
-			public void onClick(View v) {
-
-				ArrayList<CardList> trios = mTrio.getTable().getTrios();
-
-				int selectedSize = mSelectedCards.size();
-
-				if (trios.size() > 0) {
-
-					// if no cards were selected before, select the first card
-					// possible - it is being done in the end of method
-
-					// if one card was selected, check if it makes trio with
-					// others. If yes, show next card, if no, deselect it and
-					// select another one
-					if (selectedSize == 1) {
-
-						Card selected = mSelectedCards.get(0);
-
-						for (CardList trio : trios) {
-
-							if (trio.contains(selected)) {
-								for (Card c : trio) {
-									if (!c.equals(selected)) {
-
-										mSelectedCards.add(c);
-										markViewSelected(mGrid
-												.findViewWithTag(c));
-
-										if (Trio.LOCAL_LOGV)
-											Log.v("Single Game Hint",
-													"Hint showed second card");
-										return;
-									}
-								}
-							}
-
-						}
-
-						// if there're two cards selected check if they make any
-						// trio, if yes do not give additional hints, if no
-						// deselect them and select first one
-					} else if (selectedSize == 2) {
-						Card sel1 = mSelectedCards.get(0);
-						Card sel2 = mSelectedCards.get(1);
-						for (CardList trio : trios) {
-							if (trio.contains(sel1) && trio.contains(sel2)) {
-								Toast.makeText(getApplicationContext(),
-										getString(R.string.hints_ended),
-										Toast.LENGTH_SHORT).show();
-								return;
-							}
-						}
-					}
-
-					mSelectedCards.clear();
-					Card firstCard = trios.get(0).get(0);
-
-					mSelectedCards.add(firstCard);
-
-					markAllViewsDeslected();
-					markViewSelected(mGrid.findViewWithTag(firstCard));
-
-					if (Trio.LOCAL_LOGV)
-						Log.v("Single Game Hint", "Hint showed first card");
-					return;
-
-				} else {
-					if (Trio.LOCAL_LOGD)
-						Log.d("Single Game Hint",
-								"Trios were empty when they shouldn't");
-				}
-
-			}
-
-		});
+//			public void onClick(View v) {
+//
+//				ArrayList<CardList> trios = mTrio.getTable().getTrios();
+//
+//				int selectedSize = mSelectedCards.size();
+//
+//				if (trios.size() > 0) {
+//
+//					// if no cards were selected before, select the first card
+//					// possible - it is being done in the end of method
+//
+//					// if one card was selected, check if it makes trio with
+//					// others. If yes, show next card, if no, deselect it and
+//					// select another one
+//					if (selectedSize == 1) {
+//
+//						Card selected = mSelectedCards.get(0);
+//
+//						for (CardList trio : trios) {
+//
+//							if (trio.contains(selected)) {
+//								for (Card c : trio) {
+//									if (!c.equals(selected)) {
+//
+//										mSelectedCards.add(c);
+//										markViewSelected(mGrid
+//												.findViewWithTag(c));
+//
+//										if (Trio.LOCAL_LOGV)
+//											Log.v("Single Game Hint",
+//													"Hint showed second card");
+//										return;
+//									}
+//								}
+//							}
+//
+//						}
+//
+//						// if there're two cards selected check if they make any
+//						// trio, if yes do not give additional hints, if no
+//						// deselect them and select first one
+//					} else if (selectedSize == 2) {
+//						Card sel1 = mSelectedCards.get(0);
+//						Card sel2 = mSelectedCards.get(1);
+//						for (CardList trio : trios) {
+//							if (trio.contains(sel1) && trio.contains(sel2)) {
+//								Toast.makeText(getApplicationContext(),
+//										getString(R.string.hints_ended),
+//										Toast.LENGTH_SHORT).show();
+//								return;
+//							}
+//						}
+//					}
+//
+//					mSelectedCards.clear();
+//					Card firstCard = trios.get(0).get(0);
+//
+//					mSelectedCards.add(firstCard);
+//
+//					markAllViewsDeslected();
+//					markViewSelected(mGrid.findViewWithTag(firstCard));
+//
+//					if (Trio.LOCAL_LOGV)
+//						Log.v("Single Game Hint", "Hint showed first card");
+//					return;
+//
+//				} else {
+//					if (Trio.LOCAL_LOGD)
+//						Log.d("Single Game Hint",
+//								"Trios were empty when they shouldn't");
+//				}
+//
+//			}
+//
+//		});
 
 	}
 
