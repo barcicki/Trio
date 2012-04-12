@@ -51,11 +51,11 @@
     <string name="tutorial_wrong_fill">Wypełnienie się nie zgadza. Taki sam tylko dla 2-óch kart</string>
     
     <string name="game_classic">Classic Trio</string>
-    <string name="game_classic_desc">Znajduj trójki Trio dopóki nie skończą się karty</string>
+    <string name="game_classic_desc">Znajduj Trio dopóki nie skończą się karty</string>
     <string name="game_tutorial">Tutorial</string>
-    <string name="game_tutorial_desc">Naucz się rozpoznawać trójki Trio</string>
+    <string name="game_tutorial_desc">Naucz się rozpoznawać Trio</string>
     <string name="game_challenge">Daily Challenge</string>
-    <string name="game_challenge_desc">12 kart i 3 ukryte trójki Trio. Znajdź je tak szybko jak potrafisz</string>
+    <string name="game_challenge_desc">12 kart i 3 ukryte Trio. Znajdź je najszybciej jak potrafisz</string>
     <string name="tutorial_back">Wróć</string>
     <string name="tutorial_quit">Wyjdź</string>
     <string name="tutorial_step3_header">Skompletuj Trio. Odnajdź brakującą kartę.</string>

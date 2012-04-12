@@ -1,0 +1,71 @@
+package com.barcicki.trio.core;
+
+import com.openfeint.api.resource.Leaderboard;
+import com.openfeint.api.resource.Score;
+import com.openfeint.api.resource.Score.SubmitToCB;
+
+public class TrioSettings {
+	public static String APP_ID = "";
+	public static String APP_NAME = "";
+	public static String APP_KEY = "";
+	public static String APP_SECRET = "";
+	
+	public static String LEADERBOARD_CLASSIC_ID = "";
+	public static String LEADERBOARD_CHALLENGE_ID = "";
+	public static String LEADERBOARD_TOTAL_ID = "";
+	
+	public static String ACHIEVEMENT_CLASSIC_FINISH = "";
+	public static String ACHIEVEMENT_CLASSIC_FAIR = "";
+	public static String ACHIEVEMENT_CLASSIC_GOOD = "";
+	public static String ACHIEVEMENT_CLASSIC_QUICK = "";
+	public static String ACHIEVEMENT_CLASSIC_BLITZ = "";
+	
+	public static String ACHIEVEMENT_CHALLENGE_FINISH = "";
+	public static String ACHIEVEMENT_CHALLENGE_GOOD = "";
+	public static String ACHIEVEMENT_CHALLENGE_QUICK = "";
+	public static String ACHIEVEMENT_CHALLENGE_BLITZ = "";
+	
+	public static String ACHIEVEMENT_CHALLENGE_PLAYER = "";
+	public static String ACHIEVEMENT_CLASSIC_PLAYER = "";
+	
+	public static int CLASSIC_BASE_WORTH = 100;
+	public static int CHALLENGE_BASE_WORTH = 10;
+	public static long CLASSIC_TIME_BONUS_APPLIED = 10*60*1000;
+	public static long CHALLENGE_TIME_BONUS_APPLIED = 60*1000;
+	
+	
+	public static int getClassicGamePoints(long time) {
+		int timeBonus = (int) (time < CLASSIC_TIME_BONUS_APPLIED ? CLASSIC_TIME_BONUS_APPLIED - time : 0); 
+		return CHALLENGE_BASE_WORTH + timeBonus / 1000;
+	}
+	
+	public static int getChallengeGamePoints(long time) {
+		int timeBonus = (int) (time < CHALLENGE_TIME_BONUS_APPLIED ? CHALLENGE_TIME_BONUS_APPLIED - time : 0); 
+		return CHALLENGE_BASE_WORTH + timeBonus / 1000;
+	}
+	
+	public static void submitToOpenFeint(String leaderboardId, long longScore, String displayScore) {
+		Leaderboard leaderboard = new Leaderboard( leaderboardId );
+		Score score = new Score( longScore, displayScore );
+		score.submitTo(leaderboard, new SubmitToCB() {
+			
+			public void onSuccess(boolean newHighScore) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	public static void submitToOpenFeint(String leaderboardId, long longScore) {
+		Leaderboard leaderboard = new Leaderboard( leaderboardId );
+		Score score = new Score( longScore );
+		score.submitTo(leaderboard, new SubmitToCB() {
+			
+			public void onSuccess(boolean newHighScore) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+}
