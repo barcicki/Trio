@@ -1,14 +1,16 @@
 package com.barcicki.trio;
 
-import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 import com.barcicki.trio.core.Card;
@@ -26,10 +27,9 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.openfeint.api.resource.Achievement;
-import com.openfeint.api.resource.Leaderboard;
-import com.openfeint.api.resource.Score;
 import com.openfeint.api.resource.Achievement.UnlockCB;
-import com.openfeint.api.resource.Score.SubmitToCB;
+import com.openfeint.api.resource.ServerTimestamp;
+import com.openfeint.api.resource.ServerTimestamp.GetCB;
 
 public class PracticeGameActivity extends Activity {
 	private static int NUMBER_OF_TRIOS = 3;
@@ -75,7 +75,7 @@ public class PracticeGameActivity extends Activity {
 		
 		startPractice();
 	
-		hidePause();		
+//		hidePause();		
 	}
 	
 	private void startPractice() {
@@ -88,7 +88,6 @@ public class PracticeGameActivity extends Activity {
 		mCardGrid.renderGrid();
 		
 		mTriosGrid.setColumns( 3 );
-		mTriosGrid.setPredefinedCardSize( TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics()) );
 		mTriosGrid.setCards( set.getTrios() );
 		mTriosGrid.renderGrid();
 		mTriosGrid.showReverse();
@@ -176,8 +175,10 @@ public class PracticeGameActivity extends Activity {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
 		
-		if (mPauseOverlay.getVisibility() == View.VISIBLE) {
+		if (mPauseOverlay.getVisibility() == View.VISIBLE && !gGameEnded) {
 			hidePause();
+		} else if (gGameEnded) {
+			showEndingPause();
 		} else {
 			showPause();
 		}
@@ -186,13 +187,17 @@ public class PracticeGameActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		showPause();
+		pauseTimer();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onResume() {
-		showStartPause();
+		if (gElapsedTime > 0) {
+			showPause();
+		} else {
+			showStartPause();
+		}
 		super.onResume();
 	}
 	
@@ -200,8 +205,8 @@ public class PracticeGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio NOT found");
 		
-		Animation failAnimation = AnimationUtils.loadAnimation(this, R.anim.card_fail);
 		for (CardView cv : selectedViews) {
+			Animation failAnimation = AnimationUtils.loadAnimation(this, R.anim.card_fail);
 			cv.startAnimation(failAnimation);
 		}
 	}
@@ -240,8 +245,16 @@ public class PracticeGameActivity extends Activity {
 	private void submitToOpenFeint() {
 		
 		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_CHALLENGE_ID, gElapsedTime, gElapsedTimeString);
-		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID, TrioSettings.getChallengeGamePoints(gElapsedTime));
+//		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID, TrioSettings.getChallengeGamePoints(gElapsedTime));
 		
+//		ServerTimestamp.get(new GetCB() {
+//			@Override
+//			public void onSuccess(ServerTimestamp currentTime) {
+//				long score = Long.MAX_VALUE - (currentTime.secondsSinceEpoch * 1000 / TrioSettings.DAY) * TrioSettings.DAY + gElapsedTime;
+//				TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_DAILY_CHALLENGE_ID, score, DateFormat.format("MM/dd/yy", new Date()) + " " + gElapsedTimeString);				
+//			}
+//		});
+//		
 		
 		// finish game achievement
 		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_FINISH);
@@ -540,11 +553,13 @@ public class PracticeGameActivity extends Activity {
 	public void onPauseShow() {
 		pausePractice();
 		
-		TextView timeView = (TextView) mPauseOverlay.findViewById(R.id.gameTime);
 //		TextView statusView = (TextView) mPauseOverlay.findViewById(R.id.gameStatus);
-		TextView trioView = (TextView) mPauseOverlay.findViewById(R.id.gameTrioCount);
 		
+		
+		TextView timeView = (TextView) mPauseOverlay.findViewById(R.id.gameTime);
 		timeView.setText(gElapsedTimeString);
+		
+		TextView trioView = (TextView) mPauseOverlay.findViewById(R.id.gameTrioCount);
 		trioView.setText(getString(R.string.practice_trio_count, gTriosFound, NUMBER_OF_TRIOS ));
 //		statusView.setText(getString(R.string.classic_status, mTrio.getGame().size()));
 		
@@ -578,6 +593,12 @@ public class PracticeGameActivity extends Activity {
 		
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setText(getString(R.string.pause_start));
+		
+		TextView timeView = (TextView) mPauseOverlay.findViewById(R.id.gameTime);
+		timeView.setText(getString(R.string.practice_objective));
+		
+		TextView trioView = (TextView) mPauseOverlay.findViewById(R.id.gameTrioCount);
+		trioView.setText(getString(R.string.practice_subobjective));
 	}
 	
 	public void hidePause() {
@@ -599,6 +620,7 @@ public class PracticeGameActivity extends Activity {
 		
 		resetPracticeStatus();
 		
+//		showStartPause();
 		startTimer();
 		hidePause();
 	}
@@ -624,6 +646,8 @@ public class PracticeGameActivity extends Activity {
 	
 	public void onPressedQuitGame(View v) {
 		finish();
+		Intent intent = new Intent(this, HomeActivity.class);
+		startActivity(intent);
 	}
 	
 }

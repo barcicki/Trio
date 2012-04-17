@@ -11,7 +11,7 @@
     <string name="error_shape">Kształt się nie zgadza</string>
     <string name="error_color">Kolor się nie zgadza</string>
     <string name="error_fill">Wypełnienie się nie zgadza</string>
-    <string name="error_number">Ilość się nie zgadza</string>
+    <string name="error_number">Liczba się nie zgadza</string>
     
     <string name="solo_game_status">Pozostało %1$d kart</string>
     <string name="solo_game_ended">Gra skońcozna. Nie ma więcej Trio</string>
@@ -23,9 +23,15 @@
     <string name="classic_pause">Pauza</string>
     <string name="classic_hint">Podpowiedź (%1$d)</string>
     <string name="classic_end">Gratulacje! Odnalazłeś wszystkie Trio</string>
+    <string name="classic_objective">Znajduj Trio</string>
+    <string name="classic_subobjective">Zawsze jest ukryte co najmniej jedno Trio.</string>
+    <string name="classic_hints">Masz 10 podpowiedzi, każda za 30 sekund.</string>
+    <string name="classic_ends">Gra kończy się gdy skończą się karty i na stole nie będzie Trio.</string>
     
     <string name="practice_trio_count">Odnaleziono %1$d z %2$d ukrytych Trio</string>
     <string name="practice_end">Gratulacje! Odnalazłeś wszystkie ukryte Trio</string>
+    <string name="practice_objective">Znajdź 3 Trio</string>
+    <string name="practice_subobjective">Trio są ukryte w 12 widocznych kartach.</string>
     
     <string name="pause_continue">Kontynuuj</string>
     <string name="pause_restart">Od początku</string>
@@ -37,7 +43,7 @@
     <string name="tutorial_next">Dalej</string>
     <string name="tutorial_step1_header">Gra Trio składa się z 81 różnych kart. Każda karta ma 4 atrybuty: </string>
     <string name="tutorial_shape">Kształt</string>
-    <string name="tutorial_number">Ilość elementów</string>
+    <string name="tutorial_number">Liczba elementów</string>
     <string name="tutorial_colour">Kolor</string>
     <string name="tutorial_fill">Wypełnienie</string>
     <string name="tutorial_step2_header">Trio stanowią takie 3 karty, których wszystkie atrybuty są albo różne albo takie same.</string>
@@ -46,9 +52,10 @@
     <string name="tutorial_3common">3 wspólne atrybuty</string>
     <string name="tutorial_no_common">Brak wspólnych atrybutów</string>
     <string name="tutorial_wrong_shape">Kształt się nie zgadza. Taki sam tylko dla 2-óch kart</string>
-    <string name="tutorial_wrong_number">Ilość się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    <string name="tutorial_wrong_number">Liczba się nie zgadza. Taki sam tylko dla 2-óch kart</string>
     <string name="tutorial_wrong_color">Kolor się nie zgadza. Taki sam tylko dla 2-óch kart</string>
     <string name="tutorial_wrong_fill">Wypełnienie się nie zgadza. Taki sam tylko dla 2-óch kart</string>
+    <string name="tutorial_wrong_message">Nie zgadza się: %1$s </string>
     
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Znajduj Trio dopóki nie skończą się karty</string>

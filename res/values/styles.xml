@@ -11,4 +11,15 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
     </style>
+    <style name="nice_button">
+        <item name="android:background">@drawable/nice_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:shadowRadius">1</item>
+ 		<item name="android:shadowDx">1</item>
+  		<item name="android:shadowDy">1</item>
+  		<item name="android:shadowColor">@android:color/black</item>
+  		<item name="android:paddingLeft">@dimen/button_padding_size</item>
+  		<item name="android:paddingRight">@dimen/button_padding_size</item>
+    </style>
 </resources>

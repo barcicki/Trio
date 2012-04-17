@@ -74,7 +74,7 @@ public class Card {
 		return sb.toString();
 	}
 
-	public Canvas drawCanvas(Canvas canvas, Resources res, int width, int height) {
+	public Canvas drawCanvas(Canvas canvas, Resources res, int width, int height, int x_offset, int y_offset) {
 
 		// float[] positions = {};
 		PointF[] points = {};
@@ -91,24 +91,24 @@ public class Card {
 		PointF point1, point2, point3;
 		switch (number) {
 		case NUMBER_ONE:
-			point1 = new PointF((width - item_size_width) / 2f,
-					(height - item_size_height) / 2);
+			point1 = new PointF((width - item_size_width) / 2f + x_offset,
+					(height - item_size_height) / 2f + y_offset);
 			points = new PointF[] { point1 };
 			break;
 		case NUMBER_TWO:
-			point1 = new PointF(width / 4f - item_size_width / 3f, height / 4f
-					- item_size_height / 3f);
-			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f, 3 * height / 4f
-					- 2* item_size_height / 3f);
+			point1 = new PointF(width / 4f - item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f + x_offset, 3 * height / 4f
+					- 2* item_size_height / 3f + y_offset);
 			points = new PointF[] { point1, point2 };
 			break;
 		case NUMBER_THREE:
-			point1 = new PointF(width / 4f - item_size_width / 3f, height / 4f
-					- item_size_height / 3f);
-			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f, height / 4f
-					- item_size_height / 3f);
-			point3 = new PointF(width / 2f - item_size_width / 2f, 3 * height / 4f
-					- 2 * item_size_height / 3f);
+			point1 = new PointF(width / 4f - item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point3 = new PointF(width / 2f - item_size_width / 2f + x_offset, 3 * height / 4f
+					- 2 * item_size_height / 3f + y_offset);
 			points = new PointF[] { point1, point2, point3 };
 			break;
 		}

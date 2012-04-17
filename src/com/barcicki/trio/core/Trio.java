@@ -1,14 +1,25 @@
 package com.barcicki.trio.core;
 
+import java.util.EnumSet;
+
 import android.util.Log;
 
 public class Trio {
 	public static int MAX_CARDS = 81;
 	public static int DEFUALT_TABLE_SIZE = 12;
 	public static int DEFAULT_TABLE_ADDON = 1;
+		
+	public enum TrioStatus {
+		EXISTS,
+		NOT_3_CARDS,
+		WRONG_SHAPE,
+		WRONG_COLOR,
+		WRONG_FILL,
+		WRONG_NUMBER
+	}
 	
-	public static boolean LOCAL_LOGD = true;
-	public static boolean LOCAL_LOGV = true;
+	public static boolean LOCAL_LOGD = false;
+	public static boolean LOCAL_LOGV = false;
 	
 	private CardList mDeck;
 	private CardList mGame;
@@ -188,6 +199,25 @@ public class Trio {
 		int sum_fill = (3 - (cardA.getFill() + cardB.getFill()) % 3) % 3;
 		
 		return new Card(sum_shape, sum_color, sum_fill, sum_number);
+	}
+	
+	public static EnumSet<TrioStatus> getTrioStatuc(CardList threeCards) {
+		if (threeCards.size() == 3) {
+			return getTrioStatus(threeCards.get(0), threeCards.get(1), threeCards.get(2));
+		} else {
+			EnumSet<TrioStatus> status = EnumSet.of(TrioStatus.NOT_3_CARDS);		
+			return status;
+		}
+	}
+	
+	public static EnumSet<TrioStatus> getTrioStatus(Card cardA, Card cardB, Card cardC) {
+		EnumSet<TrioStatus> status = EnumSet.noneOf(TrioStatus.class);
+		if ((cardA.getShape() + cardB.getShape() + cardC.getShape()) % 3 != 0) status.add(TrioStatus.WRONG_SHAPE); 
+		if ((cardA.getColor() + cardB.getColor() + cardC.getColor()) % 3 != 0) status.add(TrioStatus.WRONG_COLOR); 
+		if ((cardA.getFill() + cardB.getFill() + cardC.getFill()) % 3 != 0) status.add(TrioStatus.WRONG_FILL); 
+		if ((cardA.getNumber() + cardB.getNumber() + cardC.getNumber()) % 3 != 0) status.add(TrioStatus.WRONG_NUMBER);
+		if (status.isEmpty()) status.add(TrioStatus.EXISTS);
+		return status; 
 	}
 	
 	/*

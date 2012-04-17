@@ -1,161 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_static"
     android:orientation="vertical" >
-
-    <ImageView
-        android:id="@+id/layoutClouds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:scaleType="center"
-        android:src="@drawable/clouds" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
-        android:onClick="onNextClicked"
-        android:text="@string/tutorial_next"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/textView1"
-        style="@style/dark_shadow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.barcicki.trio.tutorial.Tutorial3Fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/tutorial_step3_header"
-        android:textColor="@color/yellow"
-        android:textSize="24dp" />
+        android:layout_weight="0.2" >
+
+        <!-- Preview: layout=@layout/tutorial_step3_fragment -->
+    </fragment>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/Button01"
+            style="@style/nice_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:onClick="onBackClicked"
+            android:text="@string/tutorial_back" />
 
-    <Button
-        android:id="@+id/Button01"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:onClick="onBackClicked"
-        android:text="@string/tutorial_back" />
+        <Button
+            android:id="@+id/button1"
+            style="@style/nice_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/Button01"
+            android:layout_alignBottom="@+id/Button01"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:onClick="onQuitClicked"
+            android:text="@string/tutorial_quit" />
 
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/square_reverse" />
+    </RelativeLayout>
 
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/card2"
-        android:layout_toLeftOf="@+id/card2"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/card2"
-        android:layout_toRightOf="@+id/card2"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:onClick="onSelectCard"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/card6"
-        android:layout_toLeftOf="@+id/card6"
-        android:onClick="onSelectCard"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/card3"
-        android:layout_alignTop="@+id/card6"
-        android:onClick="onSelectCard"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/card4"
-        android:layout_toLeftOf="@+id/card4"
-        android:onClick="onSelectCard"
-        android:src="@drawable/square_reverse" />
-
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/card8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/card5"
-        android:layout_toRightOf="@+id/card5"
-        android:onClick="onSelectCard"
-        android:src="@drawable/square_reverse" />
-
-    <TextView
-        android:id="@+id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card6"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="0/5"
-        android:textColor="@android:color/black"
-        android:textSize="24dp" />
-
-    <Button
-        android:id="@+id/buttonPrev"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/card4"
-        android:layout_below="@+id/card4"
-        android:layout_marginTop="7dp"
-        android:layout_toRightOf="@+id/card7"
-        android:onClick="onPrevSetClicked"
-        android:text="&lt;&lt;" />
-
-    <Button
-        android:id="@+id/buttonNext"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonPrev"
-        android:layout_alignBottom="@+id/buttonPrev"
-        android:layout_alignLeft="@+id/card5"
-        android:layout_alignRight="@+id/card5"
-        android:onClick="onNextSetClicked"
-        android:text=">>" />
-
-</RelativeLayout>
+</LinearLayout>

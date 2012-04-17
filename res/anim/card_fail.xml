@@ -10,6 +10,8 @@
         android:fromXDelta="-2%p"
         android:repeatCount="3"
         android:repeatMode="reverse"
+        android:fillEnabled="false"
+        android:fillAfter="false"
         android:toXDelta="2%p" />
      
     

@@ -9,6 +9,7 @@ public class TrioSet {
 	private Card cardB;
 	private Card solution;
 	private boolean solved = false;
+	private CardList quizSet = null;
 	
 	public TrioSet(Card cardA, Card cardB) {
 		this.cardA = cardA;
@@ -59,23 +60,26 @@ public class TrioSet {
 	}
 
 	public CardList getTrioQuiz(CardList deck, int numberOfAdditionalCards) {
-		CardList set = new CardList();
-		
-		set.add( getSolution() );
-		
-		deck.shuffle();
-		int i = 0;
-		do {
-		
-			Card card = deck.get(i);
-			if (!card.isEqual( getSolution() ) && !card.isEqual( getCardA() ) && !card.isEqual( getCardB() )) {
-				set.add(card);
-			}
+		if (quizSet == null) {
+			CardList set = new CardList();
 			
-			i++;
-		} while (set.size() <= numberOfAdditionalCards);
+			set.add( getSolution() );
+			
+			deck.shuffle();
+			int i = 0;
+			do {
+			
+				Card card = deck.get(i);
+				if (!card.isEqual( getSolution() ) && !card.isEqual( getCardA() ) && !card.isEqual( getCardB() )) {
+					set.add(card);
+				}
 				
-		return set;
+				i++;
+			} while (set.size() <= numberOfAdditionalCards);
+			
+			quizSet = set;
+		}
+		return quizSet;
 	}
 	
 	

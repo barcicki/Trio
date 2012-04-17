@@ -73,18 +73,37 @@ public class CardView extends ImageView  {
 				
 				
 				Bitmap square = BitmapFactory.decodeResource(res, isSelected() ? R.drawable.square_selected : R.drawable.square);
-				float ratio = (float) getWidth() / square.getWidth();
+				float width_ratio = (float) getWidth() / square.getWidth();
+				float height_ratio = (float) getHeight() / square.getHeight();
+				
+//				ScaleType scaleType = getScaleType();
+				int x_offset = 0, y_offset = 0;
+				
+				// sqaure assumption, centering
+				if (width_ratio > height_ratio) {
+//					if (scaleType.equals(ScaleType.CENTER)) {
+						x_offset = (getWidth() - getHeight()) / 2;	
+//					} else if (scaleType.equals(ScaleType.FIT_END)) {
+//						x_offset = getWidth() - getHeight();
+//					}
+				} else {
+					y_offset = (getHeight() - getWidth()) / 2;
+				}
+				
+				float ratio = Math.min( width_ratio, height_ratio);
 //		
 				Matrix matrix = new Matrix();
 				matrix.postScale(ratio, ratio);
 				
-				cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), 0, 0, null);
-				cacheCanvas = card.drawCanvas(cacheCanvas, res, cacheCanvas.getWidth(), cacheCanvas.getHeight());
+				cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, null);
+				cacheCanvas = card.drawCanvas(cacheCanvas, res, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
 												
 			}
 			
 			if (this.overdraw) {
 				canvas.drawBitmap(this.cardCache, 0, 0, null);
+			} else {
+				super.onDraw(canvas);
 			}
 
 		} else {

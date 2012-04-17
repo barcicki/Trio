@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<alpha xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/navigation_fade_in_duration"
-    android:fillBefore="true"
-    android:fromAlpha="0"
-    android:startOffset="@integer/logo_anim_duration"
-    android:toAlpha="1" >
-
-</alpha>

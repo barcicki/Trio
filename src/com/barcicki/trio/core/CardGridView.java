@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.barcicki.trio.R;
 
-public class CardGridView extends ScrollView {
+public class CardGridView extends LinearLayout {
 	
 	private CardList cards = new CardList();
 	private OnClickListener listener;
@@ -27,7 +27,7 @@ public class CardGridView extends ScrollView {
 	private float cardSize = 0f;
 
 	public CardGridView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -69,18 +69,21 @@ public class CardGridView extends ScrollView {
 	
 		int size = cardViews.size();
 		int row = getRow(size);
+		
+		LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f);
 		 
 		if (container == null) {
 			container = new LinearLayout(getContext());
 			container.setOrientation(LinearLayout.VERTICAL);
-			container.setLayoutParams(new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+			container.setLayoutParams(rowParams);
 			container.setGravity(Gravity.CENTER);
 			addView(container);
 		}
 		
 		while (rows.size() <= row) {
-			LayoutParams rowParams = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+			
 			LinearLayout rowView = new LinearLayout(getContext());
+			
 			rowView.setOrientation(LinearLayout.HORIZONTAL);
 			rowView.setLayoutParams(rowParams);
 			rowView.setGravity(Gravity.CENTER);
@@ -94,16 +97,20 @@ public class CardGridView extends ScrollView {
 		
 		
 		CardView cardView = new CardView(getContext());
-		cardView.setBackgroundResource(R.drawable.square_reverse);
 		if (cardSize > 0) {
 			cardView.setLayoutParams(new LayoutParams((int) cardSize, (int) cardSize)); 
+		} else {
+			cardView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f));
 		}
+		cardView.setScaleType(ScaleType.FIT_CENTER);
+		cardView.setImageResource(R.drawable.square_reverse);
 		cardView.setCard(card);
 		cardView.setOnClickListener(this.listener);
 		
 		LinearLayout rowView = rows.get(row);
 		((CardList) rowView.getTag(R.id.tagCards)).add(card);
-		((ArrayList<CardView>) rowView.getTag(R.id.tagViews)).add(cardView); 
+		((ArrayList<CardView>) rowView.getTag(R.id.tagViews)).add(cardView);
+		
 		cardView.setTag(rowView);
 		rowView.addView(cardView);
 				
@@ -290,6 +297,7 @@ public class CardGridView extends ScrollView {
 			cv.setOverdraw(false);
 			cv.invalidate();
 			cv.refreshDrawableState();
+			cv.setOnClickListener(null);
 		}
 	}
 	
@@ -298,6 +306,7 @@ public class CardGridView extends ScrollView {
 			cv.setOverdraw(true);
 			cv.invalidate();
 			cv.refreshDrawableState();
+			cv.setOnClickListener(listener);
 		}
 	}
 
