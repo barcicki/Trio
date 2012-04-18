@@ -1,7 +1,6 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,13 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,8 +26,6 @@ import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.openfeint.api.resource.Achievement;
 import com.openfeint.api.resource.Achievement.UnlockCB;
-import com.openfeint.api.resource.ServerTimestamp;
-import com.openfeint.api.resource.ServerTimestamp.GetCB;
 
 public class PracticeGameActivity extends Activity {
 	private static int NUMBER_OF_TRIOS = 3;
@@ -68,7 +64,7 @@ public class PracticeGameActivity extends Activity {
 		mCardGrid = (CardGridView) findViewById(R.id.cardsContainer);
 		mTriosGrid = (CardGridView) findViewById(R.id.triosContainer);
 		mTimer = (TextView) findViewById(R.id.gameTimer);
-		mPauseOverlay = (View) findViewById(R.id.gamePause);
+		mPauseOverlay = findViewById(R.id.gamePause);
 		mGameStatus = (TextView) findViewById(R.id.gameStatus);
 		
 		attachCardListeners();
@@ -90,6 +86,7 @@ public class PracticeGameActivity extends Activity {
 		mTriosGrid.setColumns( 3 );
 		mTriosGrid.setCards( set.getTrios() );
 		mTriosGrid.renderGrid();
+		mTriosGrid.setResourceImageForAll(R.drawable.square_question);
 		mTriosGrid.showReverse();
 				
 		startTimer();
@@ -161,7 +158,7 @@ public class PracticeGameActivity extends Activity {
 					}
 					
 					gSelectedCards.clear();
-					mCardGrid.deselectAll();
+//					mCardGrid.deselectAll();
 					gSelectedViews.clear();
 					
 					
@@ -206,8 +203,7 @@ public class PracticeGameActivity extends Activity {
 			Log.v("Classic Game", "Trio NOT found");
 		
 		for (CardView cv : selectedViews) {
-			Animation failAnimation = AnimationUtils.loadAnimation(this, R.anim.card_fail);
-			cv.startAnimation(failAnimation);
+			cv.animateFail();
 		}
 	}
 
@@ -232,8 +228,29 @@ public class PracticeGameActivity extends Activity {
 			mGameStatus.setText("" + gTriosRemaines);
 			
 			gFoundTrios.add(new CardList(selectedCards));
+			final ArrayList<CardView> views = new ArrayList<CardView>(selectedViews);
+			mTriosGrid.setRevealCardListener(new AnimationListener() {
+				
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				public void onAnimationEnd(Animation animation) {
+					// TODO Auto-generated method stub
+					for (CardView cv : views) {
+						cv.setSelected(false);
+						cv.invalidate();
+						cv.refreshDrawableState();
+					}
+				}
+			});
 			mTriosGrid.revealCard(selectedCards);
-			
 		}
 		
 		if (gTriosRemaines == 0) {
@@ -592,6 +609,7 @@ public class PracticeGameActivity extends Activity {
 		showPause();
 		
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
+		buttonContinue.setVisibility(View.VISIBLE);
 		buttonContinue.setText(getString(R.string.pause_start));
 		
 		TextView timeView = (TextView) mPauseOverlay.findViewById(R.id.gameTime);

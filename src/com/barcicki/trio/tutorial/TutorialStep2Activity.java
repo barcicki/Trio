@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.barcicki.trio.R;
-import com.barcicki.trio.core.Card;
-import com.barcicki.trio.core.CardView;
 
 public class TutorialStep2Activity extends FragmentActivity {
 	@Override
@@ -21,12 +19,22 @@ public class TutorialStep2Activity extends FragmentActivity {
 	
 	public void onNextClicked(View v) {
 		Intent intent = new Intent(TutorialStep2Activity.this, TutorialStep3Activity.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 	
 	public void onBackClicked(View v) {
 		finish();
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		// TODO Auto-generated method stub
+		if (resultCode == TutorialActivity.EXIT_CODE) {
+			setResult(TutorialActivity.EXIT_CODE);
+			finish();
+		}
+		
+		super.onActivityResult(requestCode, resultCode, intent);
+	}
 	
 }

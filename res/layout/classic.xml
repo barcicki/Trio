@@ -32,9 +32,9 @@
                 android:layout_height="fill_parent"
                 android:layout_marginRight="10dp"
                 android:onClick="onPauseClicked"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:text="@string/classic_pause" />
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/classic_pause" android:paddingBottom="1dp" android:paddingTop="1dp"/>
 
             <Button
                 android:id="@+id/gameHintButton2"
@@ -42,9 +42,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:onClick="onHintClicked"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:text="@string/classic_hint" />
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/classic_hint" android:paddingBottom="1dp" android:paddingTop="1dp"/>
 
             <TextView
                 android:id="@+id/gameTimer"

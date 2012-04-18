@@ -9,15 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.test.suitebuilder.TestSuiteBuilder.FailedToCreateTests;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +61,7 @@ public class ClassicGameActivity extends Activity {
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		mCardGrid = (CardGridView) findViewById(R.id.cardsContainer);
 		mTimer = (TextView) findViewById(R.id.gameTimer);
-		mPauseOverlay = (View) findViewById(R.id.gamePause);
+		mPauseOverlay = findViewById(R.id.gamePause);
 		mHintButton = (Button) findViewById(R.id.gameHintButton2);
 
 		if (restoreSavedGame()) {
@@ -248,7 +244,6 @@ public class ClassicGameActivity extends Activity {
 					}
 
 					gSelectedCards.clear();
-					mCardGrid.deselectAll();
 					gSelectedViews.clear();
 
 				}
@@ -314,29 +309,9 @@ public class ClassicGameActivity extends Activity {
 
 		
 		for (CardView cv : selectedViews) {
-			Animation failAnimation = AnimationUtils.loadAnimation(this,
-					R.anim.card_fail);
-			cv.startAnimation(failAnimation);
+			cv.animateFail();
 		}
 		
-//		failAnimation.setAnimationListener(new AnimationListener() {
-//			
-//			public void onAnimationStart(Animation animation) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void onAnimationRepeat(Animation animation) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-////			public void onAnimationEnd(Animation animation) {
-////				for (CardView cv : selectedViews) {
-////					cv.clearAnimation();
-////				}				
-////			}
-//		});
 	}
 
 	protected void onTrioFound(CardList selectedCards,
@@ -617,6 +592,7 @@ public class ClassicGameActivity extends Activity {
 
 		if (!gRestoredGame) {
 			Button buttonContinue = (Button) findViewById(R.id.gameContinue);
+			buttonContinue.setVisibility(View.VISIBLE);
 			buttonContinue.setText(getString(R.string.pause_start));
 		
 			TextView timeView = (TextView) mPauseOverlay

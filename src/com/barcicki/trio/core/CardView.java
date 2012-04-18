@@ -8,6 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.barcicki.trio.R;
@@ -115,5 +118,145 @@ public class CardView extends ImageView  {
 	
 	public void  redraw() {
 		this.cardCache = null;
+	}
+	
+	private AnimationListener mFailAnimationListener = null;
+	private AnimationListener mSwitchAnimationListener = null;
+	private AnimationListener mRevealAniamiationListener = null;
+	
+	public void setFailAnimationLsitener(AnimationListener failAnimationListener) {
+		mFailAnimationListener = failAnimationListener;
+	}
+		
+	public void animateFail() {
+		Animation failAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_fail);
+		failAnimation.setAnimationListener(new AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mFailAnimationListener != null) mFailAnimationListener.onAnimationStart(animation);
+			}
+			
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mFailAnimationListener != null) mFailAnimationListener.onAnimationRepeat(animation);
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				invalidate();
+				refreshDrawableState();
+				setSelected(false);
+				if (mFailAnimationListener != null) mFailAnimationListener.onAnimationEnd(animation);
+			}
+		});
+		startAnimation(failAnimation);
+	}
+	
+	public void setSwitchAnimationLsitener(AnimationListener animationListener) {
+		mSwitchAnimationListener = animationListener;
+	}
+	
+	public void animateSwitchCard(final Card nextCard) {
+		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
+		final Animation switchBackAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+		switchBackAnimation.setAnimationListener(new AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				invalidate();
+				refreshDrawableState();
+				setSelected(false);
+				if (mSwitchAnimationListener != null) mSwitchAnimationListener.onAnimationEnd(animation);
+			}
+		});
+		
+		switchAnimation.setAnimationListener(new AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mSwitchAnimationListener != null) mSwitchAnimationListener.onAnimationStart(animation);
+			}
+			
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				setCard(nextCard);
+				setSelected(false);
+				invalidate();
+				refreshDrawableState();
+				startAnimation(switchBackAnimation);
+			}
+		});
+		
+		startAnimation(switchAnimation);
+	}
+	
+	public void setRevealAnimationListener(AnimationListener animationListener) {
+		mRevealAniamiationListener = animationListener;
+	}
+	
+	public void animateReveal() {
+		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
+		final Animation switchBackAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+		switchBackAnimation.setAnimationListener(new AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				invalidate();
+				refreshDrawableState();
+				setSelected(false);
+				if (mRevealAniamiationListener != null) mRevealAniamiationListener.onAnimationEnd(animation);
+			}
+		});
+		
+		switchAnimation.setAnimationListener(new AnimationListener() {
+			
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				setOverdraw(false);
+				if (mRevealAniamiationListener != null) mRevealAniamiationListener.onAnimationStart(animation);
+			}
+			
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				setSelected(false);
+				invalidate();
+				refreshDrawableState();
+				setOverdraw(true);
+				startAnimation(switchBackAnimation);
+			}
+		});
+		
+		startAnimation(switchAnimation);
 	}
 }

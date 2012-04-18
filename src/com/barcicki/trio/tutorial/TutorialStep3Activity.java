@@ -43,8 +43,7 @@ public class TutorialStep3Activity extends FragmentActivity {
 	}
 	
 	public void onQuitClicked(View v) {
+		setResult(TutorialActivity.EXIT_CODE);
 		finish();
-		Intent intent = new Intent(this, HomeActivity.class);
-		startActivity(intent);
 	}
 }

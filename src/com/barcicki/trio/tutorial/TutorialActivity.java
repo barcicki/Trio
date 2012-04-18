@@ -8,6 +8,8 @@ import android.view.View;
 import com.barcicki.trio.R;
 
 public class TutorialActivity extends FragmentActivity {
+	static int EXIT_CODE = 9;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -26,10 +28,22 @@ public class TutorialActivity extends FragmentActivity {
 	
 	public void onNextClicked(View v) {
 		Intent intent = new Intent(TutorialActivity.this, TutorialStep2Activity.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 	
 	public void onBackClicked(View v) {
 		finish();
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		// TODO Auto-generated method stub
+		if (resultCode == TutorialActivity.EXIT_CODE) {
+			finish();
+		}
+		
+		super.onActivityResult(requestCode, resultCode, intent);
+	}
+	
+
 }

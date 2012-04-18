@@ -17,10 +17,15 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
         android:layout_weight="1"
         android:gravity="center" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+        </FrameLayout>
 
         <com.barcicki.trio.core.CardView
             android:id="@+id/card1"
@@ -38,7 +43,13 @@
             android:id="@+id/card3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/square_reverse" android:layout_weight="1"/>
+            android:src="@drawable/square_question" android:layout_weight="1"/>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -180,7 +191,7 @@
             android:layout_width="100dp"
             android:layout_height="fill_parent"
             android:onClick="onPrevSetClicked"
-            android:text="&lt;&lt;" />
+            android:text="&lt;&lt;" android:paddingBottom="1dp" android:paddingTop="1dp"/>
 
         <TextView
             android:id="@+id/summary"
@@ -196,7 +207,7 @@
             android:layout_width="100dp"
             android:layout_height="fill_parent"
             android:onClick="onNextSetClicked"
-            android:text=">>" />
+            android:text=">>" android:paddingTop="1dp" android:paddingBottom="1dp"/>
     </LinearLayout>
 
 </LinearLayout>

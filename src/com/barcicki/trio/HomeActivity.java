@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -31,7 +30,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_tablets);
+		setContentView(R.layout.home);
 
 		mCard = (CardView) findViewById(R.id.gameCard);
 
@@ -45,6 +44,7 @@ public class HomeActivity extends Activity {
 				TrioSettings.APP_SECRET, TrioSettings.APP_ID, options);
 
 		OpenFeint.initialize(this, settings, new OpenFeintDelegate() {
+			
 		});
 
 		applyAnimations();

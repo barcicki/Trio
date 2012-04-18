@@ -13,8 +13,7 @@
         android:layout_height="fill_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.2" >
+        android:layout_weight="0.2">
 
         <!-- Preview: layout=@layout/tutorial_step3_fragment -->
     </fragment>
@@ -23,7 +22,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/Button01"

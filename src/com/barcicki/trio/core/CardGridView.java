@@ -25,6 +25,7 @@ public class CardGridView extends LinearLayout {
 	private ArrayList<CardView> cardViews = new ArrayList<CardView>();
 	private int columns = 0;
 	private float cardSize = 0f;
+	private AnimationListener mRevealCardAnimationListener = null;
 
 	public CardGridView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs);
@@ -70,7 +71,7 @@ public class CardGridView extends LinearLayout {
 		int size = cardViews.size();
 		int row = getRow(size);
 		
-		LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f);
+		LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT, 1f);
 		 
 		if (container == null) {
 			container = new LinearLayout(getContext());
@@ -100,7 +101,7 @@ public class CardGridView extends LinearLayout {
 		if (cardSize > 0) {
 			cardView.setLayoutParams(new LayoutParams((int) cardSize, (int) cardSize)); 
 		} else {
-			cardView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f));
+			cardView.setLayoutParams(new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT, 1f));
 		}
 		cardView.setScaleType(ScaleType.FIT_CENTER);
 		cardView.setImageResource(R.drawable.square_reverse);
@@ -143,10 +144,10 @@ public class CardGridView extends LinearLayout {
 //				final Animation reflipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
 				final ArrayList<CardView> views = (ArrayList<CardView>) row.getTag(R.id.tagViews);
 				
+				views.get(0).setRevealAnimationListener(mRevealCardAnimationListener);
 				for (int i = 0; i < views.size(); i++) {
-					Animation flipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
-					views.get(i).startAnimation(flipAnimation);
-					flipAnimation.setAnimationListener(new FlipperListener(views.get(i)));
+					views.get(i).animateReveal();
+					
 				}
 				
 			}
@@ -174,31 +175,10 @@ public class CardGridView extends LinearLayout {
 			final Card c = updated.get(0);
 			
 			if (replaceable.size() > 0) {
-				final CardView cv = replaceable.get(0);
+				CardView cv = replaceable.get(0);
+
+				cv.animateSwitchCard(c);
 				
-				Animation flipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
-				final Animation reflipAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
-				cv.startAnimation(flipAnimation);
-				
-				flipAnimation.setAnimationListener(new AnimationListener() {
-					
-					public void onAnimationStart(Animation animation) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					public void onAnimationRepeat(Animation animation) {
-						
-					}
-					
-					public void onAnimationEnd(Animation animation) {
-						cv.setCard(c);
-						cv.invalidate();
-						cv.refreshDrawableState();
-						cv.startAnimation(reflipAnimation);
-					}
-				});
-								
 				replaceable.remove(cv);
 			} else {
 				
@@ -240,9 +220,7 @@ public class CardGridView extends LinearLayout {
 			cardViews.remove(cv);	
 			
 		}
-
-		deselectAll();
-	
+		
 	}
 	
 	public void renderGrid() {
@@ -291,6 +269,14 @@ public class CardGridView extends LinearLayout {
 		}
 		
 	}
+	
+	public void setResourceImageForAll(int resId) {
+		for (CardView cv : cardViews) {
+			cv.setImageResource(resId);
+			cv.invalidate();
+			cv.refreshDrawableState();
+		}
+	}
 
 	public void showReverse() {
 		for (CardView cv : cardViews) {
@@ -330,34 +316,9 @@ public class CardGridView extends LinearLayout {
 	public float getPredefinedCardSize() {
 		return cardSize;
 	}
-	
-	private class FlipperListener implements AnimationListener {
-		
-		CardView cardView;
-		Animation back;
-		
-		public FlipperListener(CardView cv) {
-			cardView = cv;
-			back = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
-		}
 
-		public void onAnimationEnd(Animation animation) {
-			cardView.setOverdraw(true);
-			cardView.invalidate();
-			cardView.refreshDrawableState();
-			cardView.startAnimation(back);
-		}
-
-		public void onAnimationRepeat(Animation animation) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onAnimationStart(Animation animation) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+	public void setRevealCardListener(AnimationListener animationListener) {
+		mRevealCardAnimationListener  = animationListener;
 	}
 
 }
