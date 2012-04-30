@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg_static"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -16,7 +16,18 @@
             android:id="@+id/cardsContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="0.3" android:visibility="visible">
+            android:layout_weight="0.3" >
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="107dp"
+                android:layout_marginTop="46dp"
+                android:src="@drawable/square_question" />
+            
         </com.barcicki.trio.core.CardGrid>
 
         <LinearLayout
@@ -26,45 +37,56 @@
             android:orientation="horizontal" >
 
             <Button
+                android:id="@+id/Button02"
+                style="@style/nice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="10dp"
+                android:onClick="doPopulate"
+                android:paddingBottom="1dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="1dp"
+                android:text="SetTable" />
+
+            <Button
+                android:id="@+id/Clear"
+                style="@style/nice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="10dp"
+                android:onClick="doClear"
+                android:paddingBottom="1dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="1dp"
+                android:text="Clear" />
+
+            <Button
                 android:id="@+id/gamePauseButton"
                 style="@style/nice_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginRight="10dp"
-                android:onClick="onPauseClicked"
+                android:onClick="doAdd"
                 android:paddingBottom="1dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:paddingTop="1dp"
-                android:text="@string/classic_pause" />
+                android:text="AddView" />
 
             <Button
                 android:id="@+id/gameHintButton2"
                 style="@style/nice_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:onClick="onHintClicked"
+                android:onClick="doRemove"
                 android:paddingBottom="1dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:paddingTop="1dp"
-                android:text="@string/classic_hint" />
-
-            <TextView
-                android:id="@+id/gameTimer"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="right|center_vertical"
-                android:text="00:00"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/clock_size" />
+                android:text="RemoveView" />
         </LinearLayout>
     </LinearLayout>
 
-    <include
-        android:id="@+id/gamePause"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        layout="@layout/classic_pause" />
-            
 </RelativeLayout>

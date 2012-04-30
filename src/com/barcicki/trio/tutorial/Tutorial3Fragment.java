@@ -24,6 +24,7 @@ import com.barcicki.trio.R;
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.CardView;
+import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
 
@@ -81,12 +82,14 @@ public class Tutorial3Fragment extends Fragment {
 	}
 
 	public void onSelectCard(final View v) {
-
+		
 		TrioSet set = sets.get(currentSet);
 		CardList selection = new CardList();
+		CardView currentCard = (CardView) v;
+		currentCard.setSelected(true);
 		selection.add(set.getCardA());
 		selection.add(set.getCardB());
-		selection.add(((CardView) v).getCard());
+		selection.add(currentCard.getCard());
 
 		if (selection.hasTrio()) {
 
@@ -111,81 +114,21 @@ public class Tutorial3Fragment extends Fragment {
 						public void run() {
 							onNextSetClicked(null);
 						}
-					}, 500);
+					}, 300);
 				}
 			});
 
 			mCardToGuess.animateSwitchCard(set.getSolution());
-
-			// Animation flipAnimation =
-			// AnimationUtils.loadAnimation(getActivity(), R.anim.card_flip);
-			// final Animation reflipAnimation =
-			// AnimationUtils.loadAnimation(getActivity(), R.anim.card_reflip);
-			// mCardToGuess.startAnimation(flipAnimation);
-			// mCardToGuess.setTag(set.getSolution());
-
-			// flipAnimation.setAnimationListener(new AnimationListener() {
-			//
-			// public void onAnimationStart(Animation animation) {
-			// // TODO Auto-generated method stub
-			//
-			// }
-			//
-			// public void onAnimationRepeat(Animation animation) {
-			//
-			// }
-			//
-			// public void onAnimationEnd(Animation animation) {
-			// mCardToGuess.setCard( (Card) mCardToGuess.getTag() );
-			// mCardToGuess.invalidate();
-			// mCardToGuess.refreshDrawableState();
-			// mCardToGuess.startAnimation(reflipAnimation);
-			// reflipAnimation.setAnimationListener(new AnimationListener() {
-			//
-			// public void onAnimationStart(Animation animation) {
-			// // TODO Auto-generated method stub
-			//
-			// }
-			//
-			// public void onAnimationRepeat(Animation animation) {
-			// // TODO Auto-generated method stub
-			//
-			// }
-			//
-			// public void onAnimationEnd(Animation animation) {
-			// // TODO Auto-generated method stub
-			//
-			// onNextSetClicked(null);
-			//
-			// }
-			// });
-			// }
-			// });
+			
+			SoundManager.getInstance(getActivity()).playSound(SoundManager.SOUND_SUCCESS);
 
 		} else {
+			
+			SoundManager.getInstance(getActivity()).playSound(SoundManager.SOUND_FAIL);
 
-			Animation failAnimation = AnimationUtils.loadAnimation(
-					getActivity(), R.anim.card_fail);
-			v.startAnimation(failAnimation);
-			failAnimation.setAnimationListener(new AnimationListener() {
+			currentCard.animateFail();
 
-				public void onAnimationStart(Animation animation) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void onAnimationRepeat(Animation animation) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void onAnimationEnd(Animation animation) {
-					v.invalidate();
-					v.refreshDrawableState();
-				}
-			});
-
-			EnumSet<TrioStatus> status = Trio.getTrioStatuc(selection);
+			EnumSet<TrioStatus> status = Trio.getTrioStatus(selection);
 			ArrayList<String> errors = new ArrayList<String>();
 
 			if (status.contains(TrioStatus.WRONG_COLOR)) {
@@ -272,6 +215,14 @@ public class Tutorial3Fragment extends Fragment {
 
 		TrioSet quiz = sets.get(currentSet);
 
+//		if (mCardA.getCard() != null) {
+//			mCardA.animateSwitchCard(quiz.getCardA());
+//			mCardB.animateSwitchCard(quiz.getCardB());
+//		} else {
+//			mCardA.setCard(quiz.getCardA());
+//			mCardB.setCard(quiz.getCardB());
+//		}
+		
 		mCardA.setCard(quiz.getCardA());
 		mCardB.setCard(quiz.getCardB());
 
@@ -291,12 +242,27 @@ public class Tutorial3Fragment extends Fragment {
 		if (!quiz.isSolved()) {
 			cards.shuffle();
 		}
+		
+//		if (mOptionA.getCard() != null) {
+//			mOptionA.animateSwitchCard(cards.get(0));
+//			mOptionB.animateSwitchCard(cards.get(1));
+//			mOptionC.animateSwitchCard(cards.get(2));
+//			mOptionD.animateSwitchCard(cards.get(3));
+//			mOptionE.animateSwitchCard(cards.get(4));
+//		} else {
 		mOptionA.setCard(cards.get(0));
+		mOptionA.setSelected(false);
 		mOptionB.setCard(cards.get(1));
+		mOptionB.setSelected(false);
 		mOptionC.setCard(cards.get(2));
+		mOptionC.setSelected(false);
 		mOptionD.setCard(cards.get(3));
+		mOptionD.setSelected(false);
 		mOptionE.setCard(cards.get(4));
-
+		mOptionE.setSelected(false);
+			
+//		}
+		
 		if (Trio.LOCAL_LOGV) {
 			Log.v("Trio Tutorial", "CurrentSet" + currentSet);
 		}

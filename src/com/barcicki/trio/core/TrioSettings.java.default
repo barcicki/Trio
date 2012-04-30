@@ -1,5 +1,17 @@
 package com.barcicki.trio.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.openfeint.api.OpenFeint;
+import com.openfeint.api.OpenFeintDelegate;
+import com.openfeint.api.OpenFeintSettings;
 import com.openfeint.api.resource.Leaderboard;
 import com.openfeint.api.resource.Score;
 import com.openfeint.api.resource.Score.SubmitToCB;
@@ -12,7 +24,6 @@ public class TrioSettings {
 	
 	public static String LEADERBOARD_CLASSIC_ID = "";
 	public static String LEADERBOARD_CHALLENGE_ID = "";
-	public static String LEADERBOARD_TOTAL_ID = "";
 	
 	public static String ACHIEVEMENT_CLASSIC_FINISH = "";
 	public static String ACHIEVEMENT_CLASSIC_FAIR = "";
@@ -25,30 +36,12 @@ public class TrioSettings {
 	public static String ACHIEVEMENT_CHALLENGE_QUICK = "";
 	public static String ACHIEVEMENT_CHALLENGE_BLITZ = "";
 	
-	public static String ACHIEVEMENT_CHALLENGE_PLAYER = "";
-	public static String ACHIEVEMENT_CLASSIC_PLAYER = "";
-	
-	public static int CLASSIC_BASE_WORTH = 100;
-	public static int CHALLENGE_BASE_WORTH = 10;
-	public static long CLASSIC_TIME_BONUS_APPLIED = 10*60*1000;
-	public static long CHALLENGE_TIME_BONUS_APPLIED = 60*1000;
-	
-	
-	public static int getClassicGamePoints(long time) {
-		int timeBonus = (int) (time < CLASSIC_TIME_BONUS_APPLIED ? CLASSIC_TIME_BONUS_APPLIED - time : 0); 
-		return CHALLENGE_BASE_WORTH + timeBonus / 1000;
-	}
-	
-	public static int getChallengeGamePoints(long time) {
-		int timeBonus = (int) (time < CHALLENGE_TIME_BONUS_APPLIED ? CHALLENGE_TIME_BONUS_APPLIED - time : 0); 
-		return CHALLENGE_BASE_WORTH + timeBonus / 1000;
-	}
-	
 	public static void submitToOpenFeint(String leaderboardId, long longScore, String displayScore) {
 		Leaderboard leaderboard = new Leaderboard( leaderboardId );
 		Score score = new Score( longScore, displayScore );
 		score.submitTo(leaderboard, new SubmitToCB() {
 			
+			@Override
 			public void onSuccess(boolean newHighScore) {
 				// TODO Auto-generated method stub
 				
@@ -61,6 +54,7 @@ public class TrioSettings {
 		Score score = new Score( longScore );
 		score.submitTo(leaderboard, new SubmitToCB() {
 			
+			@Override
 			public void onSuccess(boolean newHighScore) {
 				// TODO Auto-generated method stub
 				
@@ -68,4 +62,55 @@ public class TrioSettings {
 		});
 	}
 	
+	
+	public static boolean usesOpenFeint(Context context) {
+		return TrioSettings.readBooleanPreference(context, "uses_openfeint", false);
+	}
+	
+	public static boolean setUsesOpenFeint(Context context, boolean value) {
+		return TrioSettings.writeBooleanPreference(context, "uses_openfeint", value);
+	}
+
+	public static boolean hasBeenAskedAboutOpenFeint(Context context) {
+		return TrioSettings.readBooleanPreference(context, "asked_openfeint", false);
+	}
+	
+	public static boolean setBeenAskedAboutOpenFeint(Context context, boolean value) {
+		return TrioSettings.writeBooleanPreference(context, "asked_openfeint", value);
+	}
+	
+	public static boolean displaysWhatIsWrong(Context context) {
+		return TrioSettings.readBooleanPreference(context, "display_errors", true);
+	}
+	
+	public static boolean setDisplaysWhatIsWrong(Context context, boolean value) {
+		return TrioSettings.writeBooleanPreference(context, "display_errors", value);
+	}
+	
+	public static boolean writeBooleanPreference(Context context, String preferenceName, boolean value) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences.Editor ed = prefs.edit();
+		ed.putBoolean(preferenceName, value);	
+		return ed.commit();
+	}
+	
+	public static boolean readBooleanPreference(Context context, String preferenceName, boolean defaultValue) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return prefs.getBoolean(preferenceName, defaultValue);
+	}
+	
+	public static void initializeOpenFeint(Context context) {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put(OpenFeintSettings.SettingCloudStorageCompressionStrategy,
+				OpenFeintSettings.CloudStorageCompressionStrategyDefault);
+		options.put(OpenFeintSettings.RequestedOrientation,
+				ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		OpenFeintSettings settings = new OpenFeintSettings(
+				TrioSettings.APP_NAME, TrioSettings.APP_KEY,
+				TrioSettings.APP_SECRET, TrioSettings.APP_ID, options);
+		
+		OpenFeint.initialize(context, settings, new OpenFeintDelegate() {
+			
+		});
+	}
 }

@@ -3,7 +3,7 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" android:layout_marginBottom="10dp">
 
     <TextView
         android:id="@+id/textView1"
@@ -185,29 +185,42 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" android:layout_weight="1.1" android:gravity="center">
 
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+        </FrameLayout>
+
         <Button
             android:id="@+id/buttonPrev"
             style="@style/nice_button"
-            android:layout_width="100dp"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:onClick="onPrevSetClicked"
-            android:text="&lt;&lt;" android:paddingBottom="1dp" android:paddingTop="1dp"/>
+            android:text="&lt;&lt;" android:paddingBottom="1dp" android:paddingTop="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/summary"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="0/5"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/tutorial_task_size" android:layout_marginLeft="50dp" android:layout_marginRight="50dp" android:gravity="center"/>
+            android:textSize="@dimen/tutorial_task_size" android:gravity="center" android:layout_weight="1"/>
 
         <Button
             android:id="@+id/buttonNext"
             style="@style/nice_button"
-            android:layout_width="100dp"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:onClick="onNextSetClicked"
-            android:text=">>" android:paddingTop="1dp" android:paddingBottom="1dp"/>
+            android:text=">>" android:paddingTop="1dp" android:paddingBottom="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+        </FrameLayout>
+
     </LinearLayout>
 
 </LinearLayout>

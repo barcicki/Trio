@@ -69,6 +69,12 @@
         android:layout_weight="1"
         android:orientation="vertical" >
 
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.1" >
+        </FrameLayout>
+
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
@@ -104,7 +110,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="@string/tutorial_shape"
-            android:textColor="@color/red"
+            android:textColor="@color/yellow"
             android:textSize="@dimen/tutorial_attributes_size" />
 
         <TextView
@@ -128,7 +134,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="@string/tutorial_colour"
-            android:textColor="@color/green"
+            android:textColor="@color/yellow"
             android:textSize="@dimen/tutorial_attributes_size" />
 
         <TextView
@@ -140,7 +146,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="@string/tutorial_fill"
-            android:textColor="@color/blue"
+            android:textColor="@color/yellow"
             android:textSize="@dimen/tutorial_attributes_size" />
     </LinearLayout>
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:key="settings">
+
+    <PreferenceCategory android:title="@string/settings_main" android:key="main_preferences">
+        <CheckBoxPreference 
+            android:key="uses_openfeint" 
+            android:title="@string/settings_using_openfeint"
+            android:summary="@string/settings_using_openfeint_description"
+            android:defaultValue="false"
+        />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/settings_gameplay" android:key="main_preferences">
+        <CheckBoxPreference 
+            android:key="display_errors" 
+            android:title="@string/settings_display_errors"
+            android:summary="@string/settings_display_errors_description"
+            android:defaultValue="true"
+        />
+        <CheckBoxPreference 
+            android:key="play_music" 
+            android:title="@string/settings_play_music"
+            android:summary="@string/settings_play_music_description"
+            android:defaultValue="true"
+        />
+        <CheckBoxPreference 
+            android:key="play_sounds" 
+            android:title="@string/settings_play_sounds"
+            android:summary="@string/settings_play_sounds_description"
+            android:defaultValue="true"
+        />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

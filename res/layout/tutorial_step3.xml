@@ -13,7 +13,7 @@
         android:layout_height="fill_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="0.2">
+        android:layout_weight="1">
 
         <!-- Preview: layout=@layout/tutorial_step3_fragment -->
     </fragment>
@@ -21,31 +21,30 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="@dimen/tutorial_dock_height"
         android:layout_weight="1">
 
         <Button
             android:id="@+id/Button01"
             style="@style/nice_button"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:onClick="onBackClicked"
-            android:text="@string/tutorial_back" />
+            android:text="@string/tutorial_back" android:paddingRight="@dimen/button_tutorial_padding_size" android:paddingLeft="@dimen/button_tutorial_padding_size"/>
 
         <Button
             android:id="@+id/button1"
             style="@style/nice_button"
-            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/Button01"
             android:layout_alignBottom="@+id/Button01"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:onClick="onQuitClicked"
-            android:text="@string/tutorial_quit" />
+            android:text="@string/tutorial_quit" android:layout_width="wrap_content" android:paddingLeft="@dimen/button_tutorial_padding_size" android:paddingRight="@dimen/button_tutorial_padding_size"/>
 
     </RelativeLayout>
 

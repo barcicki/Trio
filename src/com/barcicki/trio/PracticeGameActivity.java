@@ -1,6 +1,7 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,20 +10,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barcicki.trio.core.Card;
-import com.barcicki.trio.core.CardGridView;
+import com.barcicki.trio.core.CardGrid;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.CardView;
+import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
+import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.core.TrioSettings;
 import com.openfeint.api.resource.Achievement;
 import com.openfeint.api.resource.Achievement.UnlockCB;
@@ -48,11 +52,13 @@ public class PracticeGameActivity extends Activity {
 	int gTriosFound = 0;
 	int gTriosRemaines = NUMBER_OF_TRIOS;
 	boolean gGameEnded = false;
+	boolean gGameStarted = false;
 	
-	CardGridView mTriosGrid;
-	CardGridView mCardGrid;
+	CardGrid mTriosGrid;
+	CardGrid mCardGrid;
 
 	private TextView mGameStatus;
+	private SoundManager mSoundManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +67,13 @@ public class PracticeGameActivity extends Activity {
 		setContentView(R.layout.practice);
 		
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		mCardGrid = (CardGridView) findViewById(R.id.cardsContainer);
-		mTriosGrid = (CardGridView) findViewById(R.id.triosContainer);
+		mCardGrid = (CardGrid) findViewById(R.id.cardsContainer);
+		mTriosGrid = (CardGrid) findViewById(R.id.triosContainer);
 		mTimer = (TextView) findViewById(R.id.gameTimer);
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mGameStatus = (TextView) findViewById(R.id.gameStatus);
+		
+		mSoundManager = SoundManager.getInstance(this);
 		
 		attachCardListeners();
 		
@@ -81,19 +89,19 @@ public class PracticeGameActivity extends Activity {
 		mGameStatus.setText("" + gTriosRemaines);
 		
 		mCardGrid.setCards( set );
-		mCardGrid.renderGrid();
 		
-		mTriosGrid.setColumns( 3 );
 		mTriosGrid.setCards( set.getTrios() );
-		mTriosGrid.renderGrid();
 		mTriosGrid.setResourceImageForAll(R.drawable.square_question);
 		mTriosGrid.showReverse();
 				
 		startTimer();
+		
+		
 	}
 	
 	private void resetPracticeStatus() {
 		gGameEnded = false;
+		gGameStarted = false;
 		gElapsedTime = 0L;
 		gTriosFound = 0;
 		gTriosRemaines = NUMBER_OF_TRIOS;
@@ -118,14 +126,17 @@ public class PracticeGameActivity extends Activity {
 		
 		gGameEnded = true;
 
-		submitToOpenFeint();
+		if (TrioSettings.usesOpenFeint(this)) {
+			submitToOpenFeint();
+		}
 	
 	}
 	
 	private void attachCardListeners() {
 		
-		mCardGrid.setOnCardClickListener(new OnClickListener() {
+		mCardGrid.setOnItemClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				
 				CardView cv = (CardView) v;
 				Card card = cv.getCard();
 				
@@ -162,7 +173,10 @@ public class PracticeGameActivity extends Activity {
 					gSelectedViews.clear();
 					
 					
-				} 			
+				} else {
+					mSoundManager.playSound(SoundManager.SOUND_CLICK);
+				}
+				
 			}
 		});
 	}
@@ -172,10 +186,12 @@ public class PracticeGameActivity extends Activity {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
 		
-		if (mPauseOverlay.getVisibility() == View.VISIBLE && !gGameEnded) {
+		if (mPauseOverlay.getVisibility() == View.VISIBLE && !gGameEnded && gGameStarted) {
 			hidePause();
 		} else if (gGameEnded) {
 			showEndingPause();
+		} else if (!gGameStarted) {
+			showStartPause();
 		} else {
 			showPause();
 		}
@@ -202,8 +218,29 @@ public class PracticeGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio NOT found");
 		
+		mSoundManager.playSound(SoundManager.SOUND_FAIL);
+		
 		for (CardView cv : selectedViews) {
 			cv.animateFail();
+		}
+		
+		if (TrioSettings.displaysWhatIsWrong(this)) {
+			displayWhatIsWrong(selectedCards);
+		}
+	}
+	
+	protected void onTrioAlreadyFound(CardList selectedCards, ArrayList<CardView> selectedViews) {
+		if (Trio.LOCAL_LOGV)
+			Log.v("Classic Game", "Trio is already found");
+		
+		mSoundManager.playSound(SoundManager.SOUND_FAIL);
+		
+		for (CardView cv : selectedViews) {
+			cv.animateFail();
+		}
+		
+		if (TrioSettings.displaysWhatIsWrong(this)) {
+			Toast.makeText(this, getString(R.string.practice_already_found), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -219,8 +256,10 @@ public class PracticeGameActivity extends Activity {
 		}
 		
 		if (alreadyFound) {
-			onNotTrioFound(selectedCards, selectedViews);
+			onTrioAlreadyFound(selectedCards, selectedViews);
 		} else {
+			
+			mSoundManager.playSound(SoundManager.SOUND_SUCCESS);
 			
 			gTriosFound += 1;
 			gTriosRemaines -= 1;
@@ -559,6 +598,7 @@ public class PracticeGameActivity extends Activity {
 	 */
 	
 	public void onPauseClicked(View v) {
+		mSoundManager.playSound(SoundManager.SOUND_CLICK);
 		showPause();
 	}
 	
@@ -584,6 +624,9 @@ public class PracticeGameActivity extends Activity {
 		buttonContinue.setText(R.string.pause_continue);
 		buttonContinue.setVisibility(View.VISIBLE);
 		
+		Button buttonNewGame = (Button) findViewById(R.id.gameNew);
+		buttonNewGame.setVisibility(View.VISIBLE);
+		
 //		Button buttonQuit = (Button) findViewById(R.id.gameQuit);
 //		buttonQuit.setText(getString(R.string.pause_save_quit));
 		
@@ -598,7 +641,10 @@ public class PracticeGameActivity extends Activity {
 		showPause();
 		
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
-		buttonContinue.setVisibility(View.INVISIBLE);
+		buttonContinue.setVisibility(View.GONE);
+		
+		Button buttonNewGame = (Button) findViewById(R.id.gameNew);
+		buttonNewGame.setVisibility(View.VISIBLE);
 		
 		TextView statusView = (TextView) mPauseOverlay.findViewById(R.id.gameTrioCount);
 		statusView.setText(getString(R.string.practice_end));
@@ -611,6 +657,9 @@ public class PracticeGameActivity extends Activity {
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setVisibility(View.VISIBLE);
 		buttonContinue.setText(getString(R.string.pause_start));
+		
+		Button buttonNewGame = (Button) findViewById(R.id.gameNew);
+		buttonNewGame.setVisibility(View.GONE);
 		
 		TextView timeView = (TextView) mPauseOverlay.findViewById(R.id.gameTime);
 		timeView.setText(getString(R.string.practice_objective));
@@ -629,11 +678,13 @@ public class PracticeGameActivity extends Activity {
 	}
 	
 	public void onPressedContinue(View v) {
+		gGameStarted = true;
+		mSoundManager.playSound(SoundManager.SOUND_CLICK);
 		hidePause();
 	}
 	
 	public void onPressedNewGame(View v) {
-		
+		mSoundManager.playSound(SoundManager.SOUND_CLICK);
 		startPractice();
 		
 		resetPracticeStatus();
@@ -644,16 +695,11 @@ public class PracticeGameActivity extends Activity {
 	}
 	
 	public void onPressedRestartGame(View v) {
-		
+		mSoundManager.playSound(SoundManager.SOUND_CLICK);
 		CardList set = CardList.fromString(mTrio.getDeck(), gPracticeString);
 		
-		mCardGrid.setCards( set );		
-		mCardGrid.renderGrid();
-		
-		mTriosGrid.setColumns( 3 );
-		mTriosGrid.setPredefinedCardSize( TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics()) );
+		mCardGrid.setCards( set );				
 		mTriosGrid.setCards( set.getTrios() );
-		mTriosGrid.renderGrid();
 		mTriosGrid.showReverse();
 		
 		resetPracticeStatus();
@@ -663,9 +709,41 @@ public class PracticeGameActivity extends Activity {
 	}
 	
 	public void onPressedQuitGame(View v) {
+		mSoundManager.playSound(SoundManager.SOUND_CLICK);
 		finish();
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
 	}
 	
+	public void displayWhatIsWrong(CardList threeCards) {
+		EnumSet<TrioStatus> status = Trio.getTrioStatus(threeCards);
+		ArrayList<String> errors = new ArrayList<String>();
+
+		if (status.contains(TrioStatus.WRONG_COLOR)) {
+			errors.add(getString(R.string.tutorial_colour));
+		}
+
+		if (status.contains(TrioStatus.WRONG_SHAPE)) {
+			errors.add(getString(R.string.tutorial_shape));
+		}
+
+		if (status.contains(TrioStatus.WRONG_FILL)) {
+			errors.add(getString(R.string.tutorial_fill));
+		}
+
+		if (status.contains(TrioStatus.WRONG_NUMBER)) {
+			errors.add(getString(R.string.tutorial_number));
+		}
+
+		Toast.makeText(
+				this,
+				getString(R.string.tutorial_wrong_message,
+						TextUtils.join(", ", errors)), Toast.LENGTH_SHORT)
+				.show();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 }

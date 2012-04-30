@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -43,7 +44,7 @@ public class CardView extends ImageView  {
 		this.card = card;
 		this.cardCache = null;
 		invalidate();
-		refreshDrawableState();
+		refreshDrawableState();		
 	}
 	
 	
@@ -118,11 +119,15 @@ public class CardView extends ImageView  {
 	
 	public void  redraw() {
 		this.cardCache = null;
+//		invalidate();
+//		refreshDrawableState();
 	}
 	
 	private AnimationListener mFailAnimationListener = null;
 	private AnimationListener mSwitchAnimationListener = null;
 	private AnimationListener mRevealAniamiationListener = null;
+	private AnimationListener mHideAnimationListener;
+	private AnimationListener mShowAnimationListener;
 	
 	public void setFailAnimationLsitener(AnimationListener failAnimationListener) {
 		mFailAnimationListener = failAnimationListener;
@@ -158,8 +163,17 @@ public class CardView extends ImageView  {
 	}
 	
 	public void animateSwitchCard(final Card nextCard) {
-		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
-		final Animation switchBackAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+		int duration = getResources().getInteger(R.integer.card_fail_anim_duration);
+		animateSwitchCard(nextCard, duration);
+	}
+	
+	public void animateSwitchCard(final Card nextCard, int duration) {
+//		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
+		final Animation switchAnimation = new CardFlipAnimation(0, 90);
+//		final Animation switchBackAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
+		final Animation switchBackAnimation = new CardFlipAnimation(270, 360);
+		switchAnimation.setDuration(duration);
+		switchBackAnimation.setDuration(duration);
 		switchBackAnimation.setAnimationListener(new AnimationListener() {
 			
 			public void onAnimationStart(Animation animation) {
@@ -174,9 +188,9 @@ public class CardView extends ImageView  {
 			
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
+				setSelected(false);
 				invalidate();
 				refreshDrawableState();
-				setSelected(false);
 				if (mSwitchAnimationListener != null) mSwitchAnimationListener.onAnimationEnd(animation);
 			}
 		});
@@ -259,4 +273,65 @@ public class CardView extends ImageView  {
 		
 		startAnimation(switchAnimation);
 	}
+
+	public void setHideAnimationListener(AnimationListener animationListener) {
+		mHideAnimationListener = animationListener;
+	}
+	
+	public void animateHide() {
+		Animation hideAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_remove);
+		hideAnimation.setAnimationListener(new AnimationListener() {
+
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mHideAnimationListener != null) mHideAnimationListener.onAnimationStart(animation);
+			}
+
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mHideAnimationListener != null) mHideAnimationListener.onAnimationRepeat(animation);
+			}
+
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				setVisibility(View.GONE);
+				if (mHideAnimationListener != null) mHideAnimationListener.onAnimationEnd(animation);
+			}
+		});
+		
+		startAnimation(hideAnimation);
+	}
+	
+	public void setShowAnimationListener(AnimationListener animationListener) {
+		mShowAnimationListener = animationListener;
+	}
+	
+	public void animateShow() {
+		Animation hideAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_appear);
+		hideAnimation.setAnimationListener(new AnimationListener() {
+
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mShowAnimationListener != null) mShowAnimationListener.onAnimationStart(animation);
+			}
+
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				if (mShowAnimationListener != null) mShowAnimationListener.onAnimationRepeat(animation);
+			}
+
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+				setVisibility(View.VISIBLE);
+				if (mShowAnimationListener != null) mShowAnimationListener.onAnimationEnd(animation);
+			}
+		});
+		
+		startAnimation(hideAnimation);
+	}
+	
+	public void forceMeasureSize(int width, int height) {
+		setMeasuredDimension(width, height);
+	}
+	
 }

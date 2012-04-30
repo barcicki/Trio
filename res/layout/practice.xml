@@ -17,20 +17,20 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.3" >
 
-            <com.barcicki.trio.core.CardGridView
+            <com.barcicki.trio.core.CardGrid
                 android:id="@+id/cardsContainer"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.4" >
-
-            </com.barcicki.trio.core.CardGridView>
+            </com.barcicki.trio.core.CardGrid>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:orientation="vertical" android:layout_marginLeft="10dp">
-
+                android:orientation="vertical" >
+
                 <TextView
                     android:id="@+id/gameStatus"
                     android:layout_width="fill_parent"
@@ -40,17 +40,14 @@
                     android:text="0"
                     android:textColor="@color/white"
                     android:textSize="@dimen/score_size" />
-
-                <com.barcicki.trio.core.CardGridView
+
+                <com.barcicki.trio.core.CardGrid
                     android:id="@+id/triosContainer"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="0.4">
-
-                </com.barcicki.trio.core.CardGridView>
-
+                    android:layout_weight="0.4" >
+                </com.barcicki.trio.core.CardGrid>
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -66,9 +63,11 @@
                 android:layout_height="fill_parent"
                 android:layout_marginRight="10dp"
                 android:onClick="onPauseClicked"
+                android:paddingBottom="1dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:text="@string/classic_pause" android:paddingBottom="1dp" android:paddingTop="1dp"/>
+                android:paddingTop="1dp"
+                android:text="@string/classic_pause" />
 
             <TextView
                 android:id="@+id/gameTimer"

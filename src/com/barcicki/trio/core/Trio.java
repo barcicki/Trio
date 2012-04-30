@@ -18,8 +18,8 @@ public class Trio {
 		WRONG_NUMBER
 	}
 	
-	public static boolean LOCAL_LOGD = false;
-	public static boolean LOCAL_LOGV = false;
+	public static boolean LOCAL_LOGD = true;
+	public static boolean LOCAL_LOGV = true;
 	
 	private CardList mDeck;
 	private CardList mGame;
@@ -201,7 +201,7 @@ public class Trio {
 		return new Card(sum_shape, sum_color, sum_fill, sum_number);
 	}
 	
-	public static EnumSet<TrioStatus> getTrioStatuc(CardList threeCards) {
+	public static EnumSet<TrioStatus> getTrioStatus(CardList threeCards) {
 		if (threeCards.size() == 3) {
 			return getTrioStatus(threeCards.get(0), threeCards.get(1), threeCards.get(2));
 		} else {

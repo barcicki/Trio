@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="30dp"
-        android:orientation="vertical" >
+        android:orientation="vertical" android:layout_margin="30dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -23,13 +22,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3"
-                android:src="@drawable/trio_static" android:scaleType="fitStart"/>
-
+                android:scaleType="fitStart"
+                android:src="@drawable/trio_static" />
+
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.3" >
-
             </FrameLayout>
 
             <ImageView
@@ -45,19 +44,19 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.2" >
-
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" android:layout_weight="0.3">
+                android:layout_weight="0.8"
+                android:orientation="vertical" >
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.65" >
-
                 </FrameLayout>
-
+
                 <ImageButton
                     android:id="@+id/gameTutorial"
                     style="@style/nice_button"
@@ -67,15 +66,15 @@
                     android:onClick="onStartGame"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/tutorial" android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/tutorial" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.65" >
-
                 </FrameLayout>
-
+
                 <ImageButton
                     android:id="@+id/gameClassic"
                     style="@style/nice_button"
@@ -93,7 +92,7 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.65" >
                 </FrameLayout>
-
+
                 <ImageButton
                     android:id="@+id/gameChallenge"
                     style="@style/nice_button"
@@ -103,23 +102,46 @@
                     android:onClick="onStartGame"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/challenge" android:scaleType="fitCenter"/>
-
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/challenge" />
             </LinearLayout>
-
+
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.4" >
-
+                android:layout_weight="1" >
             </FrameLayout>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/gameCard"
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="0.3"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:orientation="vertical" >
 
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                </FrameLayout>
+
+                <com.barcicki.trio.core.CardView
+                    android:id="@+id/gameCard"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:padding="10dp"
+                    android:src="@drawable/square_reverse" />
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                </FrameLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

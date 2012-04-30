@@ -12,8 +12,7 @@
         android:layout_height="fill_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.2" >
+        android:layout_weight="1" >
 
         <!-- Preview: layout=@layout/tutorial_step2_fragment -->
     </fragment>
@@ -21,13 +20,13 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="@dimen/tutorial_dock_height"
         android:layout_weight="1" >
 
         <Button
             android:id="@+id/Button01"
             style="@style/nice_button"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -38,7 +37,7 @@
         <Button
             android:id="@+id/button1"
             style="@style/nice_button"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/Button01"
             android:layout_alignBottom="@+id/Button01"
