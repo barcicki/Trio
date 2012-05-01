@@ -3,7 +3,6 @@ package com.barcicki.trio;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,11 +26,12 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
+import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
 import com.openfeint.api.resource.Achievement;
 import com.openfeint.api.resource.Achievement.UnlockCB;
 
-public class ClassicGameActivity extends Activity {
+public class ClassicGameActivity extends TrioActivity {
 	private static int NUMBER_OF_HINTS = 10;
 
 	SharedPreferences mPrefs;
@@ -57,8 +57,6 @@ public class ClassicGameActivity extends Activity {
 
 	CardGrid mCardGrid;
 
-	SoundManager mSoundManager;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -71,8 +69,6 @@ public class ClassicGameActivity extends Activity {
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mHintButton = (Button) findViewById(R.id.gameHintButton2);
 
-		mSoundManager = SoundManager.getInstance(this);
-
 		if (restoreSavedGame()) {
 			gRestoredGame = true;
 		} else {
@@ -83,8 +79,9 @@ public class ClassicGameActivity extends Activity {
 		startGame();
 
 		hidePause();
+				
 	}
-
+	
 	private void startGame() {
 
 		mCardGrid.setCards(mTrio.getTable());
@@ -249,7 +246,7 @@ public class ClassicGameActivity extends Activity {
 					gSelectedViews.clear();
 
 				} else {
-					mSoundManager.playSound(SoundManager.SOUND_CLICK);
+					makeClickSound();
 				}
 			}
 		});
@@ -313,7 +310,7 @@ public class ClassicGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio NOT found");
 
-		mSoundManager.playSound(SoundManager.SOUND_FAIL);
+		makeFailSound();
 
 		for (CardView cv : selectedViews) {
 			cv.animateFail();
@@ -330,7 +327,7 @@ public class ClassicGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio found");
 
-		mSoundManager.playSound(SoundManager.SOUND_SUCCESS);
+		makeSuccessSound();
 
 		mTrio.foundTrio(selectedCards);
 		mCardGrid.updateGrid(mTrio.getTable());
@@ -468,13 +465,13 @@ public class ClassicGameActivity extends Activity {
 	 */
 
 	public void onPauseClicked(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		showPause();
 	}
 
 	public void onHintClicked(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
-		if (gHintsRemained > 0) {
+		makeClickSound();
+		if (gHintsRemained > 0 && mPauseOverlay.getVisibility() != View.VISIBLE) {
 			ArrayList<CardList> trios = mTrio.getTable().getTrios();
 			int selectedSize = gSelectedCards.size();
 
@@ -659,13 +656,13 @@ public class ClassicGameActivity extends Activity {
 	}
 
 	public void onPressedContinue(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		gGameStarted = true;
 		hidePause();
 	}
 
 	public void onPressedNewGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		mTrio.newGame();
 
 		// if (gGameEnded) {
@@ -681,7 +678,7 @@ public class ClassicGameActivity extends Activity {
 	}
 
 	public void onPressedRestartGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		mTrio.restartGame(mTrio.getGameString());
 
 		// if (gGameEnded) {
@@ -696,16 +693,16 @@ public class ClassicGameActivity extends Activity {
 	}
 
 	public void onPressedQuitGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
+		
 		if (gGameEnded) {
 			clearSavedGame();
 		} else {
 			saveGame();
 		}
-
+		
+		startHomeActivity();
 		finish();
-		Intent intent = new Intent(this, HomeActivity.class);
-		startActivity(intent);
 	}
 
 	public void displayWhatIsWrong(CardList threeCards) {

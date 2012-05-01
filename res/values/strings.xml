@@ -72,6 +72,8 @@
 
     <string name="openfeint_question">Would you like to keep scores online using OpenFeint? (can be changed later in settings)</string>
     
+    <string name="music">\u266A</string>
+    
     <string name="settings">Settings</string>
     <string name="settings_gameplay">Gameplay</string>
     <string name="settings_display_errors">Display what was wrong</string>

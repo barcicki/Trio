@@ -3,7 +3,6 @@ package com.barcicki.trio;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,11 +26,12 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
+import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
 import com.openfeint.api.resource.Achievement;
 import com.openfeint.api.resource.Achievement.UnlockCB;
 
-public class PracticeGameActivity extends Activity {
+public class PracticeGameActivity extends TrioActivity {
 	private static int NUMBER_OF_TRIOS = 3;
 	
 	SharedPreferences mPrefs;
@@ -58,7 +58,6 @@ public class PracticeGameActivity extends Activity {
 	CardGrid mCardGrid;
 
 	private TextView mGameStatus;
-	private SoundManager mSoundManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +71,6 @@ public class PracticeGameActivity extends Activity {
 		mTimer = (TextView) findViewById(R.id.gameTimer);
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mGameStatus = (TextView) findViewById(R.id.gameStatus);
-		
-		mSoundManager = SoundManager.getInstance(this);
 		
 		attachCardListeners();
 		
@@ -173,7 +170,7 @@ public class PracticeGameActivity extends Activity {
 					
 					
 				} else {
-					mSoundManager.playSound(SoundManager.SOUND_CLICK);
+					makeClickSound();
 				}
 				
 			}
@@ -210,6 +207,7 @@ public class PracticeGameActivity extends Activity {
 		} else {
 			showStartPause();
 		}
+		
 		super.onResume();
 	}
 	
@@ -217,7 +215,7 @@ public class PracticeGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio NOT found");
 		
-		mSoundManager.playSound(SoundManager.SOUND_FAIL);
+		makeFailSound();
 		
 		for (CardView cv : selectedViews) {
 			cv.animateFail();
@@ -232,7 +230,7 @@ public class PracticeGameActivity extends Activity {
 		if (Trio.LOCAL_LOGV)
 			Log.v("Classic Game", "Trio is already found");
 		
-		mSoundManager.playSound(SoundManager.SOUND_FAIL);
+		makeFailSound();
 		
 		for (CardView cv : selectedViews) {
 			cv.animateFail();
@@ -258,7 +256,7 @@ public class PracticeGameActivity extends Activity {
 			onTrioAlreadyFound(selectedCards, selectedViews);
 		} else {
 			
-			mSoundManager.playSound(SoundManager.SOUND_SUCCESS);
+			makeSuccessSound();
 			
 			gTriosFound += 1;
 			gTriosRemaines -= 1;
@@ -411,7 +409,7 @@ public class PracticeGameActivity extends Activity {
 	 */
 	
 	public void onPauseClicked(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		showPause();
 	}
 	
@@ -492,12 +490,12 @@ public class PracticeGameActivity extends Activity {
 	
 	public void onPressedContinue(View v) {
 		gGameStarted = true;
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		hidePause();
 	}
 	
 	public void onPressedNewGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		startPractice();
 		
 		resetPracticeStatus();
@@ -508,7 +506,7 @@ public class PracticeGameActivity extends Activity {
 	}
 	
 	public void onPressedRestartGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
 		CardList set = CardList.fromString(mTrio.getDeck(), gPracticeString);
 		
 		mCardGrid.setCards( set );				
@@ -522,10 +520,9 @@ public class PracticeGameActivity extends Activity {
 	}
 	
 	public void onPressedQuitGame(View v) {
-		mSoundManager.playSound(SoundManager.SOUND_CLICK);
+		makeClickSound();
+		startHomeActivity();
 		finish();
-		Intent intent = new Intent(this, HomeActivity.class);
-		startActivity(intent);
 	}
 	
 	public void displayWhatIsWrong(CardList threeCards) {
@@ -559,4 +556,5 @@ public class PracticeGameActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+
 }

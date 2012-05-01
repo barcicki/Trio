@@ -64,8 +64,6 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
                     android:onClick="onStartGame"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/tutorial" />
 
@@ -82,8 +80,6 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
                     android:onClick="onStartGame"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/classic" />
 
@@ -100,8 +96,6 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
                     android:onClick="onStartGame"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/challenge" />
             </LinearLayout>

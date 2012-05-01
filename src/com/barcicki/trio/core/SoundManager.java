@@ -30,7 +30,8 @@ public class SoundManager {
 	private AudioManager mAudioManager;
 	private MediaPlayer mBackgroundPlayer;
 
-	private boolean loadedSounds = false;
+	private boolean mLoadedSounds = false;
+
 	// private boolean initialized = false;
 
 	private SoundManager(Context context) {
@@ -49,48 +50,49 @@ public class SoundManager {
 		}
 		return mInstance;
 	}
-	
+
 	public void loadSounds() {
-		mBackgroundPlayer = MediaPlayer.create(mContext, R.raw.music);
-		addSound(SOUND_CLICK, R.raw.select);
-		addSound(SOUND_SUCCESS, R.raw.success);
-		addSound(SOUND_FAIL, R.raw.fail);
+		if (!mLoadedSounds) {
+			mBackgroundPlayer = MediaPlayer.create(mContext, R.raw.music);
+			addSound(SOUND_CLICK, R.raw.select);
+			addSound(SOUND_SUCCESS, R.raw.success);
+			addSound(SOUND_FAIL, R.raw.fail);
+			mLoadedSounds = true;
+		}
 	}
 
 	public void addSound(int index, int soundId) {
 		mSoundPoolMap.put(index, mSoundPool.load(mContext, soundId, 1));
 	}
-	
+
 	public void playBackground() {
 		if (!mBackgroundPlayer.isPlaying()) {
 			mBackgroundPlayer.setLooping(true);
 			mBackgroundPlayer.start();
 		}
 	}
-	
+
 	public void pauseBackground() {
 		if (mBackgroundPlayer.isPlaying()) {
 			mBackgroundPlayer.pause();
 		}
 	}
-	
+
 	public void stopBackground() {
 		mBackgroundPlayer.stop();
 	}
-	
+
 	public boolean isBackgroundPlaying() {
 		return mBackgroundPlayer.isPlaying();
 	}
 
 	public void playSound(int index) {
-		if (TrioSettings.readBooleanPreference(mContext, "play_sounds", true)) {
-			float streamVolume = mAudioManager
-					.getStreamVolume(AudioManager.STREAM_MUSIC);
-			streamVolume = streamVolume
-					/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-			mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
-					1, 0, 1f);
-		}
+		float streamVolume = mAudioManager
+				.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume
+				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
+				1, 0, 1f);
 	}
 
 	public void playLoopedSound(int index) {
@@ -101,33 +103,33 @@ public class SoundManager {
 		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
 				1, -1, 1f);
 	}
-	
-	public void stopSound(int index)
-	{
+
+	public void stopSound(int index) {
 		mSoundPool.stop(mSoundPoolMap.get(index));
 	}
-	
-	public void pauseSound(int index)
-	{
+
+	public void pauseSound(int index) {
 		mSoundPool.pause(mSoundPoolMap.get(index));
 	}
-	
+
 	public void pauseAll() {
 		Iterator iterator = mSoundPoolMap.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator.next();
+			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator
+					.next();
 			pauseSound(pair.getKey());
 		}
 	}
-	
+
 	public void stopAll() {
 		Iterator iterator = mSoundPoolMap.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator.next();
+			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator
+					.next();
 			stopSound(pair.getKey());
 		}
 	}
-	
+
 	public void release() {
 		mSoundPool.release();
 		mSoundPool = null;
@@ -136,6 +138,7 @@ public class SoundManager {
 		mBackgroundPlayer.release();
 		mBackgroundPlayer = null;
 		mInstance = null;
+		mLoadedSounds = false;
 	}
 
 }

@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:onClick="onBackClicked"
-            android:text="@string/tutorial_back" />
+            android:text="@string/tutorial_back" android:paddingLeft="@dimen/button_tutorial_padding_size" android:paddingRight="@dimen/button_tutorial_padding_size"/>
 
         <Button
             android:id="@+id/button1"
@@ -43,7 +43,7 @@
             android:layout_alignBottom="@+id/Button01"
             android:layout_alignParentRight="true"
             android:onClick="onNextClicked"
-            android:text="@string/tutorial_next" android:layout_marginRight="10dp"/>
+            android:text="@string/tutorial_next" android:layout_marginRight="10dp" android:paddingLeft="@dimen/button_tutorial_padding_size" android:paddingRight="@dimen/button_tutorial_padding_size"/>
 
     </RelativeLayout>
 

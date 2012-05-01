@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true">
         <shape>
-            <gradient android:angle="270" android:endColor="@color/NiceButtonStartColor" android:startColor="@color/NiceButtonEndColor" />
+			<gradient android:angle="270" android:endColor="@color/NiceButtonDisabledStartColor" android:startColor="@color/NiceButtonDisabledEndColor" />
 
             <stroke android:width="3dp" android:color="@color/NiceButtonBorderColor" />
 
@@ -30,7 +30,7 @@
             <padding android:bottom="10dp" android:left="@dimen/button_padding_size" android:right="@dimen/button_padding_size" android:top="10dp" />
         </shape></item>
     <item><shape>
-            <gradient android:angle="270" android:endColor="@color/NiceButtonEndColor" android:startColor="@color/NiceButtonStartColor" />
+			<gradient android:angle="270" android:endColor="@color/NiceButtonDisabledEndColor" android:startColor="@color/NiceButtonDisabledStartColor" />
 
             <stroke android:width="3dp" android:color="@color/NiceButtonBorderColor" />
 

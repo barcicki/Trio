@@ -32,10 +32,8 @@
                 android:layout_height="fill_parent"
                 android:layout_marginRight="10dp"
                 android:onClick="onPauseClicked"
-                android:paddingBottom="1dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="1dp"
+                android:paddingLeft="@dimen/button_padding_size"
+                android:paddingRight="@dimen/button_padding_size"
                 android:text="@string/classic_pause" />
 
             <Button
@@ -44,11 +42,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:onClick="onHintClicked"
-                android:paddingBottom="1dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="1dp"
-                android:text="@string/classic_hint" />
+                android:paddingLeft="@dimen/button_padding_size"
+                android:paddingRight="@dimen/button_padding_size"
+                android:text="@string/classic_hint" android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/musicSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:onClick="onMusicButtonPressed"
+                android:text="@string/music" android:background="@drawable/nice_button" android:textColor="@color/white" android:paddingLeft="@dimen/button_padding_size" android:paddingRight="@dimen/button_padding_size" android:paddingTop="5dp" android:paddingBottom="5dp" android:textSize="@dimen/button_text_size"/>
 
             <TextView
                 android:id="@+id/gameTimer"
