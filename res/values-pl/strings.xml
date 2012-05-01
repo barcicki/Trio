@@ -75,5 +75,6 @@
     <string name="settings_play_sounds_description">Odgrywa odgłosy klikania, zaznaczania, itp.</string>
     <string name="settings_mute">Wyłącz głos</string>
     <string name="settings_unmute">Włącz głos</string>
+    <string name="music">\u266A</string>
 
 </resources>
