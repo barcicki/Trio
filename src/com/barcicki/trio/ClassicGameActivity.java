@@ -498,8 +498,6 @@ public class ClassicGameActivity extends Activity {
 
 									gSelectedCards.add(c);
 									gSelectedViews.add(mCardGrid.select(c));
-									// markViewSelected(mGrid
-									// .findViewWithTag(c));
 
 									useHint();
 
@@ -533,6 +531,8 @@ public class ClassicGameActivity extends Activity {
 				Card firstCard = trios.get(0).get(0);
 
 				mCardGrid.deselectAll();
+				gSelectedCards.clear();
+				gSelectedViews.clear();
 				gSelectedCards.add(firstCard);
 				gSelectedViews.add(mCardGrid.select(firstCard));
 
@@ -542,8 +542,7 @@ public class ClassicGameActivity extends Activity {
 					Log.v("Single Game Hint", "Hint showed first card");
 				return;
 			} else {
-				if (Trio.LOCAL_LOGD)
-					Log.d("Single Game Hint",
+					Log.e("Single Game Hint",
 							"Trios were empty when they shouldn't");
 			}
 		} else {

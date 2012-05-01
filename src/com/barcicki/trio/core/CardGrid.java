@@ -247,7 +247,11 @@ public class CardGrid extends RelativeLayout {
 		int size = cardList.size();
 
 		int position = 0;
-		while (position + size < mCardViews.size()) {
+		while (position + size <= mCardViews.size()) {
+			
+			if (Trio.LOCAL_LOGD) 
+				Log.d("CardGrid", "Try to reveal cards at " + position);
+			
 			List<CardView> cardViews = mCardViews.subList(position, position
 					+ size);
 			CardList row = new CardList();
@@ -256,11 +260,17 @@ public class CardGrid extends RelativeLayout {
 			}
 
 			if (CardList.areEqual(row, cardList)) {
+				
+				if (Trio.LOCAL_LOGD) 
+					Log.d("CardGrid", "Found and revealing  " + row);
+				
 				cardViews.get(0).setRevealAnimationListener(
 						mRevealCardAnimationListener);
 				for (CardView cv : cardViews) {
 					cv.animateReveal();
 				}
+				
+				return;
 			}
 
 			position += size;
