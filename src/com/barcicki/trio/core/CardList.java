@@ -177,6 +177,10 @@ public class CardList extends ArrayList<Card> {
 		}
 		return cards;
 	}
+	
+	public boolean equals(CardList other) {
+		return CardList.areEqual(this, other);
+	}
 
 	public static boolean areEqual(CardList listA, CardList listB) {
 		if (listA.size() == listB.size()) {
@@ -188,6 +192,24 @@ public class CardList extends ArrayList<Card> {
 			return true;
 		}
 		return false;
+	}
+
+	public static ArrayList<CardList> difference(ArrayList<CardList> setA,
+			ArrayList<CardList> setB) {
+		
+		
+		ArrayList<CardList> copyA = new ArrayList<CardList>();
+		copyA.addAll(setA);
+		
+		for (CardList l : setA) {
+			for (CardList c : setB) {
+				if (CardList.areEqual(l, c)) {
+					copyA.remove(l);
+				}
+			}
+		}
+		return copyA;
+		
 	}
 	
 	

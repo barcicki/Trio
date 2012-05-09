@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/helpClassic2"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/TextView01"
+            style="@style/dark_shadow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/help_classic_2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/pause_desc_size" />
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/help_classic_1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/TextView03"
+            style="@style/dark_shadow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/help_classic_3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/pause_desc_size" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/help_classic_2" />
+
+            <TextView
+                android:id="@+id/TextView02"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/help_classic_4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/pause_desc_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

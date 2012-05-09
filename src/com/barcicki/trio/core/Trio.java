@@ -18,8 +18,8 @@ public class Trio {
 		WRONG_NUMBER
 	}
 	
-	public static boolean LOCAL_LOGD = true;
-	public static boolean LOCAL_LOGV = true;
+	public static boolean LOCAL_LOGD = false;
+	public static boolean LOCAL_LOGV = false;
 	
 	private CardList mDeck;
 	private CardList mGame;

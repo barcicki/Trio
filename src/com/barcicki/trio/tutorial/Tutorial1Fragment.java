@@ -2,6 +2,7 @@ package com.barcicki.trio.tutorial;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,28 @@ public class Tutorial1Fragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		
-		CardView card1 = (CardView) getView().findViewById(R.id.card1);
-		CardView card2 = (CardView) getView().findViewById(R.id.card2);
-		CardView card3 = (CardView) getView().findViewById(R.id.card3);
+		assignCard(R.id.color1, new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_ONE));
+		assignCard(R.id.color2, new Card(Card.SHAPE_SQUARE, Card.COLOR_RED, Card.FILL_FULL, Card.NUMBER_ONE));
+		assignCard(R.id.color3, new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_ONE));
+		assignCard(R.id.shape1, new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_ONE));
+		assignCard(R.id.shape2, new Card(Card.SHAPE_TRIANGLE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_ONE));
+		assignCard(R.id.shape3, new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_ONE));
+		assignCard(R.id.quantity1, new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_FULL, Card.NUMBER_ONE));
+		assignCard(R.id.quantity2, new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_FULL, Card.NUMBER_TWO));
+		assignCard(R.id.quantity3, new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_FULL, Card.NUMBER_THREE));
+		assignCard(R.id.fill1, new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_ONE));
+		assignCard(R.id.fill2, new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_ONE));
+		assignCard(R.id.fill3, new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_HALF, Card.NUMBER_ONE));
 		
-		card1.setCard(new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_ONE));
-		card2.setCard(new Card(Card.SHAPE_SQUARE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO));
-		card3.setCard(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN, Card.FILL_HALF, Card.NUMBER_THREE));
+	}
+	
+	private void assignCard(int resourceId, Card card) {
+		CardView cardView = (CardView) getView().findViewById(resourceId);
+		if (cardView != null) {
+			cardView.setCard(card);
+		} else {
+			Log.e("TrioTutorial", "Wrong CardView provided");
+		}
 	}
 	
 	@Override

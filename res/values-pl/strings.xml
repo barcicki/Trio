@@ -28,7 +28,8 @@
     <string name="practice_end">Gratulacje! Odnalazłeś wszystkie ukryte Trio</string>
     <string name="practice_objective">Znajdź 3 Trio</string>
     <string name="practice_subobjective">Trio są ukryte w 12 widocznych kartach.</string>
-    <string name="practice_already_found">To Trio juź odkryto</string>
+    <string name="practice_already_found">To Trio już odkryto</string>
+    <string name="practice_resigned">Nie znalazłeś %1$d trio:</string>
     <string name="pause_continue">Kontynuuj</string>
     <string name="pause_restart">Od początku</string>
     <string name="pause_new_game">Nowa gra</string>
@@ -36,7 +37,7 @@
     <string name="pause_quit">Wyjdź</string>
     <string name="pause_start">Start</string>
     <string name="tutorial_next">Dalej</string>
-    <string name="tutorial_step1_header">Gra Trio składa się z 81 różnych kart. Każda karta ma 4 atrybuty: </string>
+    <string name="tutorial_step1_header">Każda karta ma 4 atrybuty: </string>
     <string name="tutorial_shape">Kształt</string>
     <string name="tutorial_number">Liczba elementów</string>
     <string name="tutorial_colour">Kolor</string>
@@ -51,14 +52,16 @@
     <string name="tutorial_wrong_color">Kolor się nie zgadza. Jedna karta jest inna.</string>
     <string name="tutorial_wrong_fill">Wypełnienie się nie zgadza. Jedna karta jest inna.</string>
     <string name="tutorial_wrong_message">Nie zgadza się: %1$s </string>
+    <string name="tutorial_end">Gratulacje!</string>
+    <string name="tutorial_end_message">Jesteś już gotów na grę w Trio. Wybierz tryb gry i kontynuuj zabawę.</string>
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Znajduj Trio dopóki nie skończą się karty</string>
-    <string name="game_tutorial">Tutorial</string>
+    <string name="game_tutorial">Samouczek</string>
     <string name="game_tutorial_desc">Naucz się rozpoznawać Trio</string>
     <string name="game_challenge">Daily Challenge</string>
     <string name="game_challenge_desc">12 kart i 3 ukryte Trio. Znajdź je najszybciej jak potrafisz</string>
     <string name="tutorial_back">Wróć</string>
-    <string name="tutorial_quit">Wyjdź</string>
+    <string name="tutorial_quit">Wyjdź do menu</string>
     <string name="tutorial_step3_header">Skompletuj Trio. Odnajdź brakującą kartę.</string>
     <string name="game_start">Start</string>
     <string name="openfeint_question">Czy chcesz wysyłać wyniki do systemu OpenFeint? (można zmienić później w ustawieniach)</string>
@@ -76,5 +79,23 @@
     <string name="settings_mute">Wyłącz głos</string>
     <string name="settings_unmute">Włącz głos</string>
     <string name="music">\u266A</string>
-
+    <string name="help_button">\?</string>
+    <string name="help_classic_fragment3_top">Gra kończy się gdy na stole nie ma trio i nie ma kart w talii</string>
+    <string name="help_quit">Powrót do gry</string>
+    <string name="help_tutorial">Jak znaleźć trio?</string>
+    <string name="practice_resign">Poddaję się</string>
+    <string name="help_classic_goal">Twoim celem jest znalezienie go jak najszybciej.</string>
+    <string name="help_classic_1">Co najmniej jedno trio jest ukryte wśród kart na ekranie.</string>
+    <string name="help_classic_2">Dotykaj karty aby je zaznaczyć lub odznaczyć.</string>
+    <string name="help_classic_3">Jeśli trzy zaznaczone karty stanowią trio, zostaną one zastąpione przez nowe karty.</string>
+    <string name="help_classic_4">Talia składa się z 81 różnych kart.</string>
+    <string name="help_classic_5">W czasie gry możesz korzystać z podpowiedzi, jednak ich liczba jest ograniczona, a każdorazowe użycie kosztuje 30 sekund.</string>
+    <string name="help_practice_goal">Twoim celem jest znalezienie ich jak najszybciej.</string>
+    <string name="help_practice_1">Wśród kart na ekranie są ukryte dokładnie trzy trio.</string>
+    <string name="help_practice_2">Jeśli trzy zaznaczone karty stanowią trio, po boku odsłoni się wiersz z tymi kartami.</string>
+    <string name="help_practice_3">Gra się kończy gdy wszystkie trxy trio będą odnalezione.</string>
+    <string name="help_practice_4">Poddając się można zobaczyć jakie trio pozostały nieodkryte.</string>
+    <string name="game_classic_continue">Kontynuuj</string>
+    <string name="game_classic_new_game">Nowa Gra</string>
+    <string name="game_challenge_new_game">Nowe Wyzwanie</string>
 </resources>

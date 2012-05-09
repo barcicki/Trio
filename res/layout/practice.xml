@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="10dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -19,6 +18,7 @@
 
             <com.barcicki.trio.core.CardGrid
                 android:id="@+id/cardsContainer"
+                android:keepScreenOn="true"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.4" >
@@ -50,10 +50,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="2"
+            android:layout_marginBottom="@dimen/margin_size"
+            android:layout_marginLeft="@dimen/margin_size"
+            android:layout_marginRight="@dimen/margin_size"
+            android:layout_weight="1.6"
             android:orientation="horizontal" >
 
             <Button
@@ -61,37 +65,58 @@
                 style="@style/nice_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_marginRight="10dp"
-                android:onClick="onPauseClicked"
-                android:paddingBottom="1dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_size"
+                android:onClick="onPausePressed"
                 android:text="@string/classic_pause" />
+
+            <Button
+                android:id="@+id/gameResign"
+                style="@style/nice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignBaseline="@+id/gamePauseButton"
+                android:layout_marginRight="@dimen/margin_size"
+                android:layout_toRightOf="@+id/gamePauseButton"
+                android:onClick="onResignPressed"
+                android:text="@string/practice_resign" />
 
             <Button
                 android:id="@+id/musicSwitch"
-                android:layout_width="wrap_content"
+                style="@style/nice_button"
+                android:layout_width="@dimen/button_small_size"
                 android:layout_height="fill_parent"
-                android:background="@drawable/nice_button"
+                android:layout_alignParentRight="true"
                 android:onClick="onMusicButtonPressed"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/button_padding_size"
-                android:paddingRight="@dimen/button_padding_size"
-                android:paddingTop="5dp"
                 android:text="@string/music"
-                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/helpButton"
+                style="@style/nice_button"
+                android:layout_width="@dimen/button_small_size"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/musicSwitch"
+                android:layout_marginRight="@dimen/margin_size"
+                android:onClick="onHelpPressed"
+                android:text="@string/help_button"
                 android:textSize="@dimen/button_text_size" />
 
             <TextView
                 android:id="@+id/gameTimer"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/helpButton"
+                android:layout_marginRight="@dimen/margin_size"
                 android:gravity="right|center_vertical"
                 android:text="00:00"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/clock_size" />
-        </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
     <include
@@ -99,5 +124,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         layout="@layout/practice_pause" />
+    
+    <include
+        android:id="@+id/gameHelp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/help" />
 
 </RelativeLayout>

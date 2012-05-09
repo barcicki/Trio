@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_size"
+        android:gravity="center"
+        android:text="@string/tutorial_end"
+        android:textSize="@dimen/tutorial_task_size" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_size"
+        android:gravity="center"
+        android:text="@string/tutorial_end_message"
+        android:textSize="@dimen/button_text_size" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/startClassic"
+            style="@style/nice_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/score_size"
+            android:layout_margin="@dimen/margin_size"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/classic" />
+
+        <ImageButton
+            android:id="@+id/startChallenge"
+            style="@style/nice_button"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/score_size"
+            android:layout_margin="@dimen/margin_size"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/challenge" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/justQuit"
+        style="@style/nice_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/button_padding_size"
+        android:paddingRight="@dimen/button_padding_size"
+        android:text="@string/tutorial_quit"
+        android:textSize="@dimen/button_text_size" android:layout_marginBottom="@dimen/margin_size"/>
+
+</LinearLayout>

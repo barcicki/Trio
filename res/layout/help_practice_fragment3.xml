@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/helpClassic3"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/dark_shadow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/help_practice_3"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/pause_desc_size" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/help_practice_end" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/TextView01"
+        style="@style/dark_shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.6"
+        android:gravity="center"
+        android:text="@string/help_practice_4"
+        android:textColor="@color/white"
+        android:textSize="@dimen/pause_desc_size" />
+
+</LinearLayout>

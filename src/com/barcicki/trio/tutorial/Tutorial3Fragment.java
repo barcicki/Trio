@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +33,8 @@ import com.barcicki.trio.core.Trio.TrioStatus;
 
 public class Tutorial3Fragment extends Fragment {
 	private static final int NUMBER_OF_ADDITIONAL_CARDS = 4;
-	private int currentSet = 0;
-	private ArrayList<TrioSet> sets = new ArrayList<TrioSet>();
+	private int mCurrentSet = 0;
+	private ArrayList<TrioSet> mSets = new ArrayList<TrioSet>();
 
 	private Button mPrev;
 	private Button mNext;
@@ -71,6 +74,7 @@ public class Tutorial3Fragment extends Fragment {
 
 		prepareSets();
 		showSet();
+		
 	}
 
 	@Override
@@ -82,8 +86,8 @@ public class Tutorial3Fragment extends Fragment {
 	}
 
 	public void onSelectCard(final View v) {
-		
-		TrioSet set = sets.get(currentSet);
+
+		TrioSet set = mSets.get(mCurrentSet);
 		CardList selection = new CardList();
 		CardView currentCard = (CardView) v;
 		currentCard.setSelected(true);
@@ -119,12 +123,18 @@ public class Tutorial3Fragment extends Fragment {
 			});
 
 			mCardToGuess.animateSwitchCard(set.getSolution());
-			
-			SoundManager.getInstance(getActivity()).playSound(SoundManager.SOUND_SUCCESS);
+
+			if (solvedAllQuizes()) {
+				showEndingDialog();
+			}
+
+			SoundManager.getInstance(getActivity()).playSound(
+					SoundManager.SOUND_SUCCESS);
 
 		} else {
-			
-			SoundManager.getInstance(getActivity()).playSound(SoundManager.SOUND_FAIL);
+
+			SoundManager.getInstance(getActivity()).playSound(
+					SoundManager.SOUND_FAIL);
 
 			currentCard.animateFail();
 
@@ -157,37 +167,77 @@ public class Tutorial3Fragment extends Fragment {
 
 	}
 
+	private boolean solvedAllQuizes() {
+		for (TrioSet set : mSets) {
+			if (!set.isSolved()) return false;
+		}
+		return true;
+	}
+
+	private void showEndingDialog() {
+		final Dialog dialog = new Dialog(getActivity());
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.tutorial_dialog);
+		dialog.setCancelable(true);
+		dialog.getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		dialog.show();
+		
+		// probably very bad code
+		
+		dialog.findViewById(R.id.startClassic).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				((TutorialStep3Activity) getActivity()).onStartClassic(v);
+				dialog.dismiss();
+			}
+		});
+
+		dialog.findViewById(R.id.startChallenge).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				((TutorialStep3Activity) getActivity()).onStartChallenge(v);
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.findViewById(R.id.justQuit).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				((TutorialStep3Activity) getActivity()).onQuitClicked(v);
+				dialog.dismiss();
+			}
+		});
+	
+	}
+
 	//
 	private void prepareSets() {
-		sets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_RED,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_SQUARE,
 				Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_TWO), new Card(Card.SHAPE_SQUARE,
 				Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_TWO)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(
 				Card.SHAPE_TRIANGLE, Card.COLOR_GREEN, Card.FILL_HALF,
 				Card.NUMBER_TWO)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_SQUARE,
 				Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_TWO)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
 				Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
 				Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE,
 				Card.FILL_HALF, Card.NUMBER_THREE), new Card(Card.SHAPE_CIRCLE,
 				Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_THREE)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
 				Card.FILL_EMPTY, Card.NUMBER_TWO), new Card(Card.SHAPE_SQUARE,
 				Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN,
 				Card.FILL_HALF, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
 				Card.COLOR_RED, Card.FILL_HALF, Card.NUMBER_ONE)));
-		sets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
+		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
 				Card.FILL_HALF, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
 				Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
 
@@ -195,34 +245,34 @@ public class Tutorial3Fragment extends Fragment {
 
 	//
 	public void showSet() {
-		int size = sets.size();
-		if (currentSet <= 0) {
-			currentSet = 0;
+		int size = mSets.size();
+		if (mCurrentSet <= 0) {
+			mCurrentSet = 0;
 			mPrev.setVisibility(View.INVISIBLE);
 		} else {
 			mPrev.setVisibility(View.VISIBLE);
 		}
 
-		if (currentSet >= size - 1) {
-			currentSet = size - 1;
+		if (mCurrentSet >= size - 1) {
+			mCurrentSet = size - 1;
 			mNext.setVisibility(View.INVISIBLE);
 		} else {
 			mNext.setVisibility(View.VISIBLE);
 		}
 
 		TextView summary = (TextView) getView().findViewById(R.id.summary);
-		summary.setText((currentSet + 1) + "/" + size);
+		summary.setText((mCurrentSet + 1) + "/" + size);
 
-		TrioSet quiz = sets.get(currentSet);
+		TrioSet quiz = mSets.get(mCurrentSet);
 
-//		if (mCardA.getCard() != null) {
-//			mCardA.animateSwitchCard(quiz.getCardA());
-//			mCardB.animateSwitchCard(quiz.getCardB());
-//		} else {
-//			mCardA.setCard(quiz.getCardA());
-//			mCardB.setCard(quiz.getCardB());
-//		}
-		
+		// if (mCardA.getCard() != null) {
+		// mCardA.animateSwitchCard(quiz.getCardA());
+		// mCardB.animateSwitchCard(quiz.getCardB());
+		// } else {
+		// mCardA.setCard(quiz.getCardA());
+		// mCardB.setCard(quiz.getCardB());
+		// }
+
 		mCardA.setCard(quiz.getCardA());
 		mCardB.setCard(quiz.getCardB());
 
@@ -242,14 +292,14 @@ public class Tutorial3Fragment extends Fragment {
 		if (!quiz.isSolved()) {
 			cards.shuffle();
 		}
-		
-//		if (mOptionA.getCard() != null) {
-//			mOptionA.animateSwitchCard(cards.get(0));
-//			mOptionB.animateSwitchCard(cards.get(1));
-//			mOptionC.animateSwitchCard(cards.get(2));
-//			mOptionD.animateSwitchCard(cards.get(3));
-//			mOptionE.animateSwitchCard(cards.get(4));
-//		} else {
+
+		// if (mOptionA.getCard() != null) {
+		// mOptionA.animateSwitchCard(cards.get(0));
+		// mOptionB.animateSwitchCard(cards.get(1));
+		// mOptionC.animateSwitchCard(cards.get(2));
+		// mOptionD.animateSwitchCard(cards.get(3));
+		// mOptionE.animateSwitchCard(cards.get(4));
+		// } else {
 		mOptionA.setCard(cards.get(0));
 		mOptionA.setSelected(false);
 		mOptionB.setCard(cards.get(1));
@@ -260,24 +310,27 @@ public class Tutorial3Fragment extends Fragment {
 		mOptionD.setSelected(false);
 		mOptionE.setCard(cards.get(4));
 		mOptionE.setSelected(false);
-			
-//		}
-		
+
+		// }
+
 		if (Trio.LOCAL_LOGV) {
-			Log.v("Trio Tutorial", "CurrentSet" + currentSet);
+			Log.v("Trio Tutorial", "CurrentSet" + mCurrentSet);
 		}
 
 	}
 
 	//
 	public void onPrevSetClicked(View v) {
-		currentSet -= 1;
+		mCurrentSet -= 1;
 		showSet();
 	}
 
 	public void onNextSetClicked(View v) {
-		currentSet += 1;
+		mCurrentSet += 1;
 		showSet();
+		
 	}
+	
+	
 	//
 }

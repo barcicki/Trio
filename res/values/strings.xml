@@ -2,21 +2,17 @@
 <resources>
 
     <string name="app_name">Trio</string>
-    
     <string name="hint">Hint</string>
     <string name="hints_ended">No more hints</string>
-    
     <string name="trio_found">Trio found!</string>
     <string name="not_trio">This is not a trio</string>
     <string name="error_shape">Shape doesn\'t match</string>
     <string name="error_color">Color doesn\'t match</string>
-    <string name="error_fill">Fill doesn\'t match</string>
+    <string name="error_fill">Filling doesn\'t match</string>
     <string name="error_number">Number doesn\'t match</string>
-    
     <string name="solo_game_status">%1$d cards left</string>
     <string name="solo_game_ended">Game ended. No more trios</string>
     <string name="solo_game_restart">Restart game</string>
-    
     <string name="classic_trio_count">Found %1$d trios</string>
     <string name="classic_status">%1$d cards left</string>
     <string name="classic_hint_count">%1$d hints left</string>
@@ -28,26 +24,24 @@
     <string name="classic_subobjective">There\'s always at least one Trio visible.</string>
     <string name="classic_hints">You\'ve got 10 hints and each costs 30 seconds.</string>
     <string name="classic_ends">Game ends when there are no more Trios and cards in the deck</string>
-    
     <string name="practice_trio_count">Found %1$d out of %2$d trios</string>
     <string name="practice_end">Congratulations! You\'ve found all trios.</string>
+    <string name="practice_resigned">You missed %1$d trios:</string>
     <string name="practice_objective">Find 3 Trios</string>
     <string name="practice_subobjective">Trios are hidden in 12 visible cards.</string>
     <string name="practice_already_found">This Trio has already been found</string>
-    
     <string name="pause_continue">Continue</string>
     <string name="pause_restart">Restart Game</string>
     <string name="pause_new_game">New game</string>
     <string name="pause_save_quit">Save &amp; Quit</string>
     <string name="pause_quit">Quit</string>
     <string name="pause_start">Start</string>
-    
     <string name="tutorial_next">Next</string>
-    <string name="tutorial_step1_header">Trio game consists of 81 different cards. Each card has 4 attributes: </string>
+    <string name="tutorial_step1_header">Each card has 4 attributes: </string>
     <string name="tutorial_shape">Shape</string>
-    <string name="tutorial_number">Number of elements</string>
+    <string name="tutorial_number">Quantity</string>
     <string name="tutorial_colour">Color</string>
-    <string name="tutorial_fill">Fill</string>
+    <string name="tutorial_fill">Filling</string>
     <string name="tutorial_step2_header">Trio is a set of three cards, for which each attribute is either the same or different.</string>
     <string name="tutorial_1common">1 common attribute</string>
     <string name="tutorial_2common">2 common attributes</string>
@@ -56,24 +50,23 @@
     <string name="tutorial_wrong_shape">Shape is wrong. One card is different.</string>
     <string name="tutorial_wrong_number">Quantity is wrong. One card is different.</string>
     <string name="tutorial_wrong_color">Color is wrong. One card is different.</string>
-    <string name="tutorial_wrong_fill">Fill is wrong. One card is different.</string>
-    <string name="tutorial_wrong_message">Doesn\'t match: %1$s </string>
-    
+    <string name="tutorial_wrong_fill">Filling is wrong. One card is different.</string>
+    <string name="tutorial_wrong_message">Wrong: %1$s </string>
+    <string name="tutorial_back">Back</string>
+    <string name="tutorial_quit">Quit to menu</string>
+    <string name="tutorial_step3_header">Complete a trio. Find missing card</string>
+    <string name="tutorial_end">Congratulations!</string>
+    <string name="tutorial_end_message">You are ready to play Trio. Choose a game mode to start</string>
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Find trios until deck runs out of cards.</string>
     <string name="game_tutorial">Tutorial</string>
     <string name="game_tutorial_desc">Learn how to find trios.</string>
     <string name="game_challenge">Daily Challenge</string>
     <string name="game_challenge_desc">12 cards and 3 hidden trios. Find them as fast as you can.</string>
-    <string name="tutorial_back">Back</string>
-    <string name="tutorial_quit">Quit</string>
-    <string name="tutorial_step3_header">Complete a trio. Find missing card</string>
     <string name="game_start">Start</string>
-
     <string name="openfeint_question">Would you like to keep scores online using OpenFeint? (can be changed later in settings)</string>
-    
     <string name="music">\u266A</string>
-    
+    <string name="help_button">\?</string>
     <string name="settings">Settings</string>
     <string name="settings_gameplay">Gameplay</string>
     <string name="settings_display_errors">Display what was wrong</string>
@@ -81,11 +74,29 @@
     <string name="settings_main">OpenFeint</string>
     <string name="settings_using_openfeint">Use OpenFeint to keep scores</string>
     <string name="settings_using_openfeint_description">Requires granting OpenFeint permisson to post scores online. Enables achievements and leaderboards</string>
-    
     <string name="settings_play_music">Background music</string>
     <string name="settings_play_music_description">Plays background music on Trio startup</string>
     <string name="settings_play_sounds">Sound effects</string>
     <string name="settings_play_sounds_description">Plays sounds on clicking, selecting, etc.</string>
     <string name="settings_mute">Stop music</string>
     <string name="settings_unmute">Play music</string>
+    <string name="help_classic_fragment3_top">Game ends when there are no trios among remaining cards.</string>
+    <string name="help_quit">Back to game</string>
+    <string name="help_tutorial">How to find trio?</string>
+    <string name="practice_resign">Resign</string>
+    <string name="help_classic_goal">Your task is to find it as quickly as possible.</string>
+    <string name="help_classic_1">There is at least one trio hidden among cards on the screen.</string>
+    <string name="help_classic_2">Touch cards to select or unselect them.</string>
+    <string name="help_classic_3">Cards making up trio will be replaced with new ones.</string>
+    <string name="help_classic_4">Deck contains 81 different cards.</string>
+    <string name="help_classic_5">During the game you can use hints, though its number is limited and each usage will cost you 30 seconds.</string>
+    <string name="help_practice_goal">Your task is to find them as quickly as possible.</string>
+    <string name="help_practice_1">There are exactly three hidden trios among cards on the screen.</string>
+    <string name="help_practice_2">When selected three cards make trio, corresponding one will be revealed on the side.</string>
+    <string name="help_practice_3">Game ends when all three trios are found.</string>
+    <string name="help_practice_4">By resigining you can see trios you could not found.</string>
+    <string name="game_classic_continue">Continue</string>
+    <string name="game_classic_new_game">New Game</string>
+    <string name="game_challenge_new_game">New Challenge</string>
+
 </resources>

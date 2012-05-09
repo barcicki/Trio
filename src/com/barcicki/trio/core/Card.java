@@ -115,7 +115,11 @@ public class Card {
 
 		Paint paint = new Paint();
 		Paint shaderPaint = new Paint();
+		Paint whitePaint = new Paint();
 		
+		whitePaint.setStyle(Style.FILL);
+		whitePaint.setAntiAlias(true);
+		whitePaint.setColor(res.getColor(R.color.white));
 		shaderPaint.setStyle(Style.FILL);
 		shaderPaint.setAntiAlias(true);
 		paint.setAntiAlias(true);
@@ -140,11 +144,11 @@ public class Card {
 			case FILL_HALF:
 //				paint.setShader(new BitmapShader(BitmapFactory.decodeResource(res, R.drawable.shader), TileMode.REPEAT, TileMode.REPEAT));
 				paint.setStyle(Style.STROKE);
-				paint.setStrokeWidth(3);
+				paint.setStrokeWidth(2);
 				break;
 			case FILL_EMPTY:
 				paint.setStyle(Style.STROKE);
-				paint.setStrokeWidth(3);
+				paint.setStrokeWidth(2);
 				break;
 		}
 		
@@ -153,24 +157,40 @@ public class Card {
 		for (int i = 0; i < (number + 1); i++) {
 			switch (shape) {
 			case SHAPE_CIRCLE:
-				canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
-						item_size_width / 2f, paint);
 				
 				if (FILL_HALF == fill) {
 					canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
 							item_size_width / 2f, shaderPaint);
 				}
+				
+				if (FILL_EMPTY == fill) {
+					canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
+							item_size_width / 2f, whitePaint);
+				}
+				
+				canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
+						item_size_width / 2f, paint);
+				
 				break;
 			case SHAPE_SQUARE:
 				RectF rect = new RectF(points[i].x, points[i].y, points[i].x
 						+ item_size_width, points[i].y + item_size_height);
-				canvas.drawRect(rect, paint);
+				
 				
 				if (FILL_HALF == fill) {
 					canvas.drawRect(rect, shaderPaint);
 				}
+				
+				if (FILL_EMPTY == fill) {
+					canvas.drawRect(rect, whitePaint);
+				}
+				
+				canvas.drawRect(rect, paint);
+				
 				break;
 			case SHAPE_TRIANGLE:
+				
+				
 				Path path = new Path();
 				PointF top = new PointF(points[i].x + item_size_width / 2f, points[i].y + 0.1f * item_size_height);
 				PointF bottom_left = new PointF(points[i].x, points[i].y + item_size_height);
@@ -186,11 +206,17 @@ public class Card {
 				path.lineTo(top.x, top.y);
 				
 				path.close();
+				
+				if (FILL_EMPTY == fill) {
+					canvas.drawPath(path, whitePaint);
+				}
 
-				canvas.drawPath(path, paint);
 				if (FILL_HALF == fill) {
 					canvas.drawPath(path, shaderPaint);
 				}
+				
+				canvas.drawPath(path, paint);
+				
 			}
 
 		}

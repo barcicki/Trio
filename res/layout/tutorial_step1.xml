@@ -10,7 +10,7 @@
         android:name="com.barcicki.trio.tutorial.Tutorial1Fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="1" android:layout_margin="@dimen/margin_size">
         <!-- Preview: layout=@layout/tutorial_step1_fragment -->
     </fragment>
 
@@ -29,7 +29,7 @@
             android:onClick="onNextClicked"
             android:paddingLeft="@dimen/button_tutorial_padding_size"
             android:paddingRight="@dimen/button_tutorial_padding_size"
-            android:text="@string/tutorial_next" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
+            android:text="@string/tutorial_next" android:layout_marginLeft="@dimen/margin_size" android:layout_marginRight="@dimen/margin_size"/>
 
         <Button
             android:id="@+id/Button01"
@@ -41,7 +41,7 @@
             android:onClick="onBackClicked"
             android:paddingLeft="@dimen/button_tutorial_padding_size"
             android:paddingRight="@dimen/button_tutorial_padding_size"
-            android:text="@string/tutorial_quit" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
+            android:text="@string/tutorial_quit" android:layout_marginLeft="@dimen/margin_size" android:layout_marginRight="@dimen/margin_size"/>
 
     </RelativeLayout>
 

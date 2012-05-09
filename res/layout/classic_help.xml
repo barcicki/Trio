@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/help"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#a000"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_size"
+    android:visibility="visible" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/helpHolder"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.3" >
+    </android.support.v4.view.ViewPager>
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:padding="2dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/Button01"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size"
+            android:onClick="onTutorialButtonPressed"
+            android:text="@string/help_tutorial" />
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="onBackToGramePressed"
+            android:text="@string/help_quit" />
+    </LinearLayout>
+
+</LinearLayout>

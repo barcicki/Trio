@@ -31,6 +31,7 @@ public class CardGrid extends RelativeLayout {
 	private int mWidth = 0;
 	private int mHeight = 0;
 	private AnimationListener mRevealCardAnimationListener;
+	private int mOnMeasured = 0;
 
 	public CardGrid(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -50,6 +51,12 @@ public class CardGrid extends RelativeLayout {
 	public void setOnItemClickListener(OnClickListener listener) {
 		mOnClickListener = listener;
 		updateListener();
+	}
+
+	public void clearCards() {
+		mCards.clear();
+		mCardViews.clear();
+		removeAllViews();
 	}
 
 	public void setCards(CardList cards) {
@@ -248,10 +255,10 @@ public class CardGrid extends RelativeLayout {
 
 		int position = 0;
 		while (position + size <= mCardViews.size()) {
-			
-			if (Trio.LOCAL_LOGD) 
+
+			if (Trio.LOCAL_LOGD)
 				Log.d("CardGrid", "Try to reveal cards at " + position);
-			
+
 			List<CardView> cardViews = mCardViews.subList(position, position
 					+ size);
 			CardList row = new CardList();
@@ -260,16 +267,16 @@ public class CardGrid extends RelativeLayout {
 			}
 
 			if (CardList.areEqual(row, cardList)) {
-				
-				if (Trio.LOCAL_LOGD) 
+
+				if (Trio.LOCAL_LOGD)
 					Log.d("CardGrid", "Found and revealing  " + row);
-				
+
 				cardViews.get(0).setRevealAnimationListener(
 						mRevealCardAnimationListener);
 				for (CardView cv : cardViews) {
 					cv.animateReveal();
 				}
-				
+
 				return;
 			}
 
@@ -297,21 +304,20 @@ public class CardGrid extends RelativeLayout {
 			Log.d("CardGrid", "Render called: " + width + "x" + height);
 
 		if (!mRenderedViews || mWidth != width || mHeight != height) {
-			
 
-			int cards_size = getCards().size();
+			int cards_size = mCardViews.size();
 
 			if (cards_size > 0) {
 
 				CardGridSize gridSize = CardGridSize.getGridSize(cards_size);
 
-				int column_size = gridSize.getRowSize(0);
+				int column_size = gridSize.getMaxRowSize();
 				int rows = gridSize.getRowsSize();
 
-				int lower_size = (width > height) ? height : width;
-				int lower_divider = (column_size > rows) ? rows : column_size;
+				int size_by_height = (height / rows);
+				int size_by_width = (width / column_size);
 
-				int card_container = lower_size / lower_divider;
+				int card_container = Math.min(size_by_height, size_by_width);
 				int padding = (int) (5f / 100 * card_container);
 				int card_size = card_container - 2 * padding;
 
@@ -351,11 +357,7 @@ public class CardGrid extends RelativeLayout {
 					}
 
 					LayoutParams params = new LayoutParams(card_size, card_size);
-//					LayoutParams params = (RelativeLayout.LayoutParams) cv
-//							.getLayoutParams();
 
-//					params.width = card_size;
-//					params.height = card_size;
 					params.addRule(ALIGN_PARENT_LEFT, TRUE);
 					params.addRule(ALIGN_PARENT_TOP, TRUE);
 					params.setMargins(
@@ -364,11 +366,8 @@ public class CardGrid extends RelativeLayout {
 							padding_vertical
 									+ (row * (2 * padding_vertical + card_size)),
 							real_padding_horizontal, padding_vertical);
-					
-//					params.width = card_size;
-//					params.height = card_size;
+
 					cv.setLayoutParams(params);
-//					cv.forceMeasureSize(cards_size, cards_size);
 				}
 
 				mHeight = height;
@@ -388,94 +387,39 @@ public class CardGrid extends RelativeLayout {
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
 		if (Trio.LOCAL_LOGD)
-			Log.d("CardGrid", "onMeasure " + widthSize + "x" + heightSize);		
-
-		// getLayoutParams().width = widthSize;
-		// getLayoutParams().height = heightSize;
+			Log.d("CardGrid", "onMeasure " + widthSize + "x" + heightSize
+					+ " called " + (++mOnMeasured) + " time");
 
 		setMeasuredDimension(widthSize, heightSize);
 		renderCards(widthSize, heightSize);
-		
-//		forceLayout();
-//		int size = 
-//		int measure = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY);
-		
-//		for (CardView cv : mCardViews) {
-//			cv.measure(measure, measure);
-//		}
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 
-	// @Override
-	// protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	//
-	// if (Trio.LOCAL_LOGD)
-	// Log.d("CardGrid", "W: " + widthMeasureSpec + " H: "
-	// + heightMeasureSpec);
-	//
-	// super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	// }
+	public void setEmptyCardList(int quantity) {
+		mCards.clear();
+		mCardViews.clear();
+		removeAllViews();
 
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//		renderCards(r - l, b - t);
-		super.onLayout(changed, l, t, r, b);
+		int id = 1;
+		for (int i = 0; i < quantity; i++) {
+
+			CardView cardView = new CardView(getContext());
+			cardView.setId(ID_OFFSET + id++);
+			cardView.setCard(null);
+			cardView.setImageResource(R.drawable.square_reverse);
+			cardView.setOnClickListener(mOnClickListener);
+
+			addView(cardView);
+			mCardViews.add(cardView);
+
+		}
 	}
 
-	// @Override
-	// public void draw(Canvas canvas) {
-	// if (!mRenderedViews) {
-	// renderCards(canvas.getWidth(), canvas.getHeight());
-	// }
-	// super.draw(canvas);
-	// }
-
-	// @Override
-	// protected void onFinishInflate() {
-	// if (Trio.LOCAL_LOGD)
-	// Log.d("CardGrid", "onFinishInflate");
-	//
-	// if (!mCards.isEmpty()) {
-	// mCardViews.clear();
-	// for (Card card : mCards) {
-	// CardView cv = new CardView(getContext());
-	// mCardViews.add(cv);
-	// addView(cv);
-	// }
-	// invalidate();
-	// }
-	//
-	// super.onFinishInflate();
-	// }
-
-//	@Override
-//	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//		// if (!mRenderedViews) {
-//		// renderCards(r - l, b - t);
-//		// changed = true;
-//		// // invalidate();
-//		// // refreshDrawableState();
-//		// // }
-//		// // super.onLayout(changed, l, t, r, b);
-//		// invalidate();
-//		super.onLayout(changed, l, t, r, b);
-//	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		if (Trio.LOCAL_LOGD)
-			Log.d("CardGrid",
-					"onDraw: " + canvas.getWidth() + "x" + canvas.getHeight());
-
-		canvas.drawText("asdasd", 0.5f, 0.5f, new Paint());
-
-		super.onDraw(canvas);
+	public void setCardsToCardViews(CardList cards, int startIndex) {
+		int size = cards.size();
+		for (int i = 0; i < size; i++) {
+			mCardViews.get(i + startIndex).setCard(cards.get(i));
+		}
 	}
 
-	// @Override
-	// public void invalidate() {
-	// mRenderedViews = false;
-	// requestLayout();
-	// super.invalidate();
-	// }
 }

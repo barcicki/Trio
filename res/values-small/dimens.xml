@@ -12,5 +12,18 @@
     <dimen name="button_padding_size">5dp</dimen>
     <dimen name="clock_size">20sp</dimen>
     <dimen name="score_size">35sp</dimen>
+   
+    <dimen name="home_button_size">40dp</dimen>
+    <dimen name="home_button_padding_size">10dp</dimen>
+    <dimen name="home_card_size">130dp</dimen>
+    <dimen name="home_card_top">100dp</dimen>
+    <dimen name="home_card_overshoot">90dp</dimen>
+    <dimen name="home_logo_height">90dp</dimen>
+    <dimen name="home_logo_width">400dp</dimen>
+    <dimen name="home_font_size">14sp</dimen>
+    <dimen name="home_music_font_size">18sp</dimen>
+    <dimen name="home_button_width">120dp</dimen>
+    <dimen name="home_button_height">40dp</dimen>
+    <dimen name="home_button_spacing">50dp</dimen>
 
 </resources>

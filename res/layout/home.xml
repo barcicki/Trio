@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" android:layout_margin="30dp">
+        android:orientation="vertical" android:layout_margin="@dimen/margin_size">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -133,6 +133,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/musicSwitch"
+                        style="@style/nice_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:text="@string/music" android:onClick="onMusicButtonPressed"/>
+
                 </FrameLayout>
 
             </LinearLayout>

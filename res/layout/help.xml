@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/help"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#d000"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_size"
+    android:visibility="visible" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/helpHolder"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.3" >
+    </android.support.v4.view.ViewPager>
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/Button01"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_size"
+            android:onClick="onTutorialPressed"
+            android:text="@string/help_tutorial" />
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onContinuePressed"
+            android:text="@string/help_quit" />
+
+    </RelativeLayout>
+
+</LinearLayout>

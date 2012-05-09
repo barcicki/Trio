@@ -67,7 +67,7 @@ public class CardView extends ImageView  {
 
 		if (null != card) {
 			
-			if (null == this.cardCache) {
+			if (null == this.cardCache && getWidth() > 0 && getHeight() > 0) {
 				
 				this.cardCache = Bitmap.createBitmap(getWidth(), getHeight(),
 						Config.ARGB_8888);
@@ -104,7 +104,7 @@ public class CardView extends ImageView  {
 												
 			}
 			
-			if (this.overdraw) {
+			if (this.overdraw && getWidth() > 0 && getHeight() > 0) {
 				canvas.drawBitmap(this.cardCache, 0, 0, null);
 			} else {
 				super.onDraw(canvas);
@@ -163,16 +163,21 @@ public class CardView extends ImageView  {
 	}
 	
 	public void animateSwitchCard(final Card nextCard) {
-		int duration = getResources().getInteger(R.integer.card_fail_anim_duration);
+		int duration = getResources().getInteger(R.integer.card_flip_anim_duration);
 		animateSwitchCard(nextCard, duration);
 	}
 	
-	public void animateSwitchCard(final Card nextCard, int duration) {
+	public void animateSwitchCard(Card card, int duration) {
+		animateSwitchCard(card, duration, 0);
+	}
+	
+	public void animateSwitchCard(final Card nextCard, int duration, int delay) {
 //		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
 		final Animation switchAnimation = new CardFlipAnimation(0, 90);
 //		final Animation switchBackAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_reflip);
 		final Animation switchBackAnimation = new CardFlipAnimation(270, 360);
 		switchAnimation.setDuration(duration);
+		switchAnimation.setStartOffset(delay);
 		switchBackAnimation.setDuration(duration);
 		switchBackAnimation.setAnimationListener(new AnimationListener() {
 			
@@ -333,5 +338,7 @@ public class CardView extends ImageView  {
 	public void forceMeasureSize(int width, int height) {
 		setMeasuredDimension(width, height);
 	}
+
+
 	
 }

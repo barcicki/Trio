@@ -21,6 +21,7 @@ public class TrioActivity extends FragmentActivity {
 	
 	@Override
 	protected void onResume() {
+		mSoundManager = SoundManager.getInstance(this);
 		playBackgroundMusic();
 		mSoundContinue = false;
 		updateMusicButtonStatus();
@@ -29,7 +30,7 @@ public class TrioActivity extends FragmentActivity {
 	
 	@Override
 	protected void onPause() {
-		if (mSoundManager.isBackgroundPlaying() && !mSoundContinue) {
+		if (mSoundManager != null && mSoundManager.isBackgroundPlaying() && !mSoundContinue) {
 			mSoundManager.pauseBackground();
 		}
 		super.onPause();

@@ -57,6 +57,10 @@ public class CardGridSize {
 		return -1;
 	}
 	
+	public int getMaxRowSize() {
+		return mMax;
+	}
+	
 	public boolean isRowFull(int row) {
 		return mMap.get(row) == mMax;
 	}

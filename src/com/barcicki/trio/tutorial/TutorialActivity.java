@@ -12,6 +12,7 @@ import com.barcicki.trio.core.TrioSettings;
 
 public class TutorialActivity extends TrioActivity {
 	static int EXIT_CODE = 9;
+	static int SILENT_EXIT_CODE = 8;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class TutorialActivity extends TrioActivity {
 		// TODO Auto-generated method stub
 		if (resultCode == TutorialActivity.EXIT_CODE) {
 			startHomeActivity();
+			finish();
+		} else if (resultCode == TutorialActivity.SILENT_EXIT_CODE) {
 			finish();
 		}
 
