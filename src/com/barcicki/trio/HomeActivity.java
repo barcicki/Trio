@@ -18,7 +18,6 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
-import com.barcicki.trio.tutorial.TutorialActivity;
 import com.openfeint.api.ui.Dashboard;
 
 public class HomeActivity extends TrioActivity {
@@ -109,31 +108,31 @@ public class HomeActivity extends TrioActivity {
 		super.onResume();
 	}
 
-	public void onStartGame(View v) {
-		makeClickSound();
-		Intent intent;
-		switch (v.getId()) {
-
-		case R.id.gameClassic:
-			setMusicContinue(true);
-			intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-			startActivity(intent);
-			break;
-
-		case R.id.gameChallenge:
-			setMusicContinue(true);
-			intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
-			startActivity(intent);
-			break;
-
-		case R.id.gameTutorial:
-			setMusicContinue(true);
-			intent = new Intent(HomeActivity.this, TutorialActivity.class);
-			startActivity(intent);
-			break;
-
-		}
-	}
+//	public void onStartGame(View v) {
+//		makeClickSound();
+//		Intent intent;
+//		switch (v.getId()) {
+//
+//		case R.id.gameClassic:
+//			setMusicContinue(true);
+//			intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
+//			startActivity(intent);
+//			break;
+//
+//		case R.id.gameChallenge:
+//			setMusicContinue(true);
+//			intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
+//			startActivity(intent);
+//			break;
+//
+//		case R.id.gameTutorial:
+//			setMusicContinue(true);
+//			intent = new Intent(HomeActivity.this, TutorialStep1Activity.class);
+//			startActivity(intent);
+//			break;
+//
+//		}
+//	}
 
 	public void onOpenFeintPressed(View v) {
 		makeClickSound();

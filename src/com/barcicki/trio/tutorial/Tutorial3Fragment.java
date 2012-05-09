@@ -5,7 +5,9 @@ import java.util.EnumSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barcicki.trio.ClassicGameActivity;
+import com.barcicki.trio.PracticeGameActivity;
 import com.barcicki.trio.R;
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardList;
@@ -30,6 +34,7 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
+import com.barcicki.trio.core.TrioActivity;
 
 public class Tutorial3Fragment extends Fragment {
 	private static final int NUMBER_OF_ADDITIONAL_CARDS = 4;
@@ -48,16 +53,21 @@ public class Tutorial3Fragment extends Fragment {
 	private CardView mOptionC;
 	private CardView mOptionD;
 	private CardView mOptionE;
+	
+	private TrioActivity mActivity;
 
 	private static final ScheduledExecutorService mWorker = Executors
 			.newSingleThreadScheduledExecutor();
 
 	private Trio mTrio = new Trio();
+	private Dialog mDialog;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
+		mActivity = (TrioActivity) getActivity();
 
 		mPrev = (Button) getView().findViewById(R.id.buttonPrev);
 		mNext = (Button) getView().findViewById(R.id.buttonNext);
@@ -72,9 +82,44 @@ public class Tutorial3Fragment extends Fragment {
 		mOptionD = (CardView) getView().findViewById(R.id.card7);
 		mOptionE = (CardView) getView().findViewById(R.id.card8);
 
-		prepareSets();
+		attachListeners();
 		showSet();
 		
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		prepareSets();
+		super.onAttach(activity);
+	}
+
+	private void attachListeners() {
+		mPrev.setOnClickListener(new OnClickListener() {			
+			public void onClick(View v) {
+				SoundManager.getInstance(getActivity()).playSound(
+						SoundManager.SOUND_CLICK);
+				onPrevSetClicked(v);
+			}
+		});
+		mNext.setOnClickListener(new OnClickListener() {			
+			public void onClick(View v) {
+				SoundManager.getInstance(getActivity()).playSound(
+						SoundManager.SOUND_CLICK);
+				onNextSetClicked(v);
+			}
+		});
+		
+		OnClickListener selectCardsListener = new OnClickListener() {
+			public void onClick(View v) {
+				onSelectCard(v);
+			}
+		};
+		
+		mOptionA.setOnClickListener(selectCardsListener);
+		mOptionB.setOnClickListener(selectCardsListener);
+		mOptionC.setOnClickListener(selectCardsListener);
+		mOptionD.setOnClickListener(selectCardsListener);
+		mOptionE.setOnClickListener(selectCardsListener);
 	}
 
 	@Override
@@ -175,33 +220,43 @@ public class Tutorial3Fragment extends Fragment {
 	}
 
 	private void showEndingDialog() {
-		final Dialog dialog = new Dialog(getActivity());
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.tutorial_dialog);
-		dialog.setCancelable(true);
-		dialog.getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		dialog.show();
+		mDialog = new Dialog(getActivity());
+		mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		mDialog.setContentView(R.layout.tutorial_dialog);
+		mDialog.setCancelable(true);
+//		mDialog.getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		mDialog.show();
 		
-		// probably very bad code
-		
-		dialog.findViewById(R.id.startClassic).setOnClickListener(new OnClickListener() {
+		mDialog.findViewById(R.id.startClassic).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				((TutorialStep3Activity) getActivity()).onStartClassic(v);
-				dialog.dismiss();
+				
+				mActivity.makeClickSound();
+				mActivity.setMusicContinue(true);
+				Intent intent = new Intent(mActivity, ClassicGameActivity.class);
+				startActivity(intent);
+				mActivity.finish();
+				mDialog.dismiss();
+				
 			}
 		});
 
-		dialog.findViewById(R.id.startChallenge).setOnClickListener(new OnClickListener() {
+		mDialog.findViewById(R.id.startChallenge).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				((TutorialStep3Activity) getActivity()).onStartChallenge(v);
-				dialog.dismiss();
+				mActivity.makeClickSound();
+				mActivity.setMusicContinue(true);
+				Intent intent = new Intent(mActivity, PracticeGameActivity.class);
+				startActivity(intent);
+				mActivity.finish();
+				mDialog.dismiss();
 			}
 		});
 		
-		dialog.findViewById(R.id.justQuit).setOnClickListener(new OnClickListener() {
+		mDialog.findViewById(R.id.justQuit).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				((TutorialStep3Activity) getActivity()).onQuitClicked(v);
-				dialog.dismiss();
+				mActivity.makeClickSound();
+				mActivity.startHomeActivity();
+				mActivity.finish();
+				mDialog.dismiss();
 			}
 		});
 	
@@ -329,6 +384,14 @@ public class Tutorial3Fragment extends Fragment {
 		mCurrentSet += 1;
 		showSet();
 		
+	}
+	
+	@Override
+	public void onPause() {
+		if (mDialog != null) {
+			mDialog.dismiss();
+		}
+		super.onPause();
 	}
 	
 	

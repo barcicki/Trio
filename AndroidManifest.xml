@@ -35,7 +35,12 @@
         </activity>
          -->
         <activity
-            android:name=".tutorial.TutorialActivity"
+            android:name=".TutorialActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".tutorial.TutorialStep1Activity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>

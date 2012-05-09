@@ -13,14 +13,8 @@
         android:id="@+id/helpHolder"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="0.3" >
+        android:layout_weight="0.2" >
     </android.support.v4.view.ViewPager>
-
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp" />
 
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
@@ -29,6 +23,14 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal" >
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="2dp" />
 
         <Button
             android:id="@+id/Button01"
@@ -50,6 +52,7 @@
             android:layout_alignParentTop="true"
             android:onClick="onContinuePressed"
             android:text="@string/help_quit" />
+
 
     </RelativeLayout>
 

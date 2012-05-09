@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barcicki.trio.R;
+import com.barcicki.trio.TutorialActivity;
 import com.barcicki.trio.core.Trio.TrioStatus;
-import com.barcicki.trio.tutorial.TutorialActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class TrioGameActivity extends TrioActivity {
@@ -166,7 +166,7 @@ public class TrioGameActivity extends TrioActivity {
 	
 	public void onContinuePressed(View v) {
 		makeClickSound();
-		hideHelpOverlay();
+		hideOverlays();
 	}
 	
 	public void onTutorialPressed(View v) {
@@ -174,7 +174,6 @@ public class TrioGameActivity extends TrioActivity {
 		setMusicContinue(true);
 		Intent intent = new Intent(this, TutorialActivity.class);
 		startActivity(intent);
-		finish();
 	}
 	
 	/* Timer */

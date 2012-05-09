@@ -56,7 +56,7 @@
     <string name="tutorial_quit">Quit to menu</string>
     <string name="tutorial_step3_header">Complete a trio. Find missing card</string>
     <string name="tutorial_end">Congratulations!</string>
-    <string name="tutorial_end_message">You are ready to play Trio. Choose a game mode to start</string>
+    <string name="tutorial_end_message">You are ready to play Trio. Choose a game mode to start with</string>
     <string name="game_classic">Classic Trio</string>
     <string name="game_classic_desc">Find trios until deck runs out of cards.</string>
     <string name="game_tutorial">Tutorial</string>

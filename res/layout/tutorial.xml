@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+    android:id="@+id/tutorial"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg_static"
-    android:orientation="vertical" >
-
-	<fragment
-	    android:name="com.barcicki.trio.tutorial.Tutorial1Fragment"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" android:layout_weight="1">
-	    <!-- Preview: layout=@layout/tutorial_step1 -->
-	</fragment>
+    android:clickable="true"
+    android:orientation="vertical"
+    android:visibility="visible" >
 
-		<fragment
-	    android:name="com.barcicki.trio.tutorial.Tutorial2Fragment"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" android:layout_weight="1">
-	    <!-- Preview: layout=@layout/tutorial_step2 -->
-	</fragment>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/tutorialHolder"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/margin_size"
+        android:layout_weight="0.2" >
+    </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/margin_size"
+        android:layout_marginRight="@dimen/margin_size"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="2dp" />
+
+        <Button
+            android:id="@+id/Button01"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_size"
+            android:onClick="onQuitPressed"
+            android:text="@string/tutorial_back" />
+
+        <Button
+            android:id="@+id/slideNext"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:onClick="onNextSlidePressed"
+            android:text=">>" />
+
+        <Button
+            android:id="@+id/slidePrev"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/slideNext"
+            android:layout_marginRight="@dimen/margin_size"
+            android:onClick="onPrevSlidePressed"
+            android:text="&lt;&lt;" />
+    </RelativeLayout>
 
 </LinearLayout>

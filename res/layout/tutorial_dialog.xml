@@ -6,16 +6,16 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_size"
         android:gravity="center"
         android:text="@string/tutorial_end"
-        android:textSize="@dimen/tutorial_task_size" />
+        android:textSize="@dimen/tutorial_task_size" android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_size"
@@ -24,28 +24,23 @@
         android:textSize="@dimen/button_text_size" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center">
+
+        <Button
             android:id="@+id/startClassic"
             style="@style/nice_button"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/score_size"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_size"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:src="@drawable/classic" />
-
-        <ImageButton
+            android:text="@string/game_classic_new_game" android:layout_gravity="center" android:layout_width="@dimen/home_button_width"/>
+
+        <Button
             android:id="@+id/startChallenge"
             style="@style/nice_button"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/score_size"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_size"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:src="@drawable/challenge" />
+            android:text="@string/game_challenge_new_game" android:layout_gravity="center" android:layout_width="@dimen/home_button_width"/>
+
     </LinearLayout>
 
     <Button

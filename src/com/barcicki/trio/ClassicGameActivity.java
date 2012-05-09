@@ -426,8 +426,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 	public void onHintClicked(View v) {
 		makeClickSound();
-		if (gHintsRemained > 0 && !isPauseOverlayVisible()
-				&& !isHelpOverlayVisible()) {
+		if (gHintsRemained > 0) {
 			ArrayList<CardList> trios = mTrio.getTable().getTrios();
 			int selectedSize = gSelectedCards.size();
 

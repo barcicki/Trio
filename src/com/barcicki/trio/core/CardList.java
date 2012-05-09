@@ -124,7 +124,6 @@ public class CardList extends ArrayList<Card> {
 					for (int k = (j + 1); k < size; k++) {
 						if (Trio.isTrio(get(i), get(j), get(k))) {
 							CardList trio = new CardList(get(i), get(j), get(k));
-							trio.shuffle();
 							trios.add(trio);
 							if (Trio.LOCAL_LOGV) Log.v("CardList", "Trio collected");
 						}
@@ -133,7 +132,6 @@ public class CardList extends ArrayList<Card> {
 			}
 			
 		}
-		Collections.shuffle(trios);
 		return trios;
 	}
 	

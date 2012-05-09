@@ -80,7 +80,6 @@
                 android:id="@+id/card4"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:onClick="onSelectCard"
                 android:src="@drawable/square_reverse" android:layout_weight="1"/>
 
         </LinearLayout>
@@ -102,7 +101,6 @@
                 android:id="@+id/card5"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:onClick="onSelectCard"
                 android:src="@drawable/square_reverse" android:layout_weight="1"/>
 
         </LinearLayout>
@@ -124,7 +122,6 @@
                 android:id="@+id/card6"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:onClick="onSelectCard"
                 android:src="@drawable/square_reverse" android:layout_weight="1"/>
 
         </LinearLayout>
@@ -146,7 +143,6 @@
                 android:id="@+id/card7"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:onClick="onSelectCard"
                 android:src="@drawable/square_reverse" android:layout_weight="1"/>
 
         </LinearLayout>
@@ -168,7 +164,6 @@
                 android:id="@+id/card8"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:onClick="onSelectCard"
                 android:src="@drawable/square_reverse" android:layout_weight="1"/>
 
         </LinearLayout>
@@ -196,7 +191,6 @@
             style="@style/nice_button"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:onClick="onPrevSetClicked"
             android:text="&lt;&lt;" android:paddingBottom="1dp" android:paddingTop="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
 
         <TextView
@@ -212,7 +206,6 @@
             style="@style/nice_button"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:onClick="onNextSetClicked"
             android:text=">>" android:paddingTop="1dp" android:paddingBottom="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
 
         <FrameLayout
