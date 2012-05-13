@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onPressedContinue"
                 android:text="@string/pause_continue" android:paddingBottom="15dp" android:paddingTop="15dp"/>
-
+
             <Button
                 android:id="@+id/gameNew"
                 style="@style/nice_button"
@@ -37,7 +37,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:onClick="onPressedNewGame"
-                android:text="@string/pause_new_game" android:paddingBottom="15dp" android:paddingTop="15dp"/>
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/game_challenge_new_game" />
 
             <Button
                 android:id="@+id/gameRestart"

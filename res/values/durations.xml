@@ -9,5 +9,6 @@
     <integer name="navigation_fade_in_duration">200</integer>
     <integer name="navigation_slide_duration">200</integer>
     <integer name="card_flip_slow_animation">1000</integer>
+    <integer name="activity_anim_duration">200</integer>
 
 </resources>

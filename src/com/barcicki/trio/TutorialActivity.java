@@ -43,7 +43,7 @@ public class TutorialActivity extends TrioActivity {
 		mTutorialIndicator.setStrokeColor(getResources().getColor(R.color.black));
 		mTutorialIndicator.setStrokeWidth(2f);
 		
-		mTutorialPager.setOnPageChangeListener(new OnPageChangeListener() {
+		mTutorialIndicator.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			public void onPageSelected(int arg0) {
 				updateControlVisibility();

@@ -16,6 +16,7 @@ public class TrioActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
 		mSoundManager = SoundManager.getInstance(this);
 	}
 	
@@ -97,6 +98,19 @@ public class TrioActivity extends FragmentActivity {
 		
 		TrioSettings.writeBooleanPreference(this, "play_music", !musicStatus);
 		updateMusicButtonStatus();
+	}
+	
+	@Override
+	public void startActivity(Intent intent) {
+		super.startActivity(intent);
+		overridePendingTransition(R.anim.pull_top, R.anim.push_bottom);
+	}
+	
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
 	}
 	
 	@Override

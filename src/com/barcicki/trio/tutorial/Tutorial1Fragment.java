@@ -14,6 +14,12 @@ import com.barcicki.trio.core.CardView;
 public class Tutorial1Fragment extends Fragment {
 	
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);

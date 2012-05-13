@@ -32,7 +32,7 @@ public class HomeActivity extends TrioActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home2);
+		setContentView(R.layout.home);
 
 		mCard = (CardView) findViewById(R.id.gameCard);
 		mOpenFeint = (ImageView) findViewById(R.id.openFeintButton);
@@ -160,6 +160,7 @@ public class HomeActivity extends TrioActivity {
 		setMusicContinue(true);
 		Intent intent = new Intent(HomeActivity.this,
 				PracticeGameActivity.class);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(intent);
 	}
 
@@ -246,6 +247,12 @@ public class HomeActivity extends TrioActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+//	@Override
+//	protected void onPause() {
+//		overridePendingTransition(R.anim.hold, R.anim.push_left);
+//		super.onPause();
+//	}
 
 	@Override
 	protected void onDestroy() {

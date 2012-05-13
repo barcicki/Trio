@@ -38,12 +38,14 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
+
         <com.barcicki.trio.core.CardView
             android:id="@+id/card3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/square_question" android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:keepScreenOn="true"
+            android:src="@drawable/square_question" />
 
         <FrameLayout
             android:layout_width="fill_parent"

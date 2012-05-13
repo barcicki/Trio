@@ -63,6 +63,12 @@ public class Tutorial3Fragment extends Fragment {
 	private Dialog mDialog;
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		prepareSets();
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
@@ -85,12 +91,6 @@ public class Tutorial3Fragment extends Fragment {
 		attachListeners();
 		showSet();
 		
-	}
-	
-	@Override
-	public void onAttach(Activity activity) {
-		prepareSets();
-		super.onAttach(activity);
 	}
 
 	private void attachListeners() {
