@@ -6,7 +6,7 @@
     android:gravity="top"
     android:orientation="vertical"
     android:padding="@dimen/margin_size" >
-
+
     <ImageView
         android:id="@+id/trioLogo"
         android:layout_width="@dimen/home_logo_width"
@@ -14,13 +14,15 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/trio_static" />
-
+
     <com.barcicki.trio.core.CardView
         android:id="@+id/gameCard"
         android:layout_width="@dimen/home_card_size"
         android:layout_height="@dimen/home_card_size"
-        android:src="@drawable/square_reverse" android:layout_centerHorizontal="true" android:layout_marginTop="@dimen/home_card_top"/>
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/home_card_top"
+        android:src="@drawable/square_reverse" />
+
     <Button
         android:id="@+id/classicContinue"
         style="@style/nice_button"
@@ -32,7 +34,7 @@
         android:onClick="onClassicContinuePressed"
         android:text="@string/game_classic_continue"
         android:textSize="@dimen/home_font_size" />
-
+
     <Button
         android:id="@+id/classicNew"
         style="@style/nice_button"
@@ -45,7 +47,7 @@
         android:onClick="onClassicNewGamePressed"
         android:text="@string/game_classic_new_game"
         android:textSize="@dimen/home_font_size" />
-
+
     <Button
         android:id="@+id/runTutorial"
         style="@style/nice_button"
@@ -56,7 +58,7 @@
         android:onClick="onTutorialPressed"
         android:text="@string/game_tutorial"
         android:textSize="@dimen/home_font_size" />
-
+
     <Button
         android:id="@+id/challengeNew"
         style="@style/nice_button"
@@ -81,17 +83,5 @@
         android:padding="@dimen/home_button_padding_size"
         android:text="@string/music"
         android:textSize="@dimen/home_music_font_size" />
-
-    <ImageButton
-        android:id="@+id/openFeintButton"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_size"
-        android:layout_height="@dimen/home_button_size"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imageView1"
-        android:onClick="onOpenFeintPressed"
-        android:padding="@dimen/home_button_padding_size"
-        android:scaleType="fitCenter"
-        android:src="@drawable/att_of_logo" />
 
 </RelativeLayout>

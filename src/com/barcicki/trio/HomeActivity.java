@@ -1,7 +1,5 @@
 package com.barcicki.trio;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +16,6 @@ import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
-import com.openfeint.api.ui.Dashboard;
 
 public class HomeActivity extends TrioActivity {
 
@@ -35,7 +32,6 @@ public class HomeActivity extends TrioActivity {
 		setContentView(R.layout.home);
 
 		mCard = (CardView) findViewById(R.id.gameCard);
-		mOpenFeint = (ImageView) findViewById(R.id.openFeintButton);
 		mTrioLogo = (ImageView) findViewById(R.id.trioLogo);
 		mContinueButton = (Button) findViewById(R.id.classicContinue);
 
@@ -45,45 +41,6 @@ public class HomeActivity extends TrioActivity {
 			mContinueButton.setEnabled(false);
 		}
 		
-		mOpenFeint.setVisibility(View.INVISIBLE);
-		if (!TrioSettings.hasBeenAskedAboutOpenFeint(this)) {
-
-			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					TrioSettings.setBeenAskedAboutOpenFeint(
-							getApplicationContext(), true);
-					switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-						TrioSettings.setUsesOpenFeint(getApplicationContext(),
-								true);
-						TrioSettings
-								.initializeOpenFeint(getApplicationContext());
-						mOpenFeint.setVisibility(View.VISIBLE);
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						TrioSettings.setUsesOpenFeint(getApplicationContext(),
-								false);
-						mOpenFeint.setVisibility(View.INVISIBLE);
-						break;
-					}
-				}
-			};
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.openfeint_question)
-					.setPositiveButton(android.R.string.yes,
-							dialogClickListener)
-					.setNegativeButton(android.R.string.no, dialogClickListener)
-					.show();
-
-		} else {
-			if (TrioSettings.usesOpenFeint(this)) {
-				TrioSettings.initializeOpenFeint(getApplicationContext());
-				mOpenFeint.setVisibility(View.VISIBLE);
-			} else {
-				mOpenFeint.setVisibility(View.INVISIBLE);
-			}
-		}
 
 		applyAnimations();
 
@@ -98,13 +55,6 @@ public class HomeActivity extends TrioActivity {
 			mContinueButton.setEnabled(false);
 		}
 		
-		if (TrioSettings.usesOpenFeint(this)) {
-			// TrioSettings.initializeOpenFeint(getApplicationContext());
-			mOpenFeint.setVisibility(View.VISIBLE);
-		} else {
-			mOpenFeint.setVisibility(View.INVISIBLE);
-		}
-
 		super.onResume();
 	}
 
@@ -136,8 +86,6 @@ public class HomeActivity extends TrioActivity {
 
 	public void onOpenFeintPressed(View v) {
 		makeClickSound();
-		TrioSettings.initializeOpenFeint(getApplicationContext());
-		Dashboard.open();
 	}
 
 	public void onClassicContinuePressed(View v) {

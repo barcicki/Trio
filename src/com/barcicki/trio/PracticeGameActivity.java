@@ -1,10 +1,8 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -22,11 +20,8 @@ import com.barcicki.trio.core.CardGrid;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
-import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.core.TrioGameActivity;
 import com.barcicki.trio.core.TrioSettings;
-import com.openfeint.api.resource.Achievement;
-import com.openfeint.api.resource.Achievement.UnlockCB;
 
 public class PracticeGameActivity extends TrioGameActivity {
 	private static int NUMBER_OF_TRIOS = 3;
@@ -157,9 +152,6 @@ public class PracticeGameActivity extends TrioGameActivity {
 		
 		gGameEnded = true;
 
-		if (TrioSettings.usesOpenFeint(this)) {
-			submitToOpenFeint();
-		}
 	
 	}
 	
@@ -303,74 +295,6 @@ public class PracticeGameActivity extends TrioGameActivity {
 				
 	}
 	
-	private void submitToOpenFeint() {
-		
-		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_CHALLENGE_ID, gElapsedTime, gElapsedTimeString);
-//		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID, TrioSettings.getChallengeGamePoints(gElapsedTime));
-		
-//		ServerTimestamp.get(new GetCB() {
-//			@Override
-//			public void onSuccess(ServerTimestamp currentTime) {
-//				long score = Long.MAX_VALUE - (currentTime.secondsSinceEpoch * 1000 / TrioSettings.DAY) * TrioSettings.DAY + gElapsedTime;
-//				TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_DAILY_CHALLENGE_ID, score, DateFormat.format("MM/dd/yy", new Date()) + " " + gElapsedTimeString);				
-//			}
-//		});
-//		
-		
-		// finish game achievement
-		Achievement endingAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_FINISH);
-		if (!endingAchievement.isUnlocked) {
-			endingAchievement.unlock(new UnlockCB() {
-				@Override
-				public void onSuccess(boolean newUnlock) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-		}
-				
-		// turtle speed achievement
-		if (gElapsedTime < 2L * 60 * 1000) {
-			Achievement turtleAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_GOOD);
-			if (!turtleAchievement.isUnlocked) {
-				turtleAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-			}
-		}
-			
-		// gepard speed achievement
-		if (gElapsedTime <= 30 * 1000) {
-			Achievement gepardAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_QUICK);
-			if (!gepardAchievement.isUnlocked) {
-				gepardAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-			}
-		}
-
-		// lighting speed achievement
-		if (gElapsedTime <= 10 * 1000) {
-			Achievement blitzAchievement = new Achievement(TrioSettings.ACHIEVEMENT_CHALLENGE_BLITZ);
-			if (!blitzAchievement.isUnlocked) {
-				blitzAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-			}
-		}
-	}
 	
 	@Override
 	protected void onShowPauseOverlay() {

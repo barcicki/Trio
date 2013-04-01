@@ -1,18 +1,11 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,14 +16,9 @@ import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardGrid;
 import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.CardView;
-import com.barcicki.trio.core.HelpAdapter;
 import com.barcicki.trio.core.Trio;
-import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.core.TrioGameActivity;
 import com.barcicki.trio.core.TrioSettings;
-import com.openfeint.api.resource.Achievement;
-import com.openfeint.api.resource.Achievement.UnlockCB;
-import com.viewpagerindicator.CirclePageIndicator;
 
 public class ClassicGameActivity extends TrioGameActivity {
 	private static int NUMBER_OF_HINTS = 10;
@@ -107,9 +95,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 		gGameEnded = true;
 
-		if (TrioSettings.usesOpenFeint(this)) {
-			submitToOpenFeint();
-		}
 	}
 
 	private void resetGameStatus() {
@@ -169,86 +154,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 		resumeGame();
 	}
 
-	private void submitToOpenFeint() {
-
-		TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_CLASSIC_ID,
-				gElapsedTime, gElapsedTimeString);
-		// TrioSettings.submitToOpenFeint(TrioSettings.LEADERBOARD_TOTAL_ID,
-		// TrioSettings.getClassicGamePoints(gElapsedTime));
-
-		// finish game achievement
-		Achievement endingAchievement = new Achievement(
-				TrioSettings.ACHIEVEMENT_CLASSIC_FINISH);
-		if (!endingAchievement.isUnlocked) {
-			endingAchievement.unlock(new UnlockCB() {
-				@Override
-				public void onSuccess(boolean newUnlock) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-		}
-
-		// no hints used achievement
-		if (gHintsRemained == NUMBER_OF_HINTS) {
-			Achievement pureAchievement = new Achievement(
-					TrioSettings.ACHIEVEMENT_CLASSIC_FAIR);
-			if (!pureAchievement.isUnlocked) {
-				pureAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-			}
-		}
-
-		// turtle speed achievement
-		if (gElapsedTime < 10L * 60 * 1000) {
-			Achievement turtleAchievement = new Achievement(
-					TrioSettings.ACHIEVEMENT_CLASSIC_GOOD);
-			if (!turtleAchievement.isUnlocked) {
-				turtleAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-			}
-		}
-
-		// gepard speed achievement
-		if (gElapsedTime < 5L * 60 * 1000) {
-			Achievement gepardAchievement = new Achievement(
-					TrioSettings.ACHIEVEMENT_CLASSIC_QUICK);
-			if (!gepardAchievement.isUnlocked) {
-				gepardAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-			}
-		}
-
-		// lighting speed achievement
-		if (gElapsedTime < 2L * 60 * 1000) {
-			Achievement blitzAchievement = new Achievement(
-					TrioSettings.ACHIEVEMENT_CLASSIC_BLITZ);
-			if (!blitzAchievement.isUnlocked) {
-				blitzAchievement.unlock(new UnlockCB() {
-					@Override
-					public void onSuccess(boolean newUnlock) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-			}
-		}
-	}
 
 	private void attachCardListeners() {
 
