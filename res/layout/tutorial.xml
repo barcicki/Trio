@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tutorial"
+<LinearLayout android:id="@+id/tutorial"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:clickable="true"
     android:orientation="vertical"
-    android:visibility="visible" >
+    android:visibility="visible" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/tutorialHolder"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="@dimen/margin_size"
+        android:layout_marginBottom="@dimen/margin_size"
         android:layout_weight="0.2" >
+
     </android.support.v4.view.ViewPager>
 
     <RelativeLayout
@@ -37,6 +37,7 @@
             style="@style/nice_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_size"
             android:onClick="onQuitPressed"
             android:text="@string/tutorial_back" />

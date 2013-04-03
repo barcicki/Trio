@@ -3,7 +3,9 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size"
+    android:paddingRight="@dimen/margin_size" >
 
     <TextView
         android:id="@+id/textView1"
@@ -30,7 +32,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/textView2"
@@ -42,7 +45,7 @@
                     android:text="@string/tutorial_shape"
                     android:textColor="@color/yellow"
                     android:textSize="@dimen/tutorial_attributes_size" />
-
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -69,7 +72,6 @@
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <FrameLayout
@@ -81,7 +83,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/TextView01"
@@ -93,7 +96,7 @@
                     android:text="@string/tutorial_number"
                     android:textColor="@color/yellow"
                     android:textSize="@dimen/tutorial_attributes_size" />
-
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -120,9 +123,7 @@
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -133,7 +134,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/TextView02"
@@ -145,7 +147,7 @@
                     android:text="@string/tutorial_colour"
                     android:textColor="@color/yellow"
                     android:textSize="@dimen/tutorial_attributes_size" />
-
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -172,7 +174,6 @@
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <FrameLayout
@@ -184,7 +185,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/TextView03"
@@ -196,7 +198,7 @@
                     android:text="@string/tutorial_fill"
                     android:textColor="@color/yellow"
                     android:textSize="@dimen/tutorial_attributes_size" />
-
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -223,9 +225,7 @@
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 

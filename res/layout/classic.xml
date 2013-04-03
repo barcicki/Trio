@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+<RelativeLayout android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -47,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_alignBaseline="@+id/gamePauseButton"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_size"
                 android:layout_toRightOf="@+id/gamePauseButton"
                 android:onClick="onHintClicked"
@@ -58,6 +58,7 @@
                 android:layout_width="@dimen/button_small_size"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:onClick="onMusicButtonPressed"
                 android:text="@string/music"
                 android:textSize="@dimen/button_text_size" />
@@ -68,6 +69,7 @@
                 android:layout_width="@dimen/button_small_size"
                 android:layout_height="fill_parent"
                 android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_size"
                 android:layout_toLeftOf="@+id/musicSwitch"
                 android:onClick="onHelpPressed"
@@ -78,7 +80,7 @@
                 android:id="@+id/gameDeckStatus"
                 android:layout_width="@dimen/classic_card_size"
                 android:layout_height="fill_parent"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_size"
                 android:layout_toLeftOf="@+id/helpButton"
                 android:background="@drawable/square_reverse"
@@ -91,13 +93,15 @@
                 android:id="@+id/gameTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_size"
                 android:layout_toLeftOf="@+id/gameDeckStatus"
                 android:gravity="right|center_vertical"
                 android:text="00:00"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/clock_size" />
+
         </RelativeLayout>
     </LinearLayout>
 

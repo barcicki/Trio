@@ -500,6 +500,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int logo_anim_duration=0x7f0a0006;
         public static final int navigation_fade_in_duration=0x7f0a0007;
         public static final int navigation_slide_duration=0x7f0a0008;
+        public static final int stroke=0x7f0a000b;
     }
     public static final class layout {
         public static final int classic=0x7f030000;

@@ -17,7 +17,9 @@ public class TrioActivity extends FragmentActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
+		
 		mSoundManager = SoundManager.getInstance(this);
+		CardViewResources.initialize(this);
 	}
 	
 	@Override

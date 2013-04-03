@@ -3,17 +3,22 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size"
+    android:paddingRight="@dimen/margin_size" >
 
     <TextView
         android:id="@+id/textView1"
         style="@style/dark_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:text="@string/tutorial_step3_header"
         android:textColor="@color/white"
-        android:textSize="@dimen/tutorial_task_size" android:layout_weight="1" android:gravity="center_vertical"/>
-
+        android:textSize="@dimen/tutorial_task_size" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -24,21 +29,22 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1" >
-
         </FrameLayout>
 
         <com.barcicki.trio.core.CardView
             android:id="@+id/card1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/square_reverse" android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/square_reverse" />
 
         <com.barcicki.trio.core.CardView
             android:id="@+id/card2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:src="@drawable/square_reverse" />
+
         <com.barcicki.trio.core.CardView
             android:id="@+id/card3"
             android:layout_width="fill_parent"
@@ -52,124 +58,6 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" >
         </FrameLayout>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="1.2">
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="0.9" android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/dark_shadow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="a)"
-                android:textColor="@color/white" android:textSize="@dimen/tutorial_solution_size" android:paddingLeft="10dp"/>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/card4"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/TextView01"
-                style="@style/dark_shadow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="b)"
-                android:textColor="@color/white" android:textSize="@dimen/tutorial_solution_size" android:paddingLeft="10dp"/>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/card5"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/TextView02"
-                style="@style/dark_shadow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="c)"
-                android:textColor="@color/white" android:textSize="@dimen/tutorial_solution_size" android:paddingLeft="10dp"/>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/card6"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/TextView03"
-                style="@style/dark_shadow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="d)"
-                android:textColor="@color/white" android:textSize="@dimen/tutorial_solution_size" android:paddingLeft="10dp"/>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/card7"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/TextView04"
-                style="@style/dark_shadow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="e)"
-                android:textColor="@color/white" android:textSize="@dimen/tutorial_solution_size" android:paddingLeft="10dp"/>
-
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/card8"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:src="@drawable/square_reverse" android:layout_weight="1"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <FrameLayout
@@ -177,10 +65,145 @@
         android:layout_height="fill_parent"
         android:layout_weight="1.2" >
     </FrameLayout>
-
+
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="1.1" android:gravity="center">
+        android:layout_height="fill_parent"
+        android:layout_weight="0.9"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="a)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tutorial_solution_size" />
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/card4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/square_reverse" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="b)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tutorial_solution_size" />
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/card5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/square_reverse" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TextView02"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="c)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tutorial_solution_size" />
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/card6"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/square_reverse" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="d)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tutorial_solution_size" />
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/card7"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/square_reverse" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TextView04"
+                style="@style/dark_shadow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="e)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tutorial_solution_size" />
+
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/card8"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:src="@drawable/square_reverse" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.2" >
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.1"
+        android:gravity="center" >
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -193,29 +216,38 @@
             style="@style/nice_button"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text="&lt;&lt;" android:paddingBottom="1dp" android:paddingTop="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:text="&lt;&lt;"
+            android:textSize="@dimen/pause_desc_size" />
 
         <TextView
             android:id="@+id/summary"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="0/5"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/tutorial_task_size" android:gravity="center" android:layout_weight="1"/>
+            android:textSize="@dimen/tutorial_task_size" />
 
         <Button
             android:id="@+id/buttonNext"
             style="@style/nice_button"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text=">>" android:paddingTop="1dp" android:paddingBottom="1dp" android:textSize="@dimen/pause_desc_size" android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:text=">>"
+            android:textSize="@dimen/pause_desc_size" />
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1" >
         </FrameLayout>
-
     </LinearLayout>
 
 </LinearLayout>

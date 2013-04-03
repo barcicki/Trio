@@ -4,9 +4,16 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Paint.Style;
+import android.graphics.Shader.TileMode;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,12 +27,12 @@ public class CardView extends ImageView  {
 
 	private Card card = null;
 	private Bitmap cardCache = null;
+	
 	private boolean overdraw = true;
 	
 	public CardView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		// TODO Auto-generated constructor stub
-		
 	}
 
 	public CardView(Context context, AttributeSet attrs) {
@@ -68,43 +75,43 @@ public class CardView extends ImageView  {
 		if (null != card) {
 			
 			if (null == this.cardCache && getWidth() > 0 && getHeight() > 0) {
-				
-				this.cardCache = Bitmap.createBitmap(getWidth(), getHeight(),
-						Config.ARGB_8888);
-				
-				Canvas cacheCanvas = new Canvas(this.cardCache);
-				Resources res = getContext().getResources();
-				
-				
-				Bitmap square = BitmapFactory.decodeResource(res, isSelected() ? R.drawable.square_selected : R.drawable.square);
-				float width_ratio = (float) getWidth() / square.getWidth();
-				float height_ratio = (float) getHeight() / square.getHeight();
-				
-//				ScaleType scaleType = getScaleType();
-				int x_offset = 0, y_offset = 0;
-				
-				// sqaure assumption, centering
-				if (width_ratio > height_ratio) {
-//					if (scaleType.equals(ScaleType.CENTER)) {
-						x_offset = (getWidth() - getHeight()) / 2;	
-//					} else if (scaleType.equals(ScaleType.FIT_END)) {
-//						x_offset = getWidth() - getHeight();
-//					}
-				} else {
-					y_offset = (getHeight() - getWidth()) / 2;
-				}
-				
-				float ratio = Math.min( width_ratio, height_ratio);
-//		
-				Matrix matrix = new Matrix();
-				matrix.postScale(ratio, ratio);
-				
-				cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, null);
-				cacheCanvas = card.drawCanvas(cacheCanvas, res, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
+
+					this.cardCache = Bitmap.createBitmap(getWidth(), getHeight(),
+							Config.ARGB_8888);
+					
+					Canvas cacheCanvas = new Canvas(this.cardCache);
+					
+					
+					Bitmap square = CardViewResources.getBackgroundSqaure(isSelected());
+					float width_ratio = (float) getWidth() / square.getWidth();
+					float height_ratio = (float) getHeight() / square.getHeight();
+					
+//						ScaleType scaleType = getScaleType();
+					int x_offset = 0, y_offset = 0;
+					
+					// sqaure assumption, centering
+					if (width_ratio > height_ratio) {
+//							if (scaleType.equals(ScaleType.CENTER)) {
+							x_offset = (getWidth() - getHeight()) / 2;	
+//							} else if (scaleType.equals(ScaleType.FIT_END)) {
+//								x_offset = getWidth() - getHeight();
+//							}
+					} else {
+						y_offset = (getHeight() - getWidth()) / 2;
+					}
+					
+					float ratio = Math.min( width_ratio, height_ratio);
+//				
+					Matrix matrix = new Matrix();
+					matrix.postScale(ratio, ratio);
+					
+					cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, null);
+					cacheCanvas = drawCard(cacheCanvas, card, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
+						
 												
 			}
 			
-			if (this.overdraw && getWidth() > 0 && getHeight() > 0) {
+			if (this.cardCache != null && this.overdraw && getWidth() > 0 && getHeight() > 0) {
 				canvas.drawBitmap(this.cardCache, 0, 0, null);
 			} else {
 				super.onDraw(canvas);
@@ -115,6 +122,138 @@ public class CardView extends ImageView  {
 		}
 		
 		
+	}
+	
+	public Canvas drawCard(Canvas canvas, Card card, int width, int height, int x_offset, int y_offset) {
+
+		PointF[] points = {};
+
+		float item_size_width = width / 3f;
+		float item_size_height = height / 3f;
+		
+
+		PointF point1, point2, point3;
+		switch (card.getNumber()) {
+		case Card.NUMBER_ONE:
+			point1 = new PointF((width - item_size_width) / 2f + x_offset,
+					(height - item_size_height) / 2f + y_offset);
+			points = new PointF[] { point1 };
+			break;
+		case Card.NUMBER_TWO:
+			point1 = new PointF(width / 4f - item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f + x_offset, 3 * height / 4f
+					- 2* item_size_height / 3f + y_offset);
+			points = new PointF[] { point1, point2 };
+			break;
+		case Card.NUMBER_THREE:
+			point1 = new PointF(width / 4f - item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point2 = new PointF(3 * width / 4f - 2 * item_size_width / 3f + x_offset, height / 4f
+					- item_size_height / 3f + y_offset);
+			point3 = new PointF(width / 2f - item_size_width / 2f + x_offset, 3 * height / 4f
+					- 2 * item_size_height / 3f + y_offset);
+			points = new PointF[] { point1, point2, point3 };
+			break;
+		}
+
+		Paint paint = new Paint();
+		Paint shaderPaint = new Paint();
+		Paint whitePaint = new Paint();
+		
+		whitePaint.setStyle(Style.FILL);
+		whitePaint.setAntiAlias(true);
+		whitePaint.setColor(CardViewResources.getWhiteColor());
+		shaderPaint.setStyle(Style.FILL);
+		shaderPaint.setAntiAlias(true);
+		paint.setAntiAlias(true);
+		paint.setStrokeWidth(1);
+				
+		paint.setColor(CardViewResources.getCardColor(card.getColor()));
+		shaderPaint.setShader(CardViewResources.getShader(card.getColor()));
+		
+		switch (card.getFill()) {
+			case Card.FILL_FULL:
+				paint.setStyle(Style.FILL_AND_STROKE);
+				break;
+			case Card.FILL_HALF:
+				paint.setStyle(Style.STROKE);
+				paint.setStrokeWidth(CardViewResources.getStrokeWidth());
+				break;
+			case Card.FILL_EMPTY:
+				paint.setStyle(Style.STROKE);
+				paint.setStrokeWidth(CardViewResources.getStrokeWidth());
+				break;
+		}
+		
+		for (int i = 0; i < (card.getNumber()+ 1); i++) {
+			switch (card.getShape()) {
+			case Card.SHAPE_CIRCLE:
+				
+				if (Card.FILL_HALF == card.getFill()) {
+					canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
+							item_size_width / 2f, shaderPaint);
+				}
+				
+				if (Card.FILL_EMPTY == card.getFill()) {
+					canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
+							item_size_width / 2f, whitePaint);
+				}
+				
+				canvas.drawCircle(points[i].x + item_size_width/2f, points[i].y + item_size_height/2f,
+						item_size_width / 2f, paint);
+				
+				break;
+			case Card.SHAPE_SQUARE:
+				RectF rect = new RectF(points[i].x, points[i].y, points[i].x
+						+ item_size_width, points[i].y + item_size_height);
+				
+				
+				if (Card.FILL_HALF == card.getFill()) {
+					canvas.drawRect(rect, shaderPaint);
+				}
+				
+				if (Card.FILL_EMPTY == card.getFill()) {
+					canvas.drawRect(rect, whitePaint);
+				}
+				
+				canvas.drawRect(rect, paint);
+				
+				break;
+			case Card.SHAPE_TRIANGLE:
+				
+				
+				Path path = new Path();
+				PointF top = new PointF(points[i].x + item_size_width / 2f, points[i].y + 0.1f * item_size_height);
+				PointF bottom_left = new PointF(points[i].x, points[i].y + item_size_height);
+				PointF bottom_right = new PointF(points[i].x + item_size_width, points[i].y + item_size_height);
+
+				path.moveTo(top.x, top.y);
+				path.lineTo(bottom_right.x, bottom_right.y);
+				
+//				path.moveTo(bottom_right.x, bottom_right.y);
+				path.lineTo(bottom_left.x, bottom_left.y);
+				
+//				path.moveTo(bottom_left.x, bottom_left.y);
+				path.lineTo(top.x, top.y);
+				
+				path.close();
+				
+				if (Card.FILL_EMPTY == card.getFill()) {
+					canvas.drawPath(path, whitePaint);
+				}
+
+				if (Card.FILL_HALF == card.getFill()) {
+					canvas.drawPath(path, shaderPaint);
+				}
+				
+				canvas.drawPath(path, paint);
+				
+			}
+
+		}
+
+		return canvas;
 	}
 	
 	public void  redraw() {
@@ -134,7 +273,8 @@ public class CardView extends ImageView  {
 	}
 		
 	public void animateFail() {
-		Animation failAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_fail);
+		Animation failAnimation = new FailAnimation();
+//		Animation failAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_fail);
 		failAnimation.setAnimationListener(new AnimationListener() {
 			
 			public void onAnimationStart(Animation animation) {

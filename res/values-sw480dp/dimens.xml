@@ -5,14 +5,14 @@
 	<dimen name="tutorial_desc_size">30sp</dimen>
 	<dimen name="tutorial_solution_size">16sp</dimen>
 	<dimen name="tutorial_attributes_size">28sp</dimen>
-	<dimen name="button_text_size">30sp</dimen>
+	<dimen name="button_text_size">26sp</dimen>
 	<dimen name="button_small_size">80dp</dimen>
 	<dimen name="pause_clock_size">100sp</dimen>
 	<dimen name="pause_desc_size">40sp</dimen>
 	<dimen name="button_padding_size">20dp</dimen>
 	<dimen name="button_tutorial_padding_size">50dp</dimen>
-	<dimen name="clock_size">50sp</dimen>
-	<dimen name="score_size">150sp</dimen>
+	<dimen name="clock_size">40sp</dimen>
+	<dimen name="score_size">110sp</dimen>
 	<dimen name="margin_size">20dp</dimen>
 	<dimen name="practice_grid_size">300dp</dimen>
 	<dimen name="classic_card_size">50dp</dimen>

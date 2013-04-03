@@ -3,8 +3,10 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size"
+    android:paddingRight="@dimen/margin_size" >
+
     <TextView
         android:id="@+id/TextView1"
         style="@style/dark_shadow"
@@ -207,7 +209,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
