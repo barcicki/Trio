@@ -82,7 +82,7 @@
                 android:text="@string/practice_resign" />
 
             <Button
-                android:id="@+id/musicSwitch"
+                android:id="@+id/buttonMusicSwitch"
                 style="@style/nice_button"
                 android:layout_width="@dimen/button_small_size"
                 android:layout_height="fill_parent"
@@ -97,7 +97,7 @@
                 android:layout_width="@dimen/button_small_size"
                 android:layout_height="fill_parent"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/musicSwitch"
+                android:layout_toLeftOf="@+id/buttonMusicSwitch"
                 android:layout_marginRight="@dimen/margin_size"
                 android:onClick="onHelpPressed"
                 android:text="@string/help_button"

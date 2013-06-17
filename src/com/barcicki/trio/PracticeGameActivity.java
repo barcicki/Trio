@@ -65,9 +65,9 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 		hideOverlays();		
 		
-		if (!TrioSettings.readBooleanPreference(this, "seen_practice", false)) {
+		if (!TrioSettings.hasSeenChallengeHelp()) {
 			showHelpOverlay();
-			TrioSettings.writeBooleanPreference(this, "seen_practice", true);
+			TrioSettings.setSeenChallengeHelp(true);
 		}
 	}
 	
@@ -219,7 +219,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 			cv.animateFail();
 		}
 		
-		if (TrioSettings.displaysWhatIsWrong(this)) {
+		if (TrioSettings.displaysWhatIsWrong()) {
 			displayWhatIsWrong(selectedCards);
 		}
 	}
@@ -234,7 +234,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 			cv.animateFail();
 		}
 		
-		if (TrioSettings.displaysWhatIsWrong(this)) {
+		if (TrioSettings.displaysWhatIsWrong()) {
 			Toast.makeText(this, getString(R.string.practice_already_found), Toast.LENGTH_SHORT).show();
 		}
 	}

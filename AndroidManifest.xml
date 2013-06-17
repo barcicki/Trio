@@ -9,23 +9,27 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/app_theme" >
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/play_game_id" />
         <activity
-            android:name=".ClassicGameActivity"
-            android:theme="@style/app_theme"
-            android:screenOrientation="landscape" />
+            android:name="com.barcicki.trio.ClassicGameActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/app_theme" />
         <activity
-            android:name=".PracticeGameActivity"
-            android:theme="@style/app_theme"
-            android:screenOrientation="landscape" />
+            android:name="com.barcicki.trio.PracticeGameActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/app_theme" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.barcicki.trio.SettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black" >
         </activity>
-        <activity android:name=".TutorialActivity" android:screenOrientation="landscape"/>
         <activity
-            android:name=".HomeActivity"
-            android:launchMode="singleInstance"
+            android:name="com.barcicki.trio.TutorialActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.barcicki.trio.HomeActivity"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +39,7 @@
     </application>
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="8" />
 
     <supports-screens android:resizeable="true" />

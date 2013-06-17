@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -17,10 +18,10 @@ import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
 
-public class HomeActivity extends TrioActivity {
+public class HomeActivity extends TrioActivity implements OnClickListener {
 
+	
 	private CardView mCard;
-	private ImageView mOpenFeint;
 	private ImageView mTrioLogo;
 	private Trio mTrio = new Trio();
 	private Button mContinueButton;
@@ -30,93 +31,29 @@ public class HomeActivity extends TrioActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
-
+		
 		mCard = (CardView) findViewById(R.id.gameCard);
 		mTrioLogo = (ImageView) findViewById(R.id.trioLogo);
-		mContinueButton = (Button) findViewById(R.id.classicContinue);
-
-		if (TrioSettings.readBooleanPreference(this, "saved_game", false)) {
-			mContinueButton.setEnabled(true);
-		} else {
-			mContinueButton.setEnabled(false);
+		mContinueButton = (Button) findViewById(R.id.buttonGameClassicContinue);
+		
+		for (View view : new View[] { 
+				findViewById(R.id.buttonGameChallengeNew),
+				mContinueButton,
+				findViewById(R.id.buttonGameClassicNew),
+				findViewById(R.id.buttonTutorial),
+//				findViewById(R.id.buttonMusicSwitch)
+		}) {
+			view.setOnClickListener(this);
 		}
 		
-
+		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
 		applyAnimations();
-
 	}
 
 	@Override
 	protected void onResume() {
-		
-		if (TrioSettings.readBooleanPreference(this, "saved_game", false)) {
-			mContinueButton.setEnabled(true);
-		} else {
-			mContinueButton.setEnabled(false);
-		}
-		
+		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
 		super.onResume();
-	}
-
-//	public void onStartGame(View v) {
-//		makeClickSound();
-//		Intent intent;
-//		switch (v.getId()) {
-//
-//		case R.id.gameClassic:
-//			setMusicContinue(true);
-//			intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-//			startActivity(intent);
-//			break;
-//
-//		case R.id.gameChallenge:
-//			setMusicContinue(true);
-//			intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
-//			startActivity(intent);
-//			break;
-//
-//		case R.id.gameTutorial:
-//			setMusicContinue(true);
-//			intent = new Intent(HomeActivity.this, TutorialStep1Activity.class);
-//			startActivity(intent);
-//			break;
-//
-//		}
-//	}
-
-	public void onOpenFeintPressed(View v) {
-		makeClickSound();
-	}
-
-	public void onClassicContinuePressed(View v) {
-		makeClickSound();
-		setMusicContinue(true);
-		Intent intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-		startActivity(intent);
-	}
-
-	public void onClassicNewGamePressed(View v) {
-		makeClickSound();
-		setMusicContinue(true);
-		TrioSettings.writeBooleanPreference(this, "saved_game", false);
-		Intent intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-		startActivity(intent);
-	}
-
-	public void onNewChallengePressed(View v) {
-		makeClickSound();
-		setMusicContinue(true);
-		Intent intent = new Intent(HomeActivity.this,
-				PracticeGameActivity.class);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		startActivity(intent);
-	}
-
-	public void onTutorialPressed(View v) {
-		makeClickSound();
-		setMusicContinue(true);
-		Intent intent = new Intent(HomeActivity.this, TutorialActivity.class);
-		startActivity(intent);
 	}
 
 	private void applyAnimations() {
@@ -180,12 +117,12 @@ public class HomeActivity extends TrioActivity {
 			return true;
 		case R.id.mute:
 			if (!getSoundManager().isBackgroundPlaying()) {
-				TrioSettings.writeBooleanPreference(this, "play_music", true);
+				TrioSettings.setMusicEnabled(true);
 				playBackgroundMusic();
 				item.setTitle(R.string.settings_mute);
 				item.setIcon(android.R.drawable.ic_media_pause);
 			} else {
-				TrioSettings.writeBooleanPreference(this, "play_music", false);
+				TrioSettings.setMusicEnabled(false);
 				getSoundManager().pauseBackground();
 				item.setTitle(R.string.settings_unmute);
 				item.setIcon(android.R.drawable.ic_media_play);
@@ -195,16 +132,36 @@ public class HomeActivity extends TrioActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-//	@Override
-//	protected void onPause() {
-//		overridePendingTransition(R.anim.hold, R.anim.push_left);
-//		super.onPause();
-//	}
 
 	@Override
 	protected void onDestroy() {
 		getSoundManager().release();
 		super.onDestroy();
+	}
+
+	public void onClick(View view) {
+		Intent intent = null;
+		makeClickSound();
+		
+		switch (view.getId()) {
+			case R.id.buttonGameClassicNew:
+				TrioSettings.setSavedGamePresence(false);
+				intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
+				break;
+			case R.id.buttonGameClassicContinue:
+				intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
+				break;
+			case R.id.buttonGameChallengeNew:
+				intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
+				break;
+			case R.id.buttonTutorial:
+				intent = new Intent(HomeActivity.this, TutorialActivity.class);
+				break;
+		}
+		
+		if (intent != null) {
+			setMusicContinue(true);
+			startActivity(intent);
+		}
 	}
 }

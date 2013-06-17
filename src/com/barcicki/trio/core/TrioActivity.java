@@ -1,16 +1,21 @@
 package com.barcicki.trio.core;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.barcicki.trio.HomeActivity;
 import com.barcicki.trio.R;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
-public class TrioActivity extends FragmentActivity {	
+public class TrioActivity extends BaseGameActivity {	
+	
 	private SoundManager mSoundManager;
+	private TrioSettings mSettings;
+	
 	private boolean mSoundContinue = false;
 	
 	@Override
@@ -19,7 +24,10 @@ public class TrioActivity extends FragmentActivity {
 		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
 		
 		mSoundManager = SoundManager.getInstance(this);
+		setVolumeControlStream(AudioManager.STREAM_MUSIC);
+		
 		CardViewResources.initialize(this);
+		TrioSettings.initialize(this);
 	}
 	
 	@Override
@@ -40,7 +48,7 @@ public class TrioActivity extends FragmentActivity {
 	}
 	
 	public void playBackgroundMusic() {
-		if (TrioSettings.readBooleanPreference(this, "play_music", true)) {
+		if (TrioSettings.isMusicEnabled()) {
 			mSoundManager.playBackground();
 		}
 	}
@@ -61,7 +69,7 @@ public class TrioActivity extends FragmentActivity {
 	}
 	
 	public void makeSound(int type) {
-		if (TrioSettings.readBooleanPreference(this, "play_sounds", true)) {
+		if (TrioSettings.isMusicEnabled()) {
 			mSoundManager.playSound(type);
 		}
 	}
@@ -79,7 +87,7 @@ public class TrioActivity extends FragmentActivity {
 	}
 	
 	private void updateMusicButtonStatus() {
-		Button musicButton = (Button) findViewById(R.id.musicSwitch);
+		Button musicButton = (Button) findViewById(R.id.buttonMusicSwitch);
 		if (musicButton != null) {
 			if (mSoundManager.isBackgroundPlaying()) {
 				musicButton.setBackgroundResource(R.drawable.nice_button);
@@ -90,7 +98,7 @@ public class TrioActivity extends FragmentActivity {
 	}
 	
 	public void onMusicButtonPressed(View v) {
-		boolean musicStatus = TrioSettings.readBooleanPreference(this, "play_music", true);
+		boolean musicStatus = TrioSettings.isMusicEnabled();
 		
 		if (musicStatus) {
 			if (getSoundManager().isBackgroundPlaying()) getSoundManager().pauseBackground();
@@ -98,7 +106,7 @@ public class TrioActivity extends FragmentActivity {
 			getSoundManager().playBackground();
 		}
 		
-		TrioSettings.writeBooleanPreference(this, "play_music", !musicStatus);
+		TrioSettings.setMusicEnabled(!musicStatus);
 		updateMusicButtonStatus();
 	}
 	
@@ -120,6 +128,13 @@ public class TrioActivity extends FragmentActivity {
 //		mSoundManager.release();
 		super.onDestroy();
 	}
+
+	public void onSignInFailed() {
+//		Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show();
+	}
+
+	public void onSignInSucceeded() {
+//		Toast.makeText(this, "Succeded to sign in", Toast.LENGTH_SHORT).show();
+	}
 	
-	// onDestroy -> release
 }

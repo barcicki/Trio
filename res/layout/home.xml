@@ -24,56 +24,52 @@
         android:src="@drawable/square_reverse" />
 
     <Button
-        android:id="@+id/classicContinue"
+        android:id="@+id/buttonGameClassicContinue"
         style="@style/nice_button"
         android:layout_width="@dimen/home_button_width"
         android:layout_height="@dimen/home_button_height"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/gameCard"
         android:layout_marginTop="@dimen/home_card_overshoot"
-        android:onClick="onClassicContinuePressed"
         android:text="@string/game_classic_continue"
         android:textSize="@dimen/home_font_size" />
 
     <Button
-        android:id="@+id/classicNew"
+        android:id="@+id/buttonGameClassicNew"
         style="@style/nice_button"
         android:layout_width="@dimen/home_button_width"
         android:layout_height="@dimen/home_button_height"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/classicContinue"
+        android:layout_below="@+id/buttonGameClassicContinue"
         android:layout_marginLeft="@dimen/home_button_spacing"
         android:layout_marginTop="10dp"
-        android:onClick="onClassicNewGamePressed"
         android:text="@string/game_classic_new_game"
         android:textSize="@dimen/home_font_size" />
 
     <Button
-        android:id="@+id/runTutorial"
+        android:id="@+id/buttonTutorial"
         style="@style/nice_button"
         android:layout_width="@dimen/home_button_width"
         android:layout_height="@dimen/home_button_height"
-        android:layout_above="@+id/classicNew"
+        android:layout_above="@+id/buttonGameClassicNew"
         android:layout_alignParentRight="true"
-        android:onClick="onTutorialPressed"
         android:text="@string/game_tutorial"
         android:textSize="@dimen/home_font_size" />
 
     <Button
-        android:id="@+id/challengeNew"
+        android:id="@+id/buttonGameChallengeNew"
         style="@style/nice_button"
         android:layout_width="@dimen/home_button_width"
         android:layout_height="@dimen/home_button_height"
-        android:layout_alignBaseline="@+id/classicNew"
-        android:layout_alignBottom="@+id/classicNew"
-        android:layout_alignRight="@+id/runTutorial"
+        android:layout_alignBaseline="@+id/buttonGameClassicNew"
+        android:layout_alignBottom="@+id/buttonGameClassicNew"
+        android:layout_alignRight="@+id/buttonTutorial"
         android:layout_marginRight="@dimen/home_button_spacing"
-        android:onClick="onNewChallengePressed"
         android:text="@string/game_challenge_new_game"
         android:textSize="@dimen/home_font_size" />
 
     <Button
-        android:id="@+id/musicSwitch"
+        android:id="@+id/buttonMusicSwitch"
         style="@style/nice_button"
         android:layout_width="@dimen/home_button_size"
         android:layout_height="@dimen/home_button_size"

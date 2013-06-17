@@ -63,6 +63,7 @@ public class TrioGameActivity extends TrioActivity {
 				 mHelpAdapter.addFragment(id);
 			 }
 		}
+		mHelpAdapter.notifyDataSetChanged();
 	}
 	
 	@Override

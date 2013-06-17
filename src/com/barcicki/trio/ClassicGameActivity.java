@@ -65,9 +65,9 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 		hideOverlays();
 		
-		if (!TrioSettings.readBooleanPreference(this, "seen_classic", false)) {
+		if (!TrioSettings.hasSeenClassicHelp()) {
 			showHelpOverlay();
-			TrioSettings.writeBooleanPreference(this, "seen_classic", true);
+			TrioSettings.setSeenClassicHelp(true);
 		}
 
 	}
@@ -220,7 +220,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 			cv.animateFail();
 		}
 
-		if (TrioSettings.displaysWhatIsWrong(this)) {
+		if (TrioSettings.displaysWhatIsWrong()) {
 			displayWhatIsWrong(selectedCards);
 		}
 
