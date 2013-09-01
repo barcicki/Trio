@@ -3,18 +3,20 @@ package com.barcicki.trio.core;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.barcicki.trio.HomeActivity;
 import com.barcicki.trio.R;
-import com.google.example.games.basegameutils.BaseGameActivity;
+import com.barcicki.trio.SettingsActivity;
 
-public class TrioActivity extends BaseGameActivity {	
+public class TrioActivity extends FragmentActivity {	
 	
 	private SoundManager mSoundManager;
-	private TrioSettings mSettings;
 	
 	private boolean mSoundContinue = false;
 	
@@ -47,6 +49,49 @@ public class TrioActivity extends BaseGameActivity {
 		super.onPause();
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+
+		MenuItem item = menu.findItem(R.id.mute);
+		if (getSoundManager().isBackgroundPlaying()) {
+			item.setTitle(R.string.settings_mute);
+			item.setIcon(android.R.drawable.ic_media_pause);
+		} else {
+			item.setTitle(R.string.settings_unmute);
+			item.setIcon(android.R.drawable.ic_media_play);
+		}
+
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			return true;
+		case R.id.mute:
+			if (!getSoundManager().isBackgroundPlaying()) {
+				TrioSettings.setMusicEnabled(true);
+				playBackgroundMusic();
+				item.setTitle(R.string.settings_mute);
+				item.setIcon(android.R.drawable.ic_media_pause);
+			} else {
+				TrioSettings.setMusicEnabled(false);
+				getSoundManager().pauseBackground();
+				item.setTitle(R.string.settings_unmute);
+				item.setIcon(android.R.drawable.ic_media_play);
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public void playBackgroundMusic() {
 		if (TrioSettings.isMusicEnabled()) {
 			mSoundManager.playBackground();
@@ -69,7 +114,7 @@ public class TrioActivity extends BaseGameActivity {
 	}
 	
 	public void makeSound(int type) {
-		if (TrioSettings.isMusicEnabled()) {
+		if (TrioSettings.isSoundEffectsEnabled()) {
 			mSoundManager.playSound(type);
 		}
 	}
@@ -129,12 +174,12 @@ public class TrioActivity extends BaseGameActivity {
 		super.onDestroy();
 	}
 
-	public void onSignInFailed() {
-//		Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show();
-	}
-
-	public void onSignInSucceeded() {
-//		Toast.makeText(this, "Succeded to sign in", Toast.LENGTH_SHORT).show();
-	}
+//	public void onSignInFailed() {
+////		Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show();
+//	}
+//
+//	public void onSignInSucceeded() {
+////		Toast.makeText(this, "Succeded to sign in", Toast.LENGTH_SHORT).show();
+//	}
 	
 }

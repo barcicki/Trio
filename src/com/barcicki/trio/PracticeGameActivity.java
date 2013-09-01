@@ -65,15 +65,17 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 		hideOverlays();		
 		
-		if (!TrioSettings.hasSeenChallengeHelp()) {
+		if (!TrioSettings.hasSeenTripleHelp()) {
 			showHelpOverlay();
-			TrioSettings.setSeenChallengeHelp(true);
+			TrioSettings.setSeenTripleHelp(true);
 		}
 	}
 	
 	private void restoreGame(Bundle savedInstanceState) {
-		gGameEnded = false;
-		gElapsedTime = savedInstanceState.getLong("time");
+		resetGame();
+		
+		setElapsedTime(savedInstanceState.getLong("time"));
+		
 		String foundTrios = savedInstanceState.getString("found");
 		CardList three = new CardList();
 		for (String card : TextUtils.split(foundTrios, " ")) {
@@ -107,7 +109,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 			foundTrio.append(trios);
 		}
 		outState.putString("found", foundTrio.toString());
-		outState.putLong("time", gElapsedTime);
+		outState.putLong("time", getElapsedTime());
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -126,9 +128,10 @@ public class PracticeGameActivity extends TrioGameActivity {
 		startTimer();
 	}
 	
-	private void resetPracticeStatus() {
-		gGameEnded = false;
-		gElapsedTime = 0L;
+	@Override
+	public void onGameReset() {
+		setElapsedTime(0);
+		
 		gTriosFound = 0;
 		gTriosRemaines = NUMBER_OF_TRIOS;
 		mGameStatus.setText("" + gTriosRemaines);
@@ -136,6 +139,17 @@ public class PracticeGameActivity extends TrioGameActivity {
 		gSelectedCards = new CardList();
 		gSelectedViews = new ArrayList<CardView>();
 	}
+	
+//	private void resetPracticeStatus() {
+//		gGameEnded = false;
+//		gElapsedTime = 0L;
+//		gTriosFound = 0;
+//		gTriosRemaines = NUMBER_OF_TRIOS;
+//		mGameStatus.setText("" + gTriosRemaines);
+//		gFoundTrios = new ArrayList<CardList>();
+//		gSelectedCards = new CardList();
+//		gSelectedViews = new ArrayList<CardView>();
+//	}
 	
 	private void pausePractice() {
 		mCardGrid.showReverse();
@@ -147,12 +161,9 @@ public class PracticeGameActivity extends TrioGameActivity {
 		startTimer();
 	}
 	
-	private void endPractice() {
+	@Override
+	public void onGameFinished() {
 		showEndingPause();
-		
-		gGameEnded = true;
-
-	
 	}
 	
 	private void attachCardListeners() {
@@ -290,7 +301,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 		}
 		
 		if (gTriosRemaines == 0) {
-			endPractice();
+			finishGame();
 		}
 				
 	}
@@ -301,7 +312,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 		pausePractice();
 		
 		TextView timeView = (TextView) getPauseOverlay().findViewById(R.id.gameTime);
-		timeView.setText(gElapsedTimeString);
+		timeView.setText(getElapsedTimeAsString());
 		
 		TextView trioView = (TextView) getPauseOverlay().findViewById(R.id.gameTrioCount);
 		trioView.setText(getString(R.string.practice_trio_count, gTriosFound, NUMBER_OF_TRIOS ));
@@ -386,7 +397,8 @@ public class PracticeGameActivity extends TrioGameActivity {
 	public void onPressedNewGame(View v) {
 		makeClickSound();
 		startPractice();
-		resetPracticeStatus();
+		resetGame();
+//		resetPracticeStatus();
 		hidePauseOverlay();
 	}
 	
@@ -411,8 +423,12 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 	public void onResignPressed(View v) {
 		makeClickSound();
+		resign();
+	}
+	
+	@Override
+	public void onGameResign() {
 		showResignPause();
-		gGameEnded = true;
 	}
 
 }

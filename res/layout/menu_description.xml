@@ -22,29 +22,30 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="A simple description of what the game is - ąęćżłóś"
-        android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        android:textSize="@dimen/font_size_menu_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/button_padding_size"
+        android:layout_marginBottom="@dimen/margin_size"
         android:gravity="center_horizontal" >
 
         <Button
             android:id="@+id/menuButtonLeft"
             style="@style/nice_button"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/home_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/home_button_spacing"
+            android:layout_marginRight="@dimen/margin_size"
             android:layout_weight="0"
-            android:text="@string/game_classic_continue"
+            android:text="@string/menu_description_button_continue"
             android:textSize="@dimen/home_font_size" />
 
         <Button
             android:id="@+id/menuButtonRight"
             style="@style/nice_button"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/home_button_width"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/game_start"

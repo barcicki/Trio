@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pause"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#c000"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/gameContinue"
+                style="@style/nice_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onPressedContinue"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_continue" />
+
+            <Button
+                android:id="@+id/gameNew"
+                style="@style/nice_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onPressedNewGame"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_new_game" />
+
+            <Button
+                android:id="@+id/gameRestart"
+                style="@style/nice_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="onPressedRestartGame"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_restart"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="3.5"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/gameQuit"
+                style="@style/nice_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onPressedQuitGame"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_save_quit" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.4"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/gameTrioCount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/speed_found"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/pause_clock_size" />
+
+        <TextView
+            android:id="@+id/gameTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/speed_time_left"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/pause_desc_size" />
+    </LinearLayout>
+
+</LinearLayout>

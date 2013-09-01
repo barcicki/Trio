@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:barcicki="http://schemas.android.com/apk/res/com.barcicki.trio"
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:clipChildren="false"
     android:gravity="center"
+    android:background="@drawable/bg_static"
     android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/trioLogo"
         android:layout_width="@dimen/home_logo_width"
         android:layout_height="@dimen/home_logo_height"
-        android:layout_margin="@dimen/button_padding_size"
+        android:layout_marginTop="@dimen/margin_size"
+        android:scaleType="fitCenter"
         android:src="@drawable/trio_static" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_size"
+        android:layout_marginLeft="@dimen/margin_size"
+        android:layout_marginRight="@dimen/margin_size"
         android:layout_weight="1"
         android:clipChildren="false" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_size"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/showClassic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_classic" />
+
+            <ImageView
+                android:id="@+id/showSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_speed" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/menuSwitcher"
@@ -27,94 +59,74 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:layout_marginLeft="@dimen/margin_size"
-            android:layout_weight="1"
+            android:layout_marginRight="@dimen/margin_size"
+            android:layout_weight="0.5"
             android:clipChildren="false" >
 
-            <com.barcicki.trio.core.CardView
-                android:id="@+id/gameCard"
+            <com.barcicki.trio.core.MenuDescription
+                android:id="@+id/menuClassic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/square_reverse" />
+                android:layout_marginTop="@dimen/margin_size"
+                android:layout_weight="1"
+                android:visibility="gone"
+                barcicki:type="CLASSIC" />
 
             <com.barcicki.trio.core.MenuDescription
-                android:id="@+id/menuDescriptionView"
+                android:id="@+id/menuTriple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_marginTop="@dimen/margin_size"
+                android:layout_weight="1"
+                android:visibility="gone"
+                barcicki:type="TRIPLE" >
+            </com.barcicki.trio.core.MenuDescription>
+
+            <com.barcicki.trio.core.MenuDescription
+                android:id="@+id/menuSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_size"
+                android:layout_weight="1"
+                android:visibility="gone"
+                barcicki:type="SPEED" >
+            </com.barcicki.trio.core.MenuDescription>
+
+            <com.barcicki.trio.core.MenuDescription
+                android:id="@+id/menuHelp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_size"
+                android:layout_weight="1"
+                android:visibility="gone"
+                barcicki:type="HELP" >
+            </com.barcicki.trio.core.MenuDescription>
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_size"
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/showTriple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/home_button_padding_size"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_triple" />
 
-                <ImageView
-                    android:id="@+id/showClassic"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:src="@drawable/menu_classic" />
-
-                <ImageView
-                    android:id="@+id/showTriple"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/menu_triple" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/showHelp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/home_button_padding_size"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_help" />
 
-                <ImageView
-                    android:id="@+id/showSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:src="@drawable/menu_speed" />
-
-                <ImageView
-                    android:id="@+id/showHelp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/menu_help" />
-
-            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_size" >
-
-        <Button
-            android:id="@+id/buttonMusicSwitch"
-            style="@style/nice_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="onMusicButtonPressed"
-            android:padding="@dimen/home_button_padding_size"
-            android:text="@string/music"
-            android:textSize="@dimen/home_music_font_size" />
     </LinearLayout>
 
 </LinearLayout>

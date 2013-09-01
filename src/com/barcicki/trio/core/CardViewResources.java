@@ -5,14 +5,20 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
+import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.barcicki.trio.R;
 
 public class CardViewResources {
 	
-	private static Bitmap emptySqaure;
-	private static Bitmap selectedSquare;
+//	private static Bitmap emptySqaure;
+//	private static Bitmap selectedSquare;
+	
+	private static BitmapDrawable emptySqaure;
+	private static BitmapDrawable selectedSquare;
+	
 	private static BitmapShader blueShader;
 	private static BitmapShader greenShader;
 	private static BitmapShader redShader;
@@ -24,14 +30,21 @@ public class CardViewResources {
 	
 	private static int strokeWidth;
 	
+	private static Paint bitmapPaint;
+	
 	private static boolean isInitialized = false;
 	
 	static void initialize(Context context) {
 		if (!isInitialized) {
 			Resources res = context.getResources();
 			
-			emptySqaure = BitmapFactory.decodeResource(res, R.drawable.square);
-			selectedSquare= BitmapFactory.decodeResource(res, R.drawable.square_selected);
+			emptySqaure = (BitmapDrawable) res.getDrawable(R.drawable.square);
+			emptySqaure.setAntiAlias(true);
+			emptySqaure.setFilterBitmap(true);
+			
+			selectedSquare = (BitmapDrawable) res.getDrawable(R.drawable.square_selected);
+			selectedSquare.setAntiAlias(true);
+			selectedSquare.setFilterBitmap(true);
 			
 			blueShader = new BitmapShader(BitmapFactory.decodeResource(res, R.drawable.blue_shader), TileMode.REPEAT, TileMode.REPEAT);
 			redShader = new BitmapShader(BitmapFactory.decodeResource(res, R.drawable.red_shader), TileMode.REPEAT, TileMode.REPEAT);
@@ -44,11 +57,16 @@ public class CardViewResources {
 			
 			strokeWidth = res.getInteger(R.integer.stroke);
 			
+			bitmapPaint =  new Paint();
+			bitmapPaint.setAntiAlias(true);
+			bitmapPaint.setFilterBitmap(true);
+			bitmapPaint.setDither(true);
+			
 			isInitialized = true;
 		}
 	}
 	
-	static Bitmap getBackgroundSqaure(boolean isSelected) {
+	static BitmapDrawable getBackgroundSqaure(boolean isSelected) {
 		return isSelected ? selectedSquare : emptySqaure;
 	}
 	
@@ -82,5 +100,9 @@ public class CardViewResources {
 	
 	static int getStrokeWidth() {
 		return strokeWidth;
+	}
+
+	public static Paint getBitmapPaint() {
+		return bitmapPaint;
 	}
 }

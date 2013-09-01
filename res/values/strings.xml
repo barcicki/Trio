@@ -30,6 +30,9 @@
     <string name="practice_objective">Find 3 Trios</string>
     <string name="practice_subobjective">Trios are hidden in 12 visible cards.</string>
     <string name="practice_already_found">This Trio has already been found</string>
+    <string name="speed_end">Time\'s up!</string>
+    <string name="speed_time_left">%1$d seconds remained</string>
+    <string name="speed_found">%1$d Trios found</string>
     <string name="pause_continue">Continue</string>
     <string name="pause_restart">Restart Game</string>
     <string name="pause_new_game">New game</string>
@@ -99,8 +102,15 @@
     <string name="game_classic_new_game">New Game</string>
     <string name="game_challenge_new_game">New Challenge</string>
 
-    <string name="menu_description_classic">Classic Mode description</string>
-    <string name="menu_description_speed">Speed Mode description</string>
-    <string name="menu_description_triple">Triple Mode description</string>
-    <string name="menu_description_help">Help Mode description</string>
+    <string name="menu_description_classic">Find Trios on the screen. Each found Trio is replaced with 3 new cards. Play until the deck runs out of them.</string>
+    <string name="menu_description_speed">Find as many Trios as possible in 2 minutes. Each found Trio is replace with 3 new cards.</string>
+    <string name="menu_description_triple">Find 3 hidden Trios in 12 visible cards as quickly as possible.</string>
+    <string name="menu_description_help">Learn what is Trio and how to find it. Includes simple Quiz</string>
+    
+    <string name="menu_description_button_play">Play!</string>
+    <string name="menu_description_button_new_game">New Game</string>
+    <string name="menu_description_button_continue">Continue</string>
+    <string name="menu_description_button_learn">Learn!</string>
+    <string name="help_speed_4">You\'ve got 2 minutes to find as many as possible</string>
+    
 </resources>

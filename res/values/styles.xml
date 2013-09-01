@@ -30,5 +30,9 @@
     <style name="app_theme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@drawable/bg_static</item>
     </style>
+    
+     <style name="app_loader_theme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/bg_static_trio</item>
+    </style>
 
 </resources>

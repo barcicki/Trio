@@ -41,18 +41,6 @@
                 android:text="@string/classic_pause" />
 
             <Button
-                android:id="@+id/gameHintButton"
-                style="@style/nice_button"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignBaseline="@+id/gamePauseButton"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_size"
-                android:layout_toRightOf="@+id/gamePauseButton"
-                android:onClick="onHintClicked"
-                android:text="@string/classic_hint" />
-
-            <Button
                 android:id="@+id/buttonMusicSwitch"
                 style="@style/nice_button"
                 android:layout_width="@dimen/button_small_size"
@@ -85,7 +73,7 @@
                 android:layout_toLeftOf="@+id/helpButton"
                 android:background="@drawable/square_reverse"
                 android:gravity="center"
-                android:text="69"
+                android:text="0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/clock_size" />
 
@@ -109,7 +97,7 @@
         android:id="@+id/gamePause"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        layout="@layout/classic_pause" />
+        layout="@layout/pause_speed" />
 
     <include
         android:id="@+id/gameHelp"

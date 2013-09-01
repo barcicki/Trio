@@ -1,16 +1,17 @@
 package com.barcicki.trio;
 
+import java.util.HashMap;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.MenuDescription;
@@ -26,8 +27,10 @@ public class HomeActivity extends TrioActivity implements OnClickListener, MenuD
 	private CardView mCard;
 	private ImageView mTrioLogo;
 	private Trio mTrio = new Trio();
-	private MenuDescription mDescription;
-	private boolean mIsDescriptionVisible = false;
+	private HashMap<MenuDescriptionType, MenuDescription> mMenu = new HashMap<MenuDescription.MenuDescriptionType, MenuDescription>();
+	private MenuDescription mCurrentMenu = null;
+
+	private boolean mUIBlocked = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,21 @@ public class HomeActivity extends TrioActivity implements OnClickListener, MenuD
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 		
-		mCard = (CardView) findViewById(R.id.gameCard);
+//		mCard = (CardView) findViewById(R.id.gameCard);
 		mTrioLogo = (ImageView) findViewById(R.id.trioLogo);
-		mDescription = (MenuDescription) findViewById(R.id.menuDescriptionView);
-		mDescription.setMenuDescriptionListener(this);
 		
-		Utils.setAlpha(mDescription, 0f);
+		mMenu.put(MenuDescriptionType.CLASSIC, (MenuDescription) findViewById(R.id.menuClassic));
+		mMenu.put(MenuDescriptionType.HELP, (MenuDescription) findViewById(R.id.menuHelp));
+		mMenu.put(MenuDescriptionType.SPEED, (MenuDescription) findViewById(R.id.menuSpeed));
+		mMenu.put(MenuDescriptionType.TRIPLE, (MenuDescription) findViewById(R.id.menuTriple));
+		
+		for (MenuDescription menu : mMenu.values()) {
+			menu.setMenuDescriptionListener(this);
+		}
+		
+		mCurrentMenu = mMenu.get(TrioSettings.hasPlayed() ? MenuDescriptionType.CLASSIC : MenuDescriptionType.HELP);
+		mCurrentMenu.setVisibility(View.VISIBLE);
+		hideMenus(mCurrentMenu.getMenuType());
 		
 		for (View view : new View[] { 
 				findViewById(R.id.showClassic),
@@ -56,7 +68,7 @@ public class HomeActivity extends TrioActivity implements OnClickListener, MenuD
 
 	@Override
 	protected void onResume() {
-//		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
+		mCurrentMenu.update();
 		super.onResume();
 	}
 
@@ -65,76 +77,6 @@ public class HomeActivity extends TrioActivity implements OnClickListener, MenuD
 		Animation logoAnimation = AnimationUtils.loadAnimation(this,
 				R.anim.logo_appear);
 		mTrioLogo.startAnimation(logoAnimation);
-
-		final int duration = getResources().getInteger(
-				R.integer.card_flip_slow_animation);
-		final int delay = getResources().getInteger(R.integer.logo_anim_duration);
-//		mCard.setCard(null);
-//		mCard.setImageResource(R.drawable.square_question);
-		mCard.setSwitchAnimationLsitener(new AnimationListener() {
-
-			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void onAnimationEnd(Animation animation) {
-				mCard.animateSwitchCard(mTrio.getDeck().getRandomRange(1)
-					.get(0), duration);
-			}
-
-		});
-		mCard.animateSwitchCard(mTrio.getDeck().getRandomRange(1).get(0),
-				duration, delay);
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
-
-		MenuItem item = menu.findItem(R.id.mute);
-		if (getSoundManager().isBackgroundPlaying()) {
-			item.setTitle(R.string.settings_mute);
-			item.setIcon(android.R.drawable.ic_media_pause);
-		} else {
-			item.setTitle(R.string.settings_unmute);
-			item.setIcon(android.R.drawable.ic_media_play);
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.settings:
-			Intent intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
-			return true;
-		case R.id.mute:
-			if (!getSoundManager().isBackgroundPlaying()) {
-				TrioSettings.setMusicEnabled(true);
-				playBackgroundMusic();
-				item.setTitle(R.string.settings_mute);
-				item.setIcon(android.R.drawable.ic_media_pause);
-			} else {
-				TrioSettings.setMusicEnabled(false);
-				getSoundManager().pauseBackground();
-				item.setTitle(R.string.settings_unmute);
-				item.setIcon(android.R.drawable.ic_media_play);
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 	@Override
@@ -144,59 +86,101 @@ public class HomeActivity extends TrioActivity implements OnClickListener, MenuD
 	}
 
 	public void onClick(View view) {
-		MenuDescriptionType type = MenuDescriptionType.HELP;
-		makeClickSound();
-		
-		switch (view.getId()) {
-			case R.id.showClassic:
-				type = MenuDescriptionType.CLASSIC;
-				break;
-			case R.id.showHelp:
-				type = MenuDescriptionType.HELP;
-				break;
-			case R.id.showSpeed:
-				type = MenuDescriptionType.SPEED;
-				break;
-			case R.id.showTriple:
-				type = MenuDescriptionType.TRIPLE;
-				break;
+		if (!mUIBlocked) {
+			MenuDescriptionType type = MenuDescriptionType.HELP;
+			makeClickSound();
+			
+			switch (view.getId()) {
+				case R.id.showClassic:
+					type = MenuDescriptionType.CLASSIC;
+					break;
+				case R.id.showHelp:
+					type = MenuDescriptionType.HELP;
+					break;
+				case R.id.showSpeed:
+					type = MenuDescriptionType.SPEED;
+					break;
+				case R.id.showTriple:
+					type = MenuDescriptionType.TRIPLE;
+					break;
+			}
+	
+			switchToDescription(type);
 		}
-
-		switchToDescription(type);
+	}
+	
+	private void hideMenus(MenuDescriptionType exception) {
+		for (MenuDescription menu : mMenu.values()) {
+			if (menu.getMenuType() != exception) {
+				menu.setVisibility(View.GONE);
+			}
+		}
 	}
 
 	private void switchToDescription(final MenuDescriptionType type) {
 		final long duration = 500;
 		
-		if (mIsDescriptionVisible) {
+		Animation slideOut = Utils.generateSlideDownAnimation(duration);
+		Animation slideIn = Utils.generateSlideInAnimation(duration);
 		
-			if (!type.equals(mDescription.getMenuDescription())) {
+		if (!type.equals(mCurrentMenu.getMenuType())) {
+			final MenuDescription next = mMenu.get(type);
+			final MenuDescription previous = mCurrentMenu;
 			
-				AnimationListener waitForDisappearance = new AnimationListener() {
-					public void onAnimationStart(Animation animation) {}
-					public void onAnimationRepeat(Animation animation) {}
-					public void onAnimationEnd(Animation animation) {
-						mDescription.setMenuDescription(type);
-						mDescription.startAnimation(Utils.generateAlphaAnimation(0.3f, 1f, duration / 2));
-					}
-				};
-				
-				Animation anim = Utils.generateAlphaAnimation(1f, 0.3f, duration / 2); 
-				
-				anim.setAnimationListener(waitForDisappearance);
-				mDescription.startAnimation(anim); 
-				
-			}
-		
-		} else {
-			mCard.startAnimation(Utils.generateAlphaAnimation(1f, 0f, duration));
-			mDescription.setMenuDescription(type);
-			mDescription.startAnimation(Utils.generateAlphaAnimation(0f, 1f, duration));
+			previous.setVisibility(View.VISIBLE);
+			next.setVisibility(View.VISIBLE);
+			
+			slideOut.setAnimationListener(new AnimationListener() {
+				public void onAnimationStart(Animation animation) {}
+				public void onAnimationRepeat(Animation animation) {}
+				public void onAnimationEnd(Animation animation) {
+					mCurrentMenu = next;
+					hideMenus(type);
+					mUIBlocked = false;
+				}
+			});
+			
+			previous.startAnimation(slideOut);
+			next.startAnimation(slideIn);
+			
+			mUIBlocked = true;
 		}
 		
-		mIsDescriptionVisible = true;
+//		if (mIsDescriptionVisible) {
+//			if (!type.equals(mDescription.getMenuDescription())) {
+//				final MenuDescription previous = mDescription;
+//				final MenuDescription next = new MenuDescription(this);
+//				final RelativeLayout parent = (RelativeLayout) previous.getParent();
+//				next.setMenuDescription(type);
+//				next.setMenuDescriptionListener(this);
+//				parent.addView(next, previous.getLayoutParams());
+//				
+//				AnimationListener listener = new AnimationListener() {
+//					public void onAnimationStart(Animation animation) {}			
+//					public void onAnimationRepeat(Animation animation) {}
+//					public void onAnimationEnd(Animation animation) {
+//						mDescription = next;
+//						new Handler().post(new Runnable() {
+//							public void run() {
+//								parent.removeView(previous);
+//							}
+//						});
+//					}
+//				};
+//				slideOut.setAnimationListener(listener);
+//				
+//				previous.startAnimation(slideOut);
+//				next.startAnimation(slideIn);
+//			}
+//		} else {
+//			mCard.startAnimation(slideOut);
+//			mDescription.setMenuDescription(type);
+//			mDescription.startAnimation(slideIn);
+//		}
+//		
+//		mIsDescriptionVisible = true;
 	}
-
+	
 	public void onLeftButtonPressed(MenuDescriptionType type, View v) {
 		makeClickSound();
 		

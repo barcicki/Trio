@@ -81,8 +81,7 @@ public class CardView extends ImageView  {
 					
 					Canvas cacheCanvas = new Canvas(this.cardCache);
 					
-					
-					Bitmap square = CardViewResources.getBackgroundSqaure(isSelected());
+					Bitmap square = CardViewResources.getBackgroundSqaure(isSelected()).getBitmap();
 					float width_ratio = (float) getWidth() / square.getWidth();
 					float height_ratio = (float) getHeight() / square.getHeight();
 					
@@ -105,10 +104,9 @@ public class CardView extends ImageView  {
 					Matrix matrix = new Matrix();
 					matrix.postScale(ratio, ratio);
 					
-					cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, null);
+					cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, CardViewResources.getBitmapPaint());
 					cacheCanvas = drawCard(cacheCanvas, card, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
 						
-												
 			}
 			
 			if (this.cardCache != null && this.overdraw && getWidth() > 0 && getHeight() > 0) {

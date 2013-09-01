@@ -10,16 +10,23 @@ import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barcicki.trio.R;
+import com.barcicki.trio.SettingsActivity;
 import com.barcicki.trio.TutorialActivity;
 import com.barcicki.trio.core.Trio.TrioStatus;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class TrioGameActivity extends TrioActivity {
+abstract public class TrioGameActivity extends TrioActivity {
+	
+	private static final String START_TIME = "0:00";
+	private static final long TIME_LIMIT = 60000L; 
 
 	private View mPauseOverlay;
 	private View mHelpOverlay;
@@ -30,14 +37,15 @@ public class TrioGameActivity extends TrioActivity {
 	private TextView mTimer;
 	private TextView mCountdown;
 	private Handler mHandler = new Handler();
-	private long mTimerStart = 0L;
 	
-	protected String gElapsedTimeString = "00:00";
-	protected String gRemainingTimeString = "00:00";
-	protected long gElapsedTime = 0L;
-	protected long gRemainingTime = 60000L;
-	protected boolean gGameEnded = false;
-	protected boolean gTimerFinishCalled = false;
+	private long mTimerStart = 0L;
+	private long mElapsedTime = 0L;
+	
+	private boolean mCountdownEnabled = false;
+	private long mCountdownStart = TIME_LIMIT;
+	private long mRemainingTime = 0L;
+	
+	private boolean mIsGameFinished = false;
 	
 				
 	@Override
@@ -57,8 +65,10 @@ public class TrioGameActivity extends TrioActivity {
 			mHelpIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 			mHelpIndicator.setViewPager(mHelpViewPager);
 			final float density = getResources().getDisplayMetrics().density;
-			mHelpIndicator.setRadius(5 * density);
+			mHelpIndicator.setRadius(10 * density);
 		}
+		
+		TrioSettings.setHavePlayed(true);
 		
 		super.onCreate(arg0);
 	}
@@ -70,6 +80,13 @@ public class TrioGameActivity extends TrioActivity {
 			 }
 		}
 		mHelpAdapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		pauseTimer();
+		showPauseOverlay();
+		return super.onMenuOpened(featureId, menu);
 	}
 	
 	@Override
@@ -185,70 +202,85 @@ public class TrioGameActivity extends TrioActivity {
 	
 	/* Timer */
 	
-	public void onTimerFinish() {
+	public void onCountdownFinish() {
 		
+	}
+	
+	public void onTimerTick() {
+		if (mTimer != null) {
+			mTimer.setText(getElapsedTimeAsString());
+		}
+		
+		if (mCountdown != null) {
+			mCountdown.setText(getRemainingTimeAsString());
+		}
 	}
 	
 	private Runnable mUpdateTimer = new Runnable() {
 
 		public void run() {
 
-			final long start = mTimerStart;
-			long millis = System.currentTimeMillis() - start;
-			 
-
-			gElapsedTime = millis;
-			int seconds = (int) millis / 1000;
-			int minutes = seconds / 60;
-			seconds %= 60;
-
-			if (seconds < 10) {
-				gElapsedTimeString = minutes + ":0" + seconds;
-			} else {
-				gElapsedTimeString = minutes + ":" + seconds;
-			}
+			mElapsedTime = System.currentTimeMillis() - mTimerStart;
 			
-			long remainingTime = gRemainingTime - gElapsedTime;
-			
-			if (remainingTime < 0) {
-				if (!gTimerFinishCalled) {
-					onTimerFinish();
-					gTimerFinishCalled = true;
-				}
+			if (mCountdownEnabled) {
+				mRemainingTime = mCountdownStart - mElapsedTime;
 				
-				if (mCountdown!= null) {
-					mCountdown.setText("00:00");
-				}
-			} else {
-				seconds = (int) remainingTime / 1000;
-				minutes = seconds / 60;
-				seconds %= 60;
-	
-				if (seconds < 10) {
-					gRemainingTimeString = minutes + ":0" + seconds;
-				} else {
-					gRemainingTimeString = minutes + ":" + seconds;
-				}
-	
-				if (mCountdown!= null) {
-					mCountdown.setText(gRemainingTimeString);
+				if (mRemainingTime < 0) {
+					onCountdownFinish();
+					mCountdownEnabled = false;
 				}
 			}
+			
+			onTimerTick();
+			
 			mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
 		}
 	};
 	
 	public void startTimer() {
-		mTimerStart = System.currentTimeMillis() - gElapsedTime;
+		mTimerStart = System.currentTimeMillis() - mElapsedTime;
 		mHandler.removeCallbacks(mUpdateTimer);
 		mHandler.postDelayed(mUpdateTimer, 50);
 		if (Trio.LOCAL_LOGV)
 			Log.i("Classic Game", "Timer started");
 	}
 	
+	public void setCountdown(long time) {
+		mCountdownStart = time;
+		mCountdownEnabled = true;
+	}
+	
 	public void pauseTimer() {
 		mHandler.removeCallbacks(mUpdateTimer);
 	}
+	
+	/* Game Triggers */
+	
+	final public void resetGame() {
+		mIsGameFinished = false;
+		onGameReset();
+	}
+	
+	final public void finishGame() {
+		mIsGameFinished = true;
+		onGameFinished();
+	}
+	
+	final public void resign() {
+		mIsGameFinished = true;
+		onGameResign();
+	}
+	
+	final public boolean isGameFinished() {
+		return mIsGameFinished;
+	}
+	
+	public void onGameResign() {
+		
+	}
+	
+	abstract public void onGameFinished();
+	abstract public void onGameReset();
 
 	/* Utils */
 	
@@ -277,5 +309,42 @@ public class TrioGameActivity extends TrioActivity {
 				getString(R.string.tutorial_wrong_message,
 						TextUtils.join(", ", errors)), Toast.LENGTH_SHORT)
 				.show();
+	}
+	
+	public long getElapsedTime() {
+		return mElapsedTime;		
+	}
+	
+	public void setElapsedTime(long time) {
+		mElapsedTime = time;
+	}
+	
+	public String getElapsedTimeAsString() {
+		return timeToString(mElapsedTime);
+	}
+	
+	public long getRemainingTime() {
+		return mRemainingTime;
+	}
+	
+	public void setRemaingingTime(long time) {
+		mRemainingTime = time;
+	}
+	
+	public String getRemainingTimeAsString() {
+		return timeToString(mRemainingTime);
+	}
+	
+	private String timeToString(long value) {
+		StringBuilder timeString = new StringBuilder();
+		int seconds = (int) value / 1000;
+		int minutes = seconds / 60;
+		seconds %= 60;
+		
+		timeString.append(minutes);
+		timeString.append(seconds < 10 ? ":0" : ":");
+		timeString.append(seconds);
+		
+		return timeString.toString();
 	}
 }

@@ -96,6 +96,18 @@
     <string name="help_practice_3">Gra kończy się gdy wszystkie trzy trio będą odnalezione.</string>
     <string name="help_practice_4">Poddając się można zobaczyć jakie trio pozostały nieodkryte.</string>
     <string name="game_classic_continue">Kontynuuj</string>
-    <string name="game_classic_new_game">Nowa Gra</string>
-    <string name="game_challenge_new_game">Nowe Wyzwanie</string>
+    <string name="game_classic_new_game">Nowa gra</string>
+    <string name="game_challenge_new_game">Nowa gra</string>
+    
+    <string name="menu_description_classic">Znajdź ukryte Trio. W miejscu znalezionych Trio pojawiają się 3 nowe karty. Graj dopóki nie skończy się talia.</string>
+    <string name="menu_description_speed">Znajdź jak najwięcej Trio w przeciągu 2 minut. W miejscu znalezionych Trio pojawiają się 3 nowe karty.</string>
+    <string name="menu_description_triple">Znajdź 3 ukryte Trio wśród 12 widocznych kart - najszybciej jak potrafisz.</string>
+    <string name="menu_description_help">Dowiedz się co to jest Trio i jak je znajdować. Przejdź przez samouczek</string>
+    
+    <string name="menu_description_button_play">Gram!</string>
+    <string name="menu_description_button_new_game">Nowa gra</string>
+    <string name="menu_description_button_continue">Kontynuuj</string>
+    <string name="menu_description_button_learn">Chcę się nauczyć!</string>
+    
+    <string name="help_speed_4">Masz 2 minuty by znaleźć jak najwięcej Trio.</string>
 </resources>

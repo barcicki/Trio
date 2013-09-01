@@ -89,18 +89,16 @@ public class ClassicGameActivity extends TrioGameActivity {
 		mCardGrid.showReverse();
 		pauseTimer();
 	}
-
-	private void endGame() {
+	
+	@Override
+	public void onGameFinished() {
 		showEndingPause();
-
-		gGameEnded = true;
-
 	}
-
-	private void resetGameStatus() {
+	
+	@Override
+	public void onGameReset() {
 		gRestoredGame = false;
-		gGameEnded = false;
-		gElapsedTime = 0L;
+		setElapsedTime(0L);
 		gTriosFound = 0;
 		gHintsRemained = NUMBER_OF_HINTS;
 		gSelectedCards = new CardList();
@@ -108,6 +106,18 @@ public class ClassicGameActivity extends TrioGameActivity {
 		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
 		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
 	}
+
+//	private void resetGameStatus() {
+//		gRestoredGame = false;
+//		gGameEnded = false;
+//		gElapsedTime = 0L;
+//		gTriosFound = 0;
+//		gHintsRemained = NUMBER_OF_HINTS;
+//		gSelectedCards = new CardList();
+//		gSelectedViews = new ArrayList<CardView>();
+//		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
+//		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
+//	}
 
 	@Override
 	protected void onShowPauseOverlay() {
@@ -122,7 +132,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		TextView trioView = (TextView) getPauseOverlay().findViewById(
 				R.id.gameTrioCount);
 
-		timeView.setText(gElapsedTimeString);
+		timeView.setText(getElapsedTimeAsString());
 		hintsView
 				.setText(getString(R.string.classic_hint_count, gHintsRemained));
 		trioView.setText(getString(R.string.classic_trio_count, gTriosFound));
@@ -202,7 +212,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 	@Override
 	protected void onPause() {
-		if (!gGameEnded) {
+		if (!isGameFinished()) {
 			saveGame();
 		}
 		showPauseOverlay();
@@ -240,7 +250,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		gTriosFound += 1;
 
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
-			endGame();
+			finishGame();
 		} else {
 
 		}
@@ -256,7 +266,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		ed.putString("table", mTrio.getTable().toString());
 		ed.putInt("trios_found", gTriosFound);
 		ed.putInt("hints", gHintsRemained);
-		ed.putLong("time", gElapsedTime);
+		ed.putLong("time", getElapsedTime());
 		ed.putBoolean("saved_game", true);
 
 		if (ed.commit()) {
@@ -294,17 +304,9 @@ public class ClassicGameActivity extends TrioGameActivity {
 			String gameString = mPrefs.getString("game_string", "");
 			gHintsRemained = mPrefs.getInt("hints", NUMBER_OF_HINTS);
 			gTriosFound = mPrefs.getInt("trios_found", 0);
-			gElapsedTime = mPrefs.getLong("time", 0L);
+			setElapsedTime(mPrefs.getLong("time", 0L));
 
-			int seconds = (int) gElapsedTime / 1000;
-			int minutes = seconds / 60;
-			seconds %= 60;
-
-			if (seconds < 10) {
-				gElapsedTimeString = minutes + ":0" + seconds;
-			} else {
-				gElapsedTimeString = minutes + ":" + seconds;
-			}
+			onTimerTick();
 
 			if (!game.equals("") && !table.equals("")) {
 
@@ -410,7 +412,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 	public void useHint() {
 		gHintsRemained -= 1;
-		gElapsedTime += 30000;
+		setElapsedTime(getElapsedTime() + 30000); 
 		startTimer();
 		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
 	}
@@ -451,7 +453,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		// mCardGrid.updateGrid(mTrio.getTable());
 		// }
 
-		resetGameStatus();
+		resetGame();
 		// gGameStarted = true;
 		// hidePause();
 
@@ -476,7 +478,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 	public void onPressedQuitGame(View v) {
 		makeClickSound();
 
-		if (gGameEnded) {
+		if (isGameFinished()) {
 			clearSavedGame();
 		} else {
 			saveGame();

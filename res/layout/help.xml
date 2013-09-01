@@ -6,21 +6,25 @@
     android:background="#d000"
     android:clickable="true"
     android:orientation="vertical"
-    android:padding="@dimen/margin_size"
     android:visibility="visible" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/helpHolder"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="0.2" >
+        android:layout_margin="@dimen/margin_size"
+        android:layout_weight="0.3" >
+
     </android.support.v4.view.ViewPager>
 
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/margin_size"
+        android:layout_marginLeft="@dimen/margin_size"
+        android:layout_marginRight="@dimen/margin_size"
+        android:layout_weight="1.6"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -36,9 +40,9 @@
             android:id="@+id/Button01"
             style="@style/nice_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginRight="@dimen/margin_size"
             android:onClick="onTutorialPressed"
             android:text="@string/help_tutorial" />
@@ -47,13 +51,11 @@
             android:id="@+id/button1"
             style="@style/nice_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:onClick="onContinuePressed"
             android:text="@string/help_quit" />
-
-
     </RelativeLayout>
 
 </LinearLayout>

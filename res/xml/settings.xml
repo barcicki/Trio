@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:key="settings">
-
-    <PreferenceCategory android:title="@string/settings_main" android:key="main_preferences">
-        <CheckBoxPreference 
-            android:key="uses_openfeint" 
-            android:title="@string/settings_using_openfeint"
-            android:summary="@string/settings_using_openfeint_description"
-            android:defaultValue="false"
-        />
-        
-    </PreferenceCategory>
-    
+  
     <PreferenceCategory android:title="@string/settings_gameplay" android:key="main_preferences">
         <CheckBoxPreference 
             android:key="display_errors" 

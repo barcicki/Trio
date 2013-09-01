@@ -4,9 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#c000"
+    android:clickable="true"
     android:orientation="horizontal"
     android:padding="20dp"
-    android:clickable="true"
     android:visibility="visible" >
 
     <LinearLayout
@@ -28,8 +28,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onPressedContinue"
-                android:text="@string/pause_continue" android:paddingBottom="15dp" android:paddingTop="15dp"/>
-
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_continue" />
+
             <Button
                 android:id="@+id/gameNew"
                 style="@style/nice_button"
@@ -40,7 +42,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="@string/game_challenge_new_game" />
-
+
             <Button
                 android:id="@+id/gameRestart"
                 style="@style/nice_button"
@@ -48,25 +50,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:onClick="onPressedRestartGame"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:text="@string/pause_restart"
-                android:visibility="gone" android:paddingBottom="15dp" android:paddingTop="15dp"/>
-
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
             android:layout_weight="4"
-            android:orientation="vertical" android:layout_gravity="bottom" android:gravity="bottom">
-
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
             <Button
                 android:id="@+id/gameQuit"
                 style="@style/nice_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onPressedQuitGame"
-                android:text="@string/pause_quit" android:paddingBottom="15dp" android:paddingTop="15dp"/>
-
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/pause_quit" />
         </LinearLayout>
     </LinearLayout>
 
@@ -85,7 +91,7 @@
             android:text="00:00"
             android:textColor="@color/yellow"
             android:textSize="@dimen/pause_clock_size" />
-
+
         <TextView
             android:id="@+id/gameTrioCount"
             android:layout_width="fill_parent"
@@ -103,7 +109,8 @@
             android:gravity="right"
             android:text="@string/classic_status"
             android:textColor="@color/yellow"
-            android:textSize="@dimen/pause_desc_size" android:visibility="gone"/>
+            android:textSize="@dimen/pause_desc_size"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/gameHintCount"
@@ -113,15 +120,18 @@
             android:gravity="right"
             android:text="@string/classic_hint_count"
             android:textColor="@color/yellow"
-            android:textSize="@dimen/pause_desc_size" android:visibility="gone"/>
-
+            android:textSize="@dimen/pause_desc_size"
+            android:visibility="gone" />
+
         <com.barcicki.trio.core.CardGrid
             android:id="@+id/gameNotFound"
             android:layout_width="@dimen/practice_grid_size"
-            android:layout_height="fill_parent" android:layout_gravity="right" android:layout_marginTop="@dimen/margin_size" android:layout_marginBottom="@dimen/margin_size" android:layout_marginLeft="@dimen/margin_size">
-
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:layout_marginBottom="@dimen/margin_size"
+            android:layout_marginLeft="@dimen/margin_size"
+            android:layout_marginTop="@dimen/margin_size" >
         </com.barcicki.trio.core.CardGrid>
-
     </LinearLayout>
 
 </LinearLayout>

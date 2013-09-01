@@ -7,10 +7,13 @@ import android.preference.PreferenceManager;
 public class TrioSettings {
 	
 	public static final String MUSIC = "play_music";
+	public static final String SOUNDS = "play_sounds";
 	public static final String SAVED_GAME = "saved_game"; 
 	public static final String DISPLAY_ERRORS = "display_errors";
 	public static final String SEEN_CLASSIC = "seen_classic";
-	public static final String SEEN_CHALLENGE = "seen_practice";
+	public static final String SEEN_TRIPLE = "seen_practice";
+	public static final String SEEN_SPEED = "seen_speed";
+	public static final String HAVE_PLAYED = "have_played";
 	
 	private static boolean isInitialized = false;
 	private static Context settingsContext = null;
@@ -58,19 +61,43 @@ public class TrioSettings {
 		return writeBooleanPreference(MUSIC, value);
 	}
 	
+	public static boolean isSoundEffectsEnabled() {
+		return readBooleanPreference(SOUNDS, true);
+	}
+	
+	public static boolean setSoundeEffectsEnabled(boolean value) {
+		return writeBooleanPreference(SOUNDS, value);
+	}
+	
 	public static boolean hasSeenClassicHelp() {
 		return readBooleanPreference(SEEN_CLASSIC, false);
 	}
 	
-	public static boolean hasSeenChallengeHelp() {
-		return readBooleanPreference(SEEN_CHALLENGE, false);
+	public static boolean hasSeenTripleHelp() {
+		return readBooleanPreference(SEEN_TRIPLE, false);
+	}
+	
+	public static boolean hasSeenSpeedHelp() {
+		return readBooleanPreference(SEEN_SPEED, false);
+	}
+	
+	public static boolean hasPlayed() {
+		return readBooleanPreference(HAVE_PLAYED, false);
 	}
 	
 	public static boolean setSeenClassicHelp(boolean value) {
 		return writeBooleanPreference(SEEN_CLASSIC, value);
 	}
 	
-	public static boolean setSeenChallengeHelp(boolean value) {
-		return writeBooleanPreference(SEEN_CHALLENGE, value);
+	public static boolean setSeenTripleHelp(boolean value) {
+		return writeBooleanPreference(SEEN_TRIPLE, value);
+	}
+	
+	public static boolean setSeenSpeedHelp(boolean value) {
+		return writeBooleanPreference(SEEN_SPEED, value);
+	}
+	
+	public static boolean setHavePlayed(boolean value) {
+		return writeBooleanPreference(HAVE_PLAYED, value);
 	}
 }

@@ -4,7 +4,7 @@
     android:duration="@integer/logo_anim_duration"
     android:interpolator="@android:anim/accelerate_interpolator"
     > 
-    <scale 
+    <scale
         android:fillBefore="true"
         android:fromXScale="0.01"
         android:toXScale="1"
@@ -13,7 +13,7 @@
 		android:duration="@integer/logo_anim_duration"
         />   
    	<translate
-       android:fromXDelta="40%p"
+       android:fromXDelta="30%p"
        android:toXDelta="0"
        android:fromYDelta="50%p"
        android:toYDelta="0"

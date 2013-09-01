@@ -22,19 +22,17 @@ import com.barcicki.trio.core.TrioGameActivity;
 import com.barcicki.trio.core.TrioSettings;
 
 public class SpeedGameActivity extends TrioGameActivity {
-	private static int NUMBER_OF_HINTS = 10;
-
+	
+	final static long TIME_LIMIT = 120000L;
+	
 	SharedPreferences mPrefs;
 	Trio mTrio = new Trio();
-
-	Button mHintButton;
 
 	TextView mDeckStatus;
 	CardList gSelectedCards = new CardList();
 	ArrayList<CardView> gSelectedViews = new ArrayList<CardView>();
 
 	int gTriosFound = 0;
-	int gHintsRemained = NUMBER_OF_HINTS;
 	boolean gRestoredGame = false;
 
 	CardGrid mCardGrid;
@@ -46,16 +44,17 @@ public class SpeedGameActivity extends TrioGameActivity {
 		super.onCreate(savedInstanceState);
 
 		setHelpFragments(
-				R.layout.help_classic_fragment1,
-				R.layout.help_classic_fragment2,
-				R.layout.help_classic_fragment3);
+				R.layout.help_speed_fragment1,
+				R.layout.help_speed_fragment2
+				);
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		mCardGrid = (CardGrid) findViewById(R.id.cardsContainer);
-		mHintButton = (Button) findViewById(R.id.gameHintButton);
 		mDeckStatus = (TextView) findViewById(R.id.gameDeckStatus);
 		
 		attachCardListeners();
+		
+		setCountdown(TIME_LIMIT);
 		
 		if (savedInstanceState != null) {
 			restoreGame(savedInstanceState);
@@ -65,18 +64,18 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 		hideOverlays();
 		
-		if (!TrioSettings.hasSeenClassicHelp()) {
+		if (!TrioSettings.hasSeenSpeedHelp()) {
 			showHelpOverlay();
-			TrioSettings.setSeenClassicHelp(true);
+			TrioSettings.setSeenSpeedHelp(true);
 		}
 
 	}
 
 	private void startGame() {
+		mTrio.newGame();
 		mCardGrid.setCards(mTrio.getTable());
 		mCardGrid.hideReverse();
-		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
-		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
+		mDeckStatus.setText(Integer.toString(0));
 		startTimer();
 	}
 
@@ -90,23 +89,19 @@ public class SpeedGameActivity extends TrioGameActivity {
 		pauseTimer();
 	}
 
-	private void endGame() {
+	
+	@Override
+	public void onGameFinished() {
 		showEndingPause();
-
-		gGameEnded = true;
-
 	}
-
-	private void resetGameStatus() {
-		gRestoredGame = false;
-		gGameEnded = false;
-		gElapsedTime = 0L;
+	
+	@Override
+	public void onGameReset() {
+		gRestoredGame = false;	
 		gTriosFound = 0;
-		gHintsRemained = NUMBER_OF_HINTS;
 		gSelectedCards = new CardList();
 		gSelectedViews = new ArrayList<CardView>();
-		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
-		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
+		mDeckStatus.setText(Integer.toString(0));
 	}
 
 	@Override
@@ -115,19 +110,11 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 		TextView timeView = (TextView) getPauseOverlay().findViewById(
 				R.id.gameTime);
-		TextView hintsView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameHintCount);
-		TextView statusView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameStatus);
 		TextView trioView = (TextView) getPauseOverlay().findViewById(
 				R.id.gameTrioCount);
 
-		timeView.setText(gElapsedTimeString);
-		hintsView
-				.setText(getString(R.string.classic_hint_count, gHintsRemained));
-		trioView.setText(getString(R.string.classic_trio_count, gTriosFound));
-		statusView.setText(getString(R.string.classic_status, mTrio.getGame()
-				.size()));
+		timeView.setText(getString(R.string.speed_time_left, (int) Math.ceil(getRemainingTime() / 1000)));
+		trioView.setText(getString(R.string.speed_found, gTriosFound));
 
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setText(getString(R.string.pause_continue));
@@ -136,7 +123,7 @@ public class SpeedGameActivity extends TrioGameActivity {
 		buttonNewGame.setVisibility(View.VISIBLE);
 
 		Button buttonQuit = (Button) findViewById(R.id.gameQuit);
-		buttonQuit.setText(getString(R.string.pause_save_quit));
+		buttonQuit.setText(getString(R.string.pause_quit));
 	}
 
 	@Override
@@ -232,72 +219,37 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 		mTrio.foundTrio(selectedCards);
 		mCardGrid.updateGrid(mTrio.getTable());
-		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
-
 		gTriosFound += 1;
+		
+		mDeckStatus.setText(Integer.toString(gTriosFound));
 
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
-			endGame();
-		} else {
-
-		}
-
+			finishGame();
+		} 
 	}
 
-//	private boolean saveGame() {
-//
-//		SharedPreferences.Editor ed = mPrefs.edit();
-//
-//		ed.putString("game_string", mTrio.getGameString());
-//		ed.putString("game", mTrio.getGame().toString());
-//		ed.putString("table", mTrio.getTable().toString());
-//		ed.putInt("trios_found", gTriosFound);
-//		ed.putInt("hints", gHintsRemained);
-//		ed.putLong("time", gElapsedTime);
-//		ed.putBoolean("saved_game", true);
-//
-//		if (ed.commit()) {
-//			if (Trio.LOCAL_LOGV)
-//				Log.v("Classic Game", "saved progress");
-//			return true;
-//		} else {
-//			Log.e("Classic Game", "failed to save progress");
-//			return false;
-//		}
-//	}
-	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putString("game_string", mTrio.getGameString());
 		outState.putString("game", mTrio.getGame().toString());
 		outState.putString("table", mTrio.getTable().toString());
 		outState.putInt("trios_found", gTriosFound);
-		outState.putLong("time", gElapsedTime);
+		outState.putLong("time", getElapsedTime());
 		super.onSaveInstanceState(outState);
 	}
 	
 	private void restoreGame(Bundle savedInstanceState) {
-		gGameEnded = false;
-		gSelectedCards = new CardList();
-		gSelectedViews = new ArrayList<CardView>();
-		
+		resetGame();
+				
 		String game = savedInstanceState.getString("game");
 		String table = savedInstanceState.getString("table");
 		String gameString = savedInstanceState.getString("game_string");
-		gHintsRemained = 0;
 		gTriosFound = savedInstanceState.getInt("trios_found");
-		gElapsedTime = savedInstanceState.getLong("time");
-
-		int seconds = (int) gElapsedTime / 1000;
-		int minutes = seconds / 60;
-		seconds %= 60;
-
-		if (seconds < 10) {
-			gElapsedTimeString = minutes + ":0" + seconds;
-		} else {
-			gElapsedTimeString = minutes + ":" + seconds;
-		}
-
+		
+		setElapsedTime(savedInstanceState.getLong("time"));
+		
+		onTimerTick();
+		
 		if (!game.equals("") && !table.equals("")) {
 
 			mTrio.setGame(CardList.fromString(mTrio.getDeck(), game));
@@ -314,98 +266,12 @@ public class SpeedGameActivity extends TrioGameActivity {
 	 * Button handlers
 	 */
 
-	public void onHintClicked(View v) {
-		makeClickSound();
-		if (gHintsRemained > 0) {
-			ArrayList<CardList> trios = mTrio.getTable().getTrios();
-			int selectedSize = gSelectedCards.size();
-
-			if (trios.size() > 0) {
-
-				// if no cards were selected before, select the first card
-				// possible - it is being done in the end of method
-
-				// if one card was selected, check if it makes trio with
-				// others. If yes, show next card, if no, deselect it and
-				// select another one
-				if (selectedSize == 1) {
-
-					Card selected = gSelectedCards.get(0);
-
-					for (CardList trio : trios) {
-
-						if (trio.contains(selected)) {
-							for (Card c : trio) {
-								if (!c.equals(selected)) {
-
-									gSelectedCards.add(c);
-									gSelectedViews.add(mCardGrid.select(c));
-
-									useHint();
-
-									if (Trio.LOCAL_LOGV)
-										Log.v("Single Game Hint",
-												"Hint showed second card");
-									return;
-								}
-							}
-						}
-
-					}
-
-					// if there're two cards selected check if they make any
-					// trio, if yes do not give additional hints, if no
-					// deselect them and select first one
-				} else if (selectedSize == 2) {
-					Card sel1 = gSelectedCards.get(0);
-					Card sel2 = gSelectedCards.get(1);
-					for (CardList trio : trios) {
-						if (trio.contains(sel1) && trio.contains(sel2)) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.hints_ended),
-									Toast.LENGTH_SHORT).show();
-							return;
-						}
-					}
-				}
-
-				gSelectedCards.clear();
-				Card firstCard = trios.get(0).get(0);
-
-				mCardGrid.deselectAll();
-				gSelectedCards.clear();
-				gSelectedViews.clear();
-				gSelectedCards.add(firstCard);
-				gSelectedViews.add(mCardGrid.select(firstCard));
-
-				useHint();
-
-				if (Trio.LOCAL_LOGV)
-					Log.v("Single Game Hint", "Hint showed first card");
-				return;
-			} else {
-				Log.e("Single Game Hint",
-						"Trios were empty when they shouldn't");
-			}
-		} else {
-			Toast.makeText(this, getString(R.string.classic_hints_finished),
-					Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	public void useHint() {
-		gHintsRemained -= 1;
-		gElapsedTime += 30000;
-		startTimer();
-		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
-	}
-
 	public void showEndingPause() {
 		showPauseOverlay();
 
 		TextView statusView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameStatus);
-		statusView.setText(getString(R.string.classic_end));
+				R.id.gameTime);
+		statusView.setText(getString(R.string.speed_end));
 
 		Button buttonContinue = (Button) getPauseOverlay().findViewById(
 				R.id.gameContinue);
@@ -436,7 +302,7 @@ public class SpeedGameActivity extends TrioGameActivity {
 		// mCardGrid.updateGrid(mTrio.getTable());
 		// }
 
-		resetGameStatus();
+		resetGame();
 		// gGameStarted = true;
 		// hidePause();
 
@@ -463,11 +329,11 @@ public class SpeedGameActivity extends TrioGameActivity {
 		startHomeActivity();
 		finish();
 	}
-
-	@Override
-	public void onTimerFinish() {
-		Toast.makeText(this, "Game over", Toast.LENGTH_SHORT).show();
-		super.onTimerFinish();
-	}
 	
+	@Override
+	public void onCountdownFinish() {
+		super.onCountdownFinish();
+		finishGame();
+	}
+
 }

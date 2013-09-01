@@ -23,6 +23,14 @@ public final class R {
         public static final int push_top=0x7f04000b;
     }
     public static final class attr {
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int alpha=0x7f01001f;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -270,6 +278,14 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int topPadding=0x7f01001b;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int type=0x7f010020;
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
@@ -362,7 +378,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button_text_size=0x7f0b0012;
         public static final int button_tutorial_padding_size=0x7f0b0015;
         public static final int classic_card_size=0x7f0b001c;
-        public static final int classic_card_width=0x7f0b002a;
+        public static final int classic_card_width=0x7f0b002b;
         public static final int clock_size=0x7f0b0018;
         public static final int default_circle_indicator_radius=0x7f0b0000;
         public static final int default_circle_indicator_stroke_width=0x7f0b0001;
@@ -377,6 +393,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int default_title_indicator_text_size=0x7f0b000a;
         public static final int default_title_indicator_title_padding=0x7f0b000b;
         public static final int default_title_indicator_top_padding=0x7f0b000c;
+        public static final int font_size_menu_description=0x7f0b002a;
         public static final int home_button_height=0x7f0b0027;
         public static final int home_button_padding_size=0x7f0b001e;
         public static final int home_button_size=0x7f0b001d;
@@ -403,114 +420,115 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int bg_static=0x7f020000;
-        public static final int blue_shader=0x7f020001;
-        public static final int green_shader=0x7f020002;
-        public static final int help_classic_1=0x7f020003;
-        public static final int help_classic_2=0x7f020004;
-        public static final int help_classic_end=0x7f020005;
-        public static final int help_classic_screen=0x7f020006;
-        public static final int help_practice_2=0x7f020007;
-        public static final int help_practice_end=0x7f020008;
-        public static final int help_practice_screen=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int menu_classic=0x7f02000b;
-        public static final int menu_classic_label=0x7f02000c;
-        public static final int menu_description_bg=0x7f02000d;
-        public static final int menu_help=0x7f02000e;
-        public static final int menu_help_label=0x7f02000f;
-        public static final int menu_speed=0x7f020010;
-        public static final int menu_speed_label=0x7f020011;
-        public static final int menu_triple=0x7f020012;
-        public static final int menu_triple_label=0x7f020013;
-        public static final int nice_button=0x7f020014;
-        public static final int no_music_button=0x7f020015;
-        public static final int ok=0x7f020016;
-        public static final int red_shader=0x7f020017;
-        public static final int square=0x7f020018;
-        public static final int square_question=0x7f020019;
-        public static final int square_reverse=0x7f02001a;
-        public static final int square_selected=0x7f02001b;
-        public static final int trio_static=0x7f02001c;
-        public static final int vpi__tab_indicator=0x7f02001d;
-        public static final int vpi__tab_selected_focused_holo=0x7f02001e;
-        public static final int vpi__tab_selected_holo=0x7f02001f;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020020;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020021;
-        public static final int vpi__tab_unselected_holo=0x7f020022;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020023;
-        public static final int wrong=0x7f020024;
+        public static final int bg_static_trio=0x7f020001;
+        public static final int blue_shader=0x7f020002;
+        public static final int green_shader=0x7f020003;
+        public static final int help_classic_1=0x7f020004;
+        public static final int help_classic_2=0x7f020005;
+        public static final int help_classic_end=0x7f020006;
+        public static final int help_classic_screen=0x7f020007;
+        public static final int help_practice_2=0x7f020008;
+        public static final int help_practice_end=0x7f020009;
+        public static final int help_practice_screen=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int menu_classic=0x7f02000c;
+        public static final int menu_classic_label=0x7f02000d;
+        public static final int menu_description_bg=0x7f02000e;
+        public static final int menu_help=0x7f02000f;
+        public static final int menu_help_label=0x7f020010;
+        public static final int menu_speed=0x7f020011;
+        public static final int menu_speed_label=0x7f020012;
+        public static final int menu_triple=0x7f020013;
+        public static final int menu_triple_label=0x7f020014;
+        public static final int nice_button=0x7f020015;
+        public static final int no_music_button=0x7f020016;
+        public static final int ok=0x7f020017;
+        public static final int red_shader=0x7f020018;
+        public static final int square=0x7f020019;
+        public static final int square_question=0x7f02001a;
+        public static final int square_reverse=0x7f02001b;
+        public static final int square_selected=0x7f02001c;
+        public static final int trio_static=0x7f02001d;
+        public static final int vpi__tab_indicator=0x7f02001e;
+        public static final int vpi__tab_selected_focused_holo=0x7f02001f;
+        public static final int vpi__tab_selected_holo=0x7f020020;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020021;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020022;
+        public static final int vpi__tab_unselected_holo=0x7f020023;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020024;
+        public static final int wrong=0x7f020025;
     }
     public static final class id {
-        public static final int Button01=0x7f070042;
-        public static final int Button02=0x7f07003d;
-        public static final int Clear=0x7f07003e;
+        public static final int Button01=0x7f07001f;
+        public static final int Button02=0x7f070045;
+        public static final int Clear=0x7f070046;
         public static final int ImageView01=0x7f070026;
-        public static final int ImageView02=0x7f070059;
-        public static final int ImageView03=0x7f07005e;
-        public static final int ImageView04=0x7f07006b;
-        public static final int ImageView05=0x7f070070;
+        public static final int ImageView02=0x7f070060;
+        public static final int ImageView03=0x7f070065;
+        public static final int ImageView04=0x7f070072;
+        public static final int ImageView05=0x7f070077;
         public static final int LinearLayout1=0x7f070013;
         public static final int RelativeLayout1=0x7f070009;
         public static final int TextView01=0x7f070024;
         public static final int TextView02=0x7f070023;
         public static final int TextView03=0x7f070027;
-        public static final int TextView04=0x7f070072;
-        public static final int TextView1=0x7f070055;
-        public static final int TextView2=0x7f07005a;
-        public static final int TextView3=0x7f07005f;
-        public static final int TextView4=0x7f070063;
-        public static final int TextView5=0x7f070071;
-        public static final int TextView6=0x7f07006c;
-        public static final int TextView7=0x7f070067;
+        public static final int TextView04=0x7f07002b;
+        public static final int TextView1=0x7f07005c;
+        public static final int TextView2=0x7f070061;
+        public static final int TextView3=0x7f070066;
+        public static final int TextView4=0x7f07006a;
+        public static final int TextView5=0x7f070078;
+        public static final int TextView6=0x7f070073;
+        public static final int TextView7=0x7f07006e;
         public static final int bottom=0x7f070003;
         public static final int button1=0x7f070020;
-        public static final int buttonGameChallengeNew=0x7f070034;
-        public static final int buttonGameClassicContinue=0x7f070031;
-        public static final int buttonGameClassicNew=0x7f070032;
+        public static final int buttonGameChallengeNew=0x7f07003a;
+        public static final int buttonGameClassicContinue=0x7f070037;
+        public static final int buttonGameClassicNew=0x7f070038;
         public static final int buttonMusicSwitch=0x7f07000c;
-        public static final int buttonNext=0x7f070075;
-        public static final int buttonPrev=0x7f070073;
-        public static final int buttonTutorial=0x7f070033;
-        public static final int card1=0x7f070056;
-        public static final int card10=0x7f070064;
-        public static final int card11=0x7f070065;
-        public static final int card12=0x7f070066;
-        public static final int card13=0x7f070068;
-        public static final int card14=0x7f070069;
-        public static final int card15=0x7f07006a;
-        public static final int card16=0x7f07006d;
-        public static final int card17=0x7f07006e;
-        public static final int card18=0x7f07006f;
-        public static final int card2=0x7f070057;
-        public static final int card3=0x7f070058;
-        public static final int card4=0x7f07005b;
-        public static final int card5=0x7f07005c;
-        public static final int card6=0x7f07005d;
-        public static final int card7=0x7f070060;
-        public static final int card8=0x7f070061;
-        public static final int card9=0x7f070062;
-        public static final int cardView1=0x7f07003c;
+        public static final int buttonNext=0x7f07007b;
+        public static final int buttonPrev=0x7f070079;
+        public static final int buttonTutorial=0x7f070039;
+        public static final int card1=0x7f07005d;
+        public static final int card10=0x7f07006b;
+        public static final int card11=0x7f07006c;
+        public static final int card12=0x7f07006d;
+        public static final int card13=0x7f07006f;
+        public static final int card14=0x7f070070;
+        public static final int card15=0x7f070071;
+        public static final int card16=0x7f070074;
+        public static final int card17=0x7f070075;
+        public static final int card18=0x7f070076;
+        public static final int card2=0x7f07005e;
+        public static final int card3=0x7f07005f;
+        public static final int card4=0x7f070062;
+        public static final int card5=0x7f070063;
+        public static final int card6=0x7f070064;
+        public static final int card7=0x7f070067;
+        public static final int card8=0x7f070068;
+        public static final int card9=0x7f070069;
+        public static final int cardView1=0x7f070044;
         public static final int cardsContainer=0x7f070008;
-        public static final int color1=0x7f07004f;
-        public static final int color2=0x7f070050;
-        public static final int color3=0x7f070051;
-        public static final int fill1=0x7f070052;
-        public static final int fill2=0x7f070053;
-        public static final int fill3=0x7f070054;
-        public static final int gameCard=0x7f07002c;
+        public static final int color1=0x7f070056;
+        public static final int color2=0x7f070057;
+        public static final int color3=0x7f070058;
+        public static final int fill1=0x7f070059;
+        public static final int fill2=0x7f07005a;
+        public static final int fill3=0x7f07005b;
+        public static final int gameCard=0x7f070036;
         public static final int gameContinue=0x7f070014;
-        public static final int gameCountdown=0x7f07003b;
+        public static final int gameCountdown=0x7f070043;
         public static final int gameDeckStatus=0x7f07000e;
         public static final int gameHelp=0x7f070011;
         public static final int gameHintButton=0x7f07000b;
-        public static final int gameHintButton2=0x7f07003f;
+        public static final int gameHintButton2=0x7f070047;
         public static final int gameHintCount=0x7f07001b;
         public static final int gameNew=0x7f070015;
-        public static final int gameNotFound=0x7f07003a;
+        public static final int gameNotFound=0x7f070042;
         public static final int gamePause=0x7f070010;
         public static final int gamePauseButton=0x7f07000a;
         public static final int gameQuit=0x7f070017;
-        public static final int gameResign=0x7f070039;
+        public static final int gameResign=0x7f070041;
         public static final int gameRestart=0x7f070016;
         public static final int gameStatus=0x7f07001a;
         public static final int gameTime=0x7f070018;
@@ -522,44 +540,50 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int helpClassic2=0x7f070025;
         public static final int helpClassic3=0x7f070028;
         public static final int helpHolder=0x7f07001d;
+        public static final int imageView1=0x7f070022;
         public static final int indicator=0x7f07001e;
-        public static final int justQuit=0x7f070048;
+        public static final int justQuit=0x7f07004f;
+        public static final int l=0x7f07002a;
         public static final int layout=0x7f070007;
-        public static final int menuButtonLeft=0x7f070037;
-        public static final int menuButtonRight=0x7f07001f;
-        public static final int menuDescription=0x7f070036;
-        public static final int menuDescriptionView=0x7f07002d;
-        public static final int menuLogo=0x7f070035;
-        public static final int menuSwitcher=0x7f07002b;
-        public static final int mute=0x7f070077;
+        public static final int menuButtonLeft=0x7f07003e;
+        public static final int menuButtonRight=0x7f07003f;
+        public static final int menuClassic=0x7f070030;
+        public static final int menuDescription=0x7f07003d;
+        public static final int menuDescriptionView=0x7f07003b;
+        public static final int menuHelp=0x7f070033;
+        public static final int menuLogo=0x7f07003c;
+        public static final int menuSpeed=0x7f070032;
+        public static final int menuSwitcher=0x7f07002f;
+        public static final int menuTriple=0x7f070031;
+        public static final int mute=0x7f07007d;
         public static final int none=0x7f070000;
         public static final int pause=0x7f070012;
-        public static final int quantity1=0x7f07004c;
-        public static final int quantity2=0x7f07004d;
-        public static final int quantity3=0x7f07004e;
-        public static final int settings=0x7f070076;
-        public static final int shape1=0x7f070049;
-        public static final int shape2=0x7f07004a;
-        public static final int shape3=0x7f07004b;
-        public static final int showClassic=0x7f070022;
-        public static final int showHelp=0x7f070030;
-        public static final int showSpeed=0x7f07002f;
-        public static final int showTriple=0x7f07002e;
-        public static final int slideNext=0x7f070043;
-        public static final int slidePrev=0x7f070044;
-        public static final int startChallenge=0x7f070047;
-        public static final int startClassic=0x7f070046;
-        public static final int summary=0x7f070074;
+        public static final int quantity1=0x7f070053;
+        public static final int quantity2=0x7f070054;
+        public static final int quantity3=0x7f070055;
+        public static final int settings=0x7f07007c;
+        public static final int shape1=0x7f070050;
+        public static final int shape2=0x7f070051;
+        public static final int shape3=0x7f070052;
+        public static final int showClassic=0x7f07002d;
+        public static final int showHelp=0x7f070035;
+        public static final int showSpeed=0x7f07002e;
+        public static final int showTriple=0x7f070034;
+        public static final int slideNext=0x7f07004a;
+        public static final int slidePrev=0x7f07004b;
+        public static final int startChallenge=0x7f07004e;
+        public static final int startClassic=0x7f07004d;
+        public static final int summary=0x7f07007a;
         public static final int tagCards=0x7f070005;
         public static final int tagViews=0x7f070006;
         public static final int textView1=0x7f070029;
-        public static final int textView2=0x7f070045;
+        public static final int textView2=0x7f07004c;
         public static final int top=0x7f070004;
         public static final int triangle=0x7f070001;
-        public static final int trioLogo=0x7f07002a;
-        public static final int triosContainer=0x7f070038;
-        public static final int tutorial=0x7f070040;
-        public static final int tutorialHolder=0x7f070041;
+        public static final int trioLogo=0x7f07002c;
+        public static final int triosContainer=0x7f070040;
+        public static final int tutorial=0x7f070048;
+        public static final int tutorialHolder=0x7f070049;
         public static final int underline=0x7f070002;
     }
     public static final class integer {
@@ -589,18 +613,22 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int help_practice_fragment1=0x7f030006;
         public static final int help_practice_fragment2=0x7f030007;
         public static final int help_practice_fragment3=0x7f030008;
-        public static final int home=0x7f030009;
-        public static final int home_copy=0x7f03000a;
-        public static final int menu_description=0x7f03000b;
-        public static final int practice=0x7f03000c;
-        public static final int practice_pause=0x7f03000d;
-        public static final int speed=0x7f03000e;
-        public static final int testing=0x7f03000f;
-        public static final int tutorial=0x7f030010;
-        public static final int tutorial_dialog=0x7f030011;
-        public static final int tutorial_step1_fragment=0x7f030012;
-        public static final int tutorial_step2_fragment=0x7f030013;
-        public static final int tutorial_step3_fragment=0x7f030014;
+        public static final int help_speed_fragment1=0x7f030009;
+        public static final int help_speed_fragment2=0x7f03000a;
+        public static final int home=0x7f03000b;
+        public static final int home_copy=0x7f03000c;
+        public static final int home_new=0x7f03000d;
+        public static final int menu_description=0x7f03000e;
+        public static final int pause_speed=0x7f03000f;
+        public static final int practice=0x7f030010;
+        public static final int practice_pause=0x7f030011;
+        public static final int speed=0x7f030012;
+        public static final int testing=0x7f030013;
+        public static final int tutorial=0x7f030014;
+        public static final int tutorial_dialog=0x7f030015;
+        public static final int tutorial_step1_fragment=0x7f030016;
+        public static final int tutorial_step2_fragment=0x7f030017;
+        public static final int tutorial_step3_fragment=0x7f030018;
     }
     public static final class menu {
         public static final int menu=0x7f0e0000;
@@ -628,92 +656,100 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int error_fill=0x7f0d0008;
         public static final int error_number=0x7f0d0009;
         public static final int error_shape=0x7f0d0006;
-        public static final int game_challenge=0x7f0d003d;
-        public static final int game_challenge_desc=0x7f0d003e;
-        public static final int game_challenge_new_game=0x7f0d0061;
-        public static final int game_classic=0x7f0d0039;
-        public static final int game_classic_continue=0x7f0d005f;
-        public static final int game_classic_desc=0x7f0d003a;
-        public static final int game_classic_new_game=0x7f0d0060;
-        public static final int game_start=0x7f0d003f;
-        public static final int game_tutorial=0x7f0d003b;
-        public static final int game_tutorial_desc=0x7f0d003c;
-        public static final int help_button=0x7f0d0042;
-        public static final int help_classic_1=0x7f0d0055;
-        public static final int help_classic_2=0x7f0d0056;
-        public static final int help_classic_3=0x7f0d0057;
-        public static final int help_classic_4=0x7f0d0058;
-        public static final int help_classic_5=0x7f0d0059;
-        public static final int help_classic_fragment3_top=0x7f0d0050;
-        public static final int help_classic_goal=0x7f0d0054;
-        public static final int help_practice_1=0x7f0d005b;
-        public static final int help_practice_2=0x7f0d005c;
-        public static final int help_practice_3=0x7f0d005d;
-        public static final int help_practice_4=0x7f0d005e;
-        public static final int help_practice_goal=0x7f0d005a;
-        public static final int help_quit=0x7f0d0051;
-        public static final int help_tutorial=0x7f0d0052;
+        public static final int game_challenge=0x7f0d0040;
+        public static final int game_challenge_desc=0x7f0d0041;
+        public static final int game_challenge_new_game=0x7f0d0064;
+        public static final int game_classic=0x7f0d003c;
+        public static final int game_classic_continue=0x7f0d0062;
+        public static final int game_classic_desc=0x7f0d003d;
+        public static final int game_classic_new_game=0x7f0d0063;
+        public static final int game_start=0x7f0d0042;
+        public static final int game_tutorial=0x7f0d003e;
+        public static final int game_tutorial_desc=0x7f0d003f;
+        public static final int help_button=0x7f0d0045;
+        public static final int help_classic_1=0x7f0d0058;
+        public static final int help_classic_2=0x7f0d0059;
+        public static final int help_classic_3=0x7f0d005a;
+        public static final int help_classic_4=0x7f0d005b;
+        public static final int help_classic_5=0x7f0d005c;
+        public static final int help_classic_fragment3_top=0x7f0d0053;
+        public static final int help_classic_goal=0x7f0d0057;
+        public static final int help_practice_1=0x7f0d005e;
+        public static final int help_practice_2=0x7f0d005f;
+        public static final int help_practice_3=0x7f0d0060;
+        public static final int help_practice_4=0x7f0d0061;
+        public static final int help_practice_goal=0x7f0d005d;
+        public static final int help_quit=0x7f0d0054;
+        public static final int help_speed_4=0x7f0d006d;
+        public static final int help_tutorial=0x7f0d0055;
         public static final int hint=0x7f0d0002;
         public static final int hints_ended=0x7f0d0003;
-        public static final int menu_description_classic=0x7f0d0062;
-        public static final int menu_description_help=0x7f0d0065;
-        public static final int menu_description_speed=0x7f0d0063;
-        public static final int menu_description_triple=0x7f0d0064;
-        public static final int music=0x7f0d0041;
+        public static final int menu_description_button_continue=0x7f0d006b;
+        public static final int menu_description_button_learn=0x7f0d006c;
+        public static final int menu_description_button_new_game=0x7f0d006a;
+        public static final int menu_description_button_play=0x7f0d0069;
+        public static final int menu_description_classic=0x7f0d0065;
+        public static final int menu_description_help=0x7f0d0068;
+        public static final int menu_description_speed=0x7f0d0066;
+        public static final int menu_description_triple=0x7f0d0067;
+        public static final int music=0x7f0d0044;
         public static final int not_trio=0x7f0d0005;
-        public static final int openfeint_question=0x7f0d0040;
-        public static final int pause_continue=0x7f0d001e;
-        public static final int pause_new_game=0x7f0d0020;
-        public static final int pause_quit=0x7f0d0022;
-        public static final int pause_restart=0x7f0d001f;
-        public static final int pause_save_quit=0x7f0d0021;
-        public static final int pause_start=0x7f0d0023;
+        public static final int openfeint_question=0x7f0d0043;
+        public static final int pause_continue=0x7f0d0021;
+        public static final int pause_new_game=0x7f0d0023;
+        public static final int pause_quit=0x7f0d0025;
+        public static final int pause_restart=0x7f0d0022;
+        public static final int pause_save_quit=0x7f0d0024;
+        public static final int pause_start=0x7f0d0026;
         public static final int play_game_id=0x7f0d0000;
         public static final int practice_already_found=0x7f0d001d;
         public static final int practice_end=0x7f0d0019;
         public static final int practice_objective=0x7f0d001b;
-        public static final int practice_resign=0x7f0d0053;
+        public static final int practice_resign=0x7f0d0056;
         public static final int practice_resigned=0x7f0d001a;
         public static final int practice_subobjective=0x7f0d001c;
         public static final int practice_trio_count=0x7f0d0018;
-        public static final int settings=0x7f0d0043;
-        public static final int settings_display_errors=0x7f0d0045;
-        public static final int settings_display_errors_description=0x7f0d0046;
-        public static final int settings_gameplay=0x7f0d0044;
-        public static final int settings_main=0x7f0d0047;
-        public static final int settings_mute=0x7f0d004e;
-        public static final int settings_play_music=0x7f0d004a;
-        public static final int settings_play_music_description=0x7f0d004b;
-        public static final int settings_play_sounds=0x7f0d004c;
-        public static final int settings_play_sounds_description=0x7f0d004d;
-        public static final int settings_unmute=0x7f0d004f;
-        public static final int settings_using_openfeint=0x7f0d0048;
-        public static final int settings_using_openfeint_description=0x7f0d0049;
+        public static final int settings=0x7f0d0046;
+        public static final int settings_display_errors=0x7f0d0048;
+        public static final int settings_display_errors_description=0x7f0d0049;
+        public static final int settings_gameplay=0x7f0d0047;
+        public static final int settings_main=0x7f0d004a;
+        public static final int settings_mute=0x7f0d0051;
+        public static final int settings_play_music=0x7f0d004d;
+        public static final int settings_play_music_description=0x7f0d004e;
+        public static final int settings_play_sounds=0x7f0d004f;
+        public static final int settings_play_sounds_description=0x7f0d0050;
+        public static final int settings_unmute=0x7f0d0052;
+        public static final int settings_using_openfeint=0x7f0d004b;
+        public static final int settings_using_openfeint_description=0x7f0d004c;
         public static final int solo_game_ended=0x7f0d000b;
         public static final int solo_game_restart=0x7f0d000c;
         public static final int solo_game_status=0x7f0d000a;
+        public static final int speed_end=0x7f0d001e;
+        public static final int speed_found=0x7f0d0020;
+        public static final int speed_time_left=0x7f0d001f;
         public static final int trio_found=0x7f0d0004;
-        public static final int tutorial_1common=0x7f0d002b;
-        public static final int tutorial_2common=0x7f0d002c;
-        public static final int tutorial_3common=0x7f0d002d;
-        public static final int tutorial_back=0x7f0d0034;
-        public static final int tutorial_colour=0x7f0d0028;
-        public static final int tutorial_end=0x7f0d0037;
-        public static final int tutorial_end_message=0x7f0d0038;
-        public static final int tutorial_fill=0x7f0d0029;
-        public static final int tutorial_next=0x7f0d0024;
-        public static final int tutorial_no_common=0x7f0d002e;
-        public static final int tutorial_number=0x7f0d0027;
-        public static final int tutorial_quit=0x7f0d0035;
-        public static final int tutorial_shape=0x7f0d0026;
-        public static final int tutorial_step1_header=0x7f0d0025;
-        public static final int tutorial_step2_header=0x7f0d002a;
-        public static final int tutorial_step3_header=0x7f0d0036;
-        public static final int tutorial_wrong_color=0x7f0d0031;
-        public static final int tutorial_wrong_fill=0x7f0d0032;
-        public static final int tutorial_wrong_message=0x7f0d0033;
-        public static final int tutorial_wrong_number=0x7f0d0030;
-        public static final int tutorial_wrong_shape=0x7f0d002f;
+        public static final int tutorial_1common=0x7f0d002e;
+        public static final int tutorial_2common=0x7f0d002f;
+        public static final int tutorial_3common=0x7f0d0030;
+        public static final int tutorial_back=0x7f0d0037;
+        public static final int tutorial_colour=0x7f0d002b;
+        public static final int tutorial_end=0x7f0d003a;
+        public static final int tutorial_end_message=0x7f0d003b;
+        public static final int tutorial_fill=0x7f0d002c;
+        public static final int tutorial_next=0x7f0d0027;
+        public static final int tutorial_no_common=0x7f0d0031;
+        public static final int tutorial_number=0x7f0d002a;
+        public static final int tutorial_quit=0x7f0d0038;
+        public static final int tutorial_shape=0x7f0d0029;
+        public static final int tutorial_step1_header=0x7f0d0028;
+        public static final int tutorial_step2_header=0x7f0d002d;
+        public static final int tutorial_step3_header=0x7f0d0039;
+        public static final int tutorial_wrong_color=0x7f0d0034;
+        public static final int tutorial_wrong_fill=0x7f0d0035;
+        public static final int tutorial_wrong_message=0x7f0d0036;
+        public static final int tutorial_wrong_number=0x7f0d0033;
+        public static final int tutorial_wrong_shape=0x7f0d0032;
     }
     public static final class style {
         public static final int TextAppearance_TabPageIndicator=0x7f0c0003;
@@ -721,6 +757,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Widget=0x7f0c0001;
         public static final int Widget_IconPageIndicator=0x7f0c0004;
         public static final int Widget_TabPageIndicator=0x7f0c0002;
+        public static final int app_loader_theme=0x7f0c0009;
         public static final int app_theme=0x7f0c0008;
         public static final int dark_shadow=0x7f0c0006;
         public static final int navigationItemDescription=0x7f0c0005;
@@ -1037,6 +1074,49 @@ containing a value of this type.
           @attr name com.barcicki.trio:unselectedColor
         */
         public static final int LinePageIndicator_unselectedColor = 4;
+        /** Attributes that can be used with a MenuDescription.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MenuDescription_alpha com.barcicki.trio:alpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #MenuDescription_type com.barcicki.trio:type}</code></td><td></td></tr>
+           </table>
+           @see #MenuDescription_alpha
+           @see #MenuDescription_type
+         */
+        public static final int[] MenuDescription = {
+            0x7f01001f, 0x7f010020
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.barcicki.trio.R.attr#alpha}
+          attribute's value can be found in the {@link #MenuDescription} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.barcicki.trio:alpha
+        */
+        public static final int MenuDescription_alpha = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.barcicki.trio.R.attr#type}
+          attribute's value can be found in the {@link #MenuDescription} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.barcicki.trio:type
+        */
+        public static final int MenuDescription_type = 1;
         /** Attributes that can be used with a TitlePageIndicator.
            <p>Includes the following attributes:</p>
            <table>
