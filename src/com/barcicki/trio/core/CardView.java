@@ -311,6 +311,14 @@ public class CardView extends ImageView  {
 		animateSwitchCard(card, duration, 0);
 	}
 	
+	public void stopSwitchingCard() {
+		Animation currentAnimation = getAnimation();
+		if (currentAnimation != null) {
+			currentAnimation.setAnimationListener(null);
+			currentAnimation.cancel();
+		}
+	}
+	
 	public void animateSwitchCard(final Card nextCard, int duration, int delay) {
 //		Animation switchAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.card_flip);
 		final Animation switchAnimation = new CardFlipAnimation(0, 90);

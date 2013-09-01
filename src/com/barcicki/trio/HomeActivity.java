@@ -10,21 +10,24 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.barcicki.trio.core.CardView;
+import com.barcicki.trio.core.MenuDescription;
+import com.barcicki.trio.core.MenuDescription.MenuDescriptionListener;
+import com.barcicki.trio.core.MenuDescription.MenuDescriptionType;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
+import com.barcicki.trio.core.Utils;
 
-public class HomeActivity extends TrioActivity implements OnClickListener {
-
+public class HomeActivity extends TrioActivity implements OnClickListener, MenuDescriptionListener {
 	
 	private CardView mCard;
 	private ImageView mTrioLogo;
 	private Trio mTrio = new Trio();
-	private Button mContinueButton;
+	private MenuDescription mDescription;
+	private boolean mIsDescriptionVisible = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +37,26 @@ public class HomeActivity extends TrioActivity implements OnClickListener {
 		
 		mCard = (CardView) findViewById(R.id.gameCard);
 		mTrioLogo = (ImageView) findViewById(R.id.trioLogo);
-		mContinueButton = (Button) findViewById(R.id.buttonGameClassicContinue);
+		mDescription = (MenuDescription) findViewById(R.id.menuDescriptionView);
+		mDescription.setMenuDescriptionListener(this);
+		
+		Utils.setAlpha(mDescription, 0f);
 		
 		for (View view : new View[] { 
-				findViewById(R.id.buttonGameChallengeNew),
-				mContinueButton,
-				findViewById(R.id.buttonGameClassicNew),
-				findViewById(R.id.buttonTutorial),
-//				findViewById(R.id.buttonMusicSwitch)
+				findViewById(R.id.showClassic),
+				findViewById(R.id.showHelp),
+				findViewById(R.id.showSpeed),
+				findViewById(R.id.showTriple),
 		}) {
 			view.setOnClickListener(this);
 		}
 		
-		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
 		applyAnimations();
 	}
 
 	@Override
 	protected void onResume() {
-		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
+//		mContinueButton.setEnabled(TrioSettings.isSavedGamePresent());
 		super.onResume();
 	}
 
@@ -81,7 +85,7 @@ public class HomeActivity extends TrioActivity implements OnClickListener {
 
 			public void onAnimationEnd(Animation animation) {
 				mCard.animateSwitchCard(mTrio.getDeck().getRandomRange(1)
-						.get(0), duration);
+					.get(0), duration);
 			}
 
 		});
@@ -140,22 +144,85 @@ public class HomeActivity extends TrioActivity implements OnClickListener {
 	}
 
 	public void onClick(View view) {
-		Intent intent = null;
+		MenuDescriptionType type = MenuDescriptionType.HELP;
 		makeClickSound();
 		
 		switch (view.getId()) {
-			case R.id.buttonGameClassicNew:
+			case R.id.showClassic:
+				type = MenuDescriptionType.CLASSIC;
+				break;
+			case R.id.showHelp:
+				type = MenuDescriptionType.HELP;
+				break;
+			case R.id.showSpeed:
+				type = MenuDescriptionType.SPEED;
+				break;
+			case R.id.showTriple:
+				type = MenuDescriptionType.TRIPLE;
+				break;
+		}
+
+		switchToDescription(type);
+	}
+
+	private void switchToDescription(final MenuDescriptionType type) {
+		final long duration = 500;
+		
+		if (mIsDescriptionVisible) {
+		
+			if (!type.equals(mDescription.getMenuDescription())) {
+			
+				AnimationListener waitForDisappearance = new AnimationListener() {
+					public void onAnimationStart(Animation animation) {}
+					public void onAnimationRepeat(Animation animation) {}
+					public void onAnimationEnd(Animation animation) {
+						mDescription.setMenuDescription(type);
+						mDescription.startAnimation(Utils.generateAlphaAnimation(0.3f, 1f, duration / 2));
+					}
+				};
+				
+				Animation anim = Utils.generateAlphaAnimation(1f, 0.3f, duration / 2); 
+				
+				anim.setAnimationListener(waitForDisappearance);
+				mDescription.startAnimation(anim); 
+				
+			}
+		
+		} else {
+			mCard.startAnimation(Utils.generateAlphaAnimation(1f, 0f, duration));
+			mDescription.setMenuDescription(type);
+			mDescription.startAnimation(Utils.generateAlphaAnimation(0f, 1f, duration));
+		}
+		
+		mIsDescriptionVisible = true;
+	}
+
+	public void onLeftButtonPressed(MenuDescriptionType type, View v) {
+		makeClickSound();
+		
+		if (type.equals(MenuDescriptionType.CLASSIC)) {
+			setMusicContinue(true);
+			startActivity(new Intent(HomeActivity.this, ClassicGameActivity.class));
+		}
+	}
+
+	public void onRightButtonPressed(MenuDescriptionType type, View v) {
+		Intent intent = null;
+		makeClickSound();
+		
+		switch (type) {
+			case CLASSIC:
 				TrioSettings.setSavedGamePresence(false);
 				intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
 				break;
-			case R.id.buttonGameClassicContinue:
-				intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
-				break;
-			case R.id.buttonGameChallengeNew:
-				intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
-				break;
-			case R.id.buttonTutorial:
+			case HELP:
 				intent = new Intent(HomeActivity.this, TutorialActivity.class);
+				break;
+			case SPEED:
+				intent = new Intent(HomeActivity.this, SpeedGameActivity.class);
+				break;
+			case TRIPLE:
+				intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
 				break;
 		}
 		
@@ -163,5 +230,7 @@ public class HomeActivity extends TrioActivity implements OnClickListener {
 			setMusicContinue(true);
 			startActivity(intent);
 		}
+		
 	}
+	
 }

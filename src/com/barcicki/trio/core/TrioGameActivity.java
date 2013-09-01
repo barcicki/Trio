@@ -28,12 +28,17 @@ public class TrioGameActivity extends TrioActivity {
 	private HelpAdapter mHelpAdapter;
 	
 	private TextView mTimer;
+	private TextView mCountdown;
 	private Handler mHandler = new Handler();
 	private long mTimerStart = 0L;
 	
 	protected String gElapsedTimeString = "00:00";
+	protected String gRemainingTimeString = "00:00";
 	protected long gElapsedTime = 0L;
+	protected long gRemainingTime = 60000L;
 	protected boolean gGameEnded = false;
+	protected boolean gTimerFinishCalled = false;
+	
 				
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -41,6 +46,7 @@ public class TrioGameActivity extends TrioActivity {
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mHelpOverlay = findViewById(R.id.gameHelp);
 		mTimer = (TextView) findViewById(R.id.gameTimer);
+		mCountdown = (TextView) findViewById(R.id.gameCountdown);
 		
 		if (mHelpOverlay != null) {
 			mHelpAdapter = new HelpAdapter(this);
@@ -179,12 +185,17 @@ public class TrioGameActivity extends TrioActivity {
 	
 	/* Timer */
 	
+	public void onTimerFinish() {
+		
+	}
+	
 	private Runnable mUpdateTimer = new Runnable() {
 
 		public void run() {
 
 			final long start = mTimerStart;
 			long millis = System.currentTimeMillis() - start;
+			 
 
 			gElapsedTime = millis;
 			int seconds = (int) millis / 1000;
@@ -196,9 +207,32 @@ public class TrioGameActivity extends TrioActivity {
 			} else {
 				gElapsedTimeString = minutes + ":" + seconds;
 			}
-
-			if (mTimer != null) {
-				mTimer.setText(gElapsedTimeString);
+			
+			long remainingTime = gRemainingTime - gElapsedTime;
+			
+			if (remainingTime < 0) {
+				if (!gTimerFinishCalled) {
+					onTimerFinish();
+					gTimerFinishCalled = true;
+				}
+				
+				if (mCountdown!= null) {
+					mCountdown.setText("00:00");
+				}
+			} else {
+				seconds = (int) remainingTime / 1000;
+				minutes = seconds / 60;
+				seconds %= 60;
+	
+				if (seconds < 10) {
+					gRemainingTimeString = minutes + ":0" + seconds;
+				} else {
+					gRemainingTimeString = minutes + ":" + seconds;
+				}
+	
+				if (mCountdown!= null) {
+					mCountdown.setText(gRemainingTimeString);
+				}
 			}
 			mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
 		}

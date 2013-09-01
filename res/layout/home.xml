@@ -1,83 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="top"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_size" >
+    android:layout_gravity="center"
+    android:clipChildren="false"
+    android:gravity="center"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/trioLogo"
         android:layout_width="@dimen/home_logo_width"
         android:layout_height="@dimen/home_logo_height"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/button_padding_size"
         android:src="@drawable/trio_static" />
 
-    <com.barcicki.trio.core.CardView
-        android:id="@+id/gameCard"
-        android:layout_width="@dimen/home_card_size"
-        android:layout_height="@dimen/home_card_size"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/home_card_top"
-        android:src="@drawable/square_reverse" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clipChildren="false" >
 
-    <Button
-        android:id="@+id/buttonGameClassicContinue"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_width"
-        android:layout_height="@dimen/home_button_height"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/gameCard"
-        android:layout_marginTop="@dimen/home_card_overshoot"
-        android:text="@string/game_classic_continue"
-        android:textSize="@dimen/home_font_size" />
+        <RelativeLayout
+            android:id="@+id/menuSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/margin_size"
+            android:layout_weight="1"
+            android:clipChildren="false" >
 
-    <Button
-        android:id="@+id/buttonGameClassicNew"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_width"
-        android:layout_height="@dimen/home_button_height"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/buttonGameClassicContinue"
-        android:layout_marginLeft="@dimen/home_button_spacing"
-        android:layout_marginTop="10dp"
-        android:text="@string/game_classic_new_game"
-        android:textSize="@dimen/home_font_size" />
+            <com.barcicki.trio.core.CardView
+                android:id="@+id/gameCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/square_reverse" />
 
-    <Button
-        android:id="@+id/buttonTutorial"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_width"
-        android:layout_height="@dimen/home_button_height"
-        android:layout_above="@+id/buttonGameClassicNew"
-        android:layout_alignParentRight="true"
-        android:text="@string/game_tutorial"
-        android:textSize="@dimen/home_font_size" />
+            <com.barcicki.trio.core.MenuDescription
+                android:id="@+id/menuDescriptionView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/buttonGameChallengeNew"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_width"
-        android:layout_height="@dimen/home_button_height"
-        android:layout_alignBaseline="@+id/buttonGameClassicNew"
-        android:layout_alignBottom="@+id/buttonGameClassicNew"
-        android:layout_alignRight="@+id/buttonTutorial"
-        android:layout_marginRight="@dimen/home_button_spacing"
-        android:text="@string/game_challenge_new_game"
-        android:textSize="@dimen/home_font_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/buttonMusicSwitch"
-        style="@style/nice_button"
-        android:layout_width="@dimen/home_button_size"
-        android:layout_height="@dimen/home_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="onMusicButtonPressed"
-        android:padding="@dimen/home_button_padding_size"
-        android:text="@string/music"
-        android:textSize="@dimen/home_music_font_size" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/home_button_padding_size"
+                android:layout_weight="1" >
 
-</RelativeLayout>
+                <ImageView
+                    android:id="@+id/showClassic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:src="@drawable/menu_classic" />
+
+                <ImageView
+                    android:id="@+id/showTriple"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/menu_triple" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/home_button_padding_size"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/showSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:src="@drawable/menu_speed" />
+
+                <ImageView
+                    android:id="@+id/showHelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/menu_help" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_size" >
+
+        <Button
+            android:id="@+id/buttonMusicSwitch"
+            style="@style/nice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="onMusicButtonPressed"
+            android:padding="@dimen/home_button_padding_size"
+            android:text="@string/music"
+            android:textSize="@dimen/home_music_font_size" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -21,6 +21,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/app_theme" />
         <activity
+            android:name="com.barcicki.trio.SpeedGameActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/app_theme" />
+        <activity
             android:name="com.barcicki.trio.SettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black" >

@@ -1,6 +1,9 @@
 # Android compiled data #
 bin/
 
+# Android generated data #
+gen/
+
 # Compiled source #
 ###################
 *.com

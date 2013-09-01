@@ -99,4 +99,8 @@
     <string name="game_classic_new_game">New Game</string>
     <string name="game_challenge_new_game">New Challenge</string>
 
+    <string name="menu_description_classic">Classic Mode description</string>
+    <string name="menu_description_speed">Speed Mode description</string>
+    <string name="menu_description_triple">Triple Mode description</string>
+    <string name="menu_description_help">Help Mode description</string>
 </resources>

@@ -11,7 +11,9 @@
     <color name="green">#7cc576</color>
     <color name="red">#ff0000</color>
     <color name="blue">#00aeef</color>
-    <color name="transaprent_blue">#4000aeef</color>
+    <color name="transparent_blue">#4000aeef</color>
+    <color name="transparent_white">#EEFFFFFF</color>
+    <color name="transparent_orange">#EEf7e8d5</color>
     <color name="black">@android:color/black</color>
     
     <color name="NiceButtonStartColor">#4AA02C</color>
