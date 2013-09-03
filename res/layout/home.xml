@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:barcicki="http://schemas.android.com/apk/res/com.barcicki.trio"
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
+    android:background="@drawable/bg_static"
     android:clipChildren="false"
     android:gravity="center"
-    android:background="@drawable/bg_static"
     android:orientation="vertical" >
 
     <ImageView
@@ -35,25 +34,26 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <ImageView
+            <com.barcicki.trio.views.MenuDescriptionButton
                 android:id="@+id/showClassic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_classic" />
+                android:src="@drawable/menu_classic_selector"
+                barcicki:type="CLASSIC" />
 
-            <ImageView
+            <com.barcicki.trio.views.MenuDescriptionButton
                 android:id="@+id/showSpeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_speed" />
-
+                android:src="@drawable/menu_speed_selector"
+                barcicki:type="SPEED" />
         </LinearLayout>
 
-        <RelativeLayout
+        <com.barcicki.trio.views.MenuDescriptionPlaceholder
             android:id="@+id/menuSwitcher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -101,7 +101,7 @@
                 android:visibility="gone"
                 barcicki:type="HELP" >
             </com.barcicki.trio.core.MenuDescription>
-        </RelativeLayout>
+        </com.barcicki.trio.views.MenuDescriptionPlaceholder>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,22 +110,23 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <ImageView
+            <com.barcicki.trio.views.MenuDescriptionButton
                 android:id="@+id/showTriple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_triple" />
+                android:src="@drawable/menu_triple_selector"
+                barcicki:type="TRIPLE" />
 
-            <ImageView
+            <com.barcicki.trio.views.MenuDescriptionButton
                 android:id="@+id/showHelp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_help" />
-
+                android:src="@drawable/menu_help_selector"
+                barcicki:type="HELP" />
         </LinearLayout>
     </LinearLayout>
 

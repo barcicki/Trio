@@ -110,4 +110,9 @@
     <string name="menu_description_button_learn">Chcę się nauczyć!</string>
     
     <string name="help_speed_4">Masz 2 minuty by znaleźć jak najwięcej Trio.</string>
+    
+    <string name="speed_end">Koniec czasu!</string>
+    <string name="speed_time_left">Pozostało %1$d sekund</string>
+    <string name="speed_found">%1$d Trio</string>
+
 </resources>

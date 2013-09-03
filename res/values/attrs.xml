@@ -4,4 +4,7 @@
         <attr name="alpha" format="float"/>
         <attr name="type" format="string"/>
     </declare-styleable>
+    <declare-styleable name="MenuDescriptionButton">
+        <attr name="state_active" format="boolean"/>
+    </declare-styleable>
 </resources>

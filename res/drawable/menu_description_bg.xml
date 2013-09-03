@@ -3,7 +3,7 @@
     <item>
         <shape>
             <solid android:color="@color/transparent_white"/>
-            <stroke android:width="6dp" android:color="@color/NiceButtonBorderColor" />
+            <stroke android:width="5dp" android:color="@color/NiceButtonBorderColor" />
             <corners android:radius="5dp" />
             <padding android:bottom="10dp" android:left="@dimen/button_padding_size" android:right="@dimen/button_padding_size" android:top="10dp" />
         </shape>
