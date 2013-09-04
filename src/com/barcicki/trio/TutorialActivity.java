@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.Button;
 
-import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TutorialAdapter;
 import com.barcicki.trio.tutorial.Tutorial1Fragment;
 import com.barcicki.trio.tutorial.Tutorial2Fragment;

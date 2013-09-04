@@ -32,4 +32,6 @@
 	
 	<dimen name="home_description_logo_height">80dp</dimen>
 	<dimen name="font_size_menu_description">26sp</dimen>
+	
+	<dimen name="button_stroke">3dp</dimen>
 </resources>

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.animation.Animation;
@@ -14,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.barcicki.trio.R;
+import com.barcicki.trio.views.CardView;
 
 public class CardGrid extends RelativeLayout {
 

@@ -1,16 +1,12 @@
 package com.barcicki.trio.core;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import com.barcicki.trio.R;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.util.SparseIntArray;
+
+import com.barcicki.trio.R;
 
 public class SoundManager {
 
@@ -23,21 +19,18 @@ public class SoundManager {
 	private static SoundManager mInstance;
 
 	private Context mContext;
-	private static boolean mMute;
-	//
+	
 	private SoundPool mSoundPool;
-	private HashMap<Integer, Integer> mSoundPoolMap;
+	private SparseIntArray mSoundPoolMap;
 	private AudioManager mAudioManager;
 	private MediaPlayer mBackgroundPlayer;
 
 	private boolean mLoadedSounds = false;
 
-	// private boolean initialized = false;
-
 	private SoundManager(Context context) {
 		mContext = context;
 		mSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
-		mSoundPoolMap = new HashMap<Integer, Integer>();
+		mSoundPoolMap = new SparseIntArray();
 		mAudioManager = (AudioManager) mContext
 				.getSystemService(Context.AUDIO_SERVICE);
 		mBackgroundPlayer = null;
@@ -113,20 +106,14 @@ public class SoundManager {
 	}
 
 	public void pauseAll() {
-		Iterator iterator = mSoundPoolMap.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator
-					.next();
-			pauseSound(pair.getKey());
+		for (int i = 0, size = mSoundPoolMap.size(); i < size; i += 1) {
+			pauseSound(mSoundPoolMap.keyAt(i));
 		}
 	}
 
 	public void stopAll() {
-		Iterator iterator = mSoundPoolMap.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<Integer, Integer> pair = (Entry<Integer, Integer>) iterator
-					.next();
-			stopSound(pair.getKey());
+		for (int i = 0, size = mSoundPoolMap.size(); i < size; i += 1) {
+			stopSound(mSoundPoolMap.keyAt(i));
 		}
 	}
 

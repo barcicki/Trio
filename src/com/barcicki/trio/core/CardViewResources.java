@@ -2,7 +2,6 @@ package com.barcicki.trio.core;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Paint;
@@ -12,9 +11,6 @@ import android.graphics.drawable.BitmapDrawable;
 import com.barcicki.trio.R;
 
 public class CardViewResources {
-	
-//	private static Bitmap emptySqaure;
-//	private static Bitmap selectedSquare;
 	
 	private static BitmapDrawable emptySqaure;
 	private static BitmapDrawable selectedSquare;
@@ -34,7 +30,7 @@ public class CardViewResources {
 	
 	private static boolean isInitialized = false;
 	
-	static void initialize(Context context) {
+	static public void initialize(Context context) {
 		if (!isInitialized) {
 			Resources res = context.getResources();
 			
@@ -66,11 +62,11 @@ public class CardViewResources {
 		}
 	}
 	
-	static BitmapDrawable getBackgroundSqaure(boolean isSelected) {
+	static public BitmapDrawable getBackgroundSqaure(boolean isSelected) {
 		return isSelected ? selectedSquare : emptySqaure;
 	}
 	
-	static BitmapShader getShader(int color) {
+	static public BitmapShader getShader(int color) {
 		switch (color) {
 			case Card.COLOR_BLUE:
 				return blueShader;
@@ -82,11 +78,11 @@ public class CardViewResources {
 		}
 	}
 	
-	static int getWhiteColor() {
+	static public int getWhiteColor() {
 		return whiteColor;
 	}
 	
-	static int getCardColor(int color) {
+	static public int getCardColor(int color) {
 		switch (color) {
 			case Card.COLOR_BLUE:
 				return blueColor;
@@ -98,11 +94,11 @@ public class CardViewResources {
 		}
 	}
 	
-	static int getStrokeWidth() {
+	static public int getStrokeWidth() {
 		return strokeWidth;
 	}
 
-	public static Paint getBitmapPaint() {
+	static public Paint getBitmapPaint() {
 		return bitmapPaint;
 	}
 }

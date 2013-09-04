@@ -1,13 +1,12 @@
 package com.barcicki.trio.views;
 
-import com.barcicki.trio.R;
-import com.barcicki.trio.core.Utils;
-import com.barcicki.trio.core.MenuDescription.MenuDescriptionType;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
+import com.barcicki.trio.R;
+import com.barcicki.trio.views.MenuDescription.MenuDescriptionType;
 
 public class MenuDescriptionButton extends ImageView {
 	

@@ -61,7 +61,7 @@
     <string name="game_challenge">Daily Challenge</string>
     <string name="game_challenge_desc">12 kart i 3 ukryte Trio. Znajdź je najszybciej jak potrafisz</string>
     <string name="tutorial_back">Wróć</string>
-    <string name="tutorial_quit">Wyjdź do menu</string>
+    <string name="tutorial_quit">Powrót do Menu</string>
     <string name="tutorial_step3_header">Skompletuj Trio. Odnajdź brakującą kartę.</string>
     <string name="game_start">Start</string>
     <string name="openfeint_question">Czy chcesz wysyłać wyniki do systemu OpenFeint? (można zmienić później w ustawieniach)</string>

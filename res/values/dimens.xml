@@ -31,6 +31,8 @@
 	<dimen name="home_button_spacing">50dp</dimen>
 	<dimen name="home_description_logo_height">40dp</dimen>
 	
+	<dimen name="button_stroke">2dp</dimen>
+	
 	<dimen name="font_size_menu_description">16sp</dimen>
 	
 </resources>

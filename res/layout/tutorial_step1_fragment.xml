@@ -51,21 +51,21 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1" >
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/shape1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/shape2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/shape3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -102,21 +102,21 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1" >
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/quantity1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/quantity2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/quantity3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -153,21 +153,21 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1" >
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/color1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/color2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/color3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -204,21 +204,21 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1" >
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/fill1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/fill2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="10"
                         android:src="@drawable/square_reverse" />
 
-                    <com.barcicki.trio.core.CardView
+                    <com.barcicki.trio.views.CardView
                         android:id="@+id/fill3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"

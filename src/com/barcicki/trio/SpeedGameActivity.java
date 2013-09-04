@@ -5,21 +5,18 @@ import java.util.ArrayList;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardGrid;
 import com.barcicki.trio.core.CardList;
-import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
-import com.barcicki.trio.core.TrioGameActivity;
 import com.barcicki.trio.core.TrioSettings;
+import com.barcicki.trio.views.CardView;
 
 public class SpeedGameActivity extends TrioGameActivity {
 	
@@ -97,6 +94,9 @@ public class SpeedGameActivity extends TrioGameActivity {
 	
 	@Override
 	public void onGameReset() {
+		setElapsedTime(0);
+		setCountdown(TIME_LIMIT);
+		
 		gRestoredGame = false;	
 		gTriosFound = 0;
 		gSelectedCards = new CardList();
@@ -258,6 +258,9 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 		} else {
 			Log.e("TrioState", "failed to restore saved game");
+			
+			resetGame();
+			startGame();
 		}
 		
 	}
@@ -293,36 +296,10 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 	public void onPressedNewGame(View v) {
 		makeClickSound();
-		mTrio.newGame();
-
-		// if (gGameEnded) {
-		mCardGrid.setCards(mTrio.getTable());
-		// mCardGrid.render();
-		// } else {
-		// mCardGrid.updateGrid(mTrio.getTable());
-		// }
-
+		startGame();
 		resetGame();
-		// gGameStarted = true;
-		// hidePause();
-
 		hidePauseOverlay();
 	}
-
-	// public void onPressedRestartGame(View v) {
-	// makeClickSound();
-	// mTrio.restartGame(mTrio.getGameString());
-	//
-	// // if (gGameEnded) {
-	// mCardGrid.setCards(mTrio.getTable());
-	// // mCardGrid.render();
-	// // } else {
-	// // mCardGrid.updateGrid(mTrio.getTable());
-	// // }
-	//
-	// resetGameStatus();
-	// showStartPause();
-	// }
 
 	public void onPressedQuitGame(View v) {
 		makeClickSound();

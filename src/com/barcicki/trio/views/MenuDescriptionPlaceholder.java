@@ -1,7 +1,5 @@
 package com.barcicki.trio.views;
 
-import com.barcicki.trio.core.MenuDescription.MenuDescriptionType;
-
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;

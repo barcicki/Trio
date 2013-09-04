@@ -1,18 +1,5 @@
 package com.barcicki.trio.core;
 
-import com.barcicki.trio.R;
-
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.Path;
-import android.graphics.PointF;
-import android.graphics.RectF;
-import android.graphics.Shader.TileMode;
-
 public class Card {
 
 	public final static int SHAPE_SQUARE = 0, SHAPE_TRIANGLE = 2,
@@ -27,7 +14,6 @@ public class Card {
 		this.shape = shape;
 		this.fill = fill;
 		this.number = number;
-
 	}
 
 	public int getShape() {

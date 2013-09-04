@@ -1,4 +1,4 @@
-package com.barcicki.trio.core;
+package com.barcicki.trio;
 
 import android.content.Intent;
 import android.media.AudioManager;
@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.barcicki.trio.HomeActivity;
-import com.barcicki.trio.R;
-import com.barcicki.trio.SettingsActivity;
+import com.barcicki.trio.core.CardViewResources;
+import com.barcicki.trio.core.SoundManager;
+import com.barcicki.trio.core.TrioSettings;
 
 public class TrioActivity extends FragmentActivity {	
 	

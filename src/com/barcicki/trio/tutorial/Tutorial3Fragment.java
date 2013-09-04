@@ -2,12 +2,8 @@ package com.barcicki.trio.tutorial;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -25,16 +20,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.barcicki.trio.ClassicGameActivity;
-import com.barcicki.trio.PracticeGameActivity;
 import com.barcicki.trio.R;
+import com.barcicki.trio.TrioActivity;
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardList;
-import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
-import com.barcicki.trio.core.TrioActivity;
+import com.barcicki.trio.views.CardView;
 
 public class Tutorial3Fragment extends Fragment {
 	private static final int NUMBER_OF_ADDITIONAL_CARDS = 4;
@@ -48,16 +41,15 @@ public class Tutorial3Fragment extends Fragment {
 	private CardView mCardB;
 	private CardView mCardToGuess;
 
-	private CardView mOptionA;
-	private CardView mOptionB;
-	private CardView mOptionC;
-	private CardView mOptionD;
-	private CardView mOptionE;
+//	private CardView mOptionA;
+//	private CardView mOptionB;
+//	private CardView mOptionC;
+//	private CardView mOptionD;
+//	private CardView mOptionE;
+	
+	private ArrayList<CardView> mOptions = new ArrayList<CardView>();
 	
 	private TrioActivity mActivity;
-
-	private static final ScheduledExecutorService mWorker = Executors
-			.newSingleThreadScheduledExecutor();
 
 	private Trio mTrio = new Trio();
 	private Dialog mDialog;
@@ -82,11 +74,22 @@ public class Tutorial3Fragment extends Fragment {
 		mCardA = (CardView) getView().findViewById(R.id.card1);
 		mCardB = (CardView) getView().findViewById(R.id.card2);
 		mCardToGuess = (CardView) getView().findViewById(R.id.card3);
-		mOptionA = (CardView) getView().findViewById(R.id.card4);
-		mOptionB = (CardView) getView().findViewById(R.id.card5);
-		mOptionC = (CardView) getView().findViewById(R.id.card6);
-		mOptionD = (CardView) getView().findViewById(R.id.card7);
-		mOptionE = (CardView) getView().findViewById(R.id.card8);
+		
+		for (int id : new int[] {
+			R.id.card4,
+			R.id.card5,
+			R.id.card6,
+			R.id.card7,
+			R.id.card8
+		}) {
+			mOptions.add((CardView) getView().findViewById(id));
+		}
+		
+//		mOptionA = (CardView) getView().findViewById(R.id.card4);
+//		mOptionB = (CardView) getView().findViewById(R.id.card5);
+//		mOptionC = (CardView) getView().findViewById(R.id.card6);
+//		mOptionD = (CardView) getView().findViewById(R.id.card7);
+//		mOptionE = (CardView) getView().findViewById(R.id.card8);
 
 		attachListeners();
 		showSet();
@@ -115,11 +118,15 @@ public class Tutorial3Fragment extends Fragment {
 			}
 		};
 		
-		mOptionA.setOnClickListener(selectCardsListener);
-		mOptionB.setOnClickListener(selectCardsListener);
-		mOptionC.setOnClickListener(selectCardsListener);
-		mOptionD.setOnClickListener(selectCardsListener);
-		mOptionE.setOnClickListener(selectCardsListener);
+		for (CardView view : mOptions) {
+			view.setOnClickListener(selectCardsListener);
+		}
+		
+//		mOptionA.setOnClickListener(selectCardsListener);
+//		mOptionB.setOnClickListener(selectCardsListener);
+//		mOptionC.setOnClickListener(selectCardsListener);
+//		mOptionD.setOnClickListener(selectCardsListener);
+//		mOptionE.setOnClickListener(selectCardsListener);
 	}
 
 	@Override
@@ -224,32 +231,7 @@ public class Tutorial3Fragment extends Fragment {
 		mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mDialog.setContentView(R.layout.tutorial_dialog);
 		mDialog.setCancelable(true);
-//		mDialog.getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		mDialog.show();
-		
-		mDialog.findViewById(R.id.startClassic).setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				
-				mActivity.makeClickSound();
-				mActivity.setMusicContinue(true);
-				Intent intent = new Intent(mActivity, ClassicGameActivity.class);
-				startActivity(intent);
-				mActivity.finish();
-				mDialog.dismiss();
-				
-			}
-		});
-
-		mDialog.findViewById(R.id.startChallenge).setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				mActivity.makeClickSound();
-				mActivity.setMusicContinue(true);
-				Intent intent = new Intent(mActivity, PracticeGameActivity.class);
-				startActivity(intent);
-				mActivity.finish();
-				mDialog.dismiss();
-			}
-		});
 		
 		mDialog.findViewById(R.id.justQuit).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -262,7 +244,6 @@ public class Tutorial3Fragment extends Fragment {
 	
 	}
 
-	//
 	private void prepareSets() {
 		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_RED,
 				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_SQUARE,
@@ -298,7 +279,6 @@ public class Tutorial3Fragment extends Fragment {
 
 	}
 
-	//
 	public void showSet() {
 		int size = mSets.size();
 		if (mCurrentSet <= 0) {
@@ -347,6 +327,12 @@ public class Tutorial3Fragment extends Fragment {
 		if (!quiz.isSolved()) {
 			cards.shuffle();
 		}
+		
+		for (int i = 0, count = mOptions.size(); i < count; i++) {
+			CardView view = mOptions.get(i);
+			view.setCard(cards.get(i));
+			view.setSelected(false);
+		}
 
 		// if (mOptionA.getCard() != null) {
 		// mOptionA.animateSwitchCard(cards.get(0));
@@ -355,16 +341,16 @@ public class Tutorial3Fragment extends Fragment {
 		// mOptionD.animateSwitchCard(cards.get(3));
 		// mOptionE.animateSwitchCard(cards.get(4));
 		// } else {
-		mOptionA.setCard(cards.get(0));
-		mOptionA.setSelected(false);
-		mOptionB.setCard(cards.get(1));
-		mOptionB.setSelected(false);
-		mOptionC.setCard(cards.get(2));
-		mOptionC.setSelected(false);
-		mOptionD.setCard(cards.get(3));
-		mOptionD.setSelected(false);
-		mOptionE.setCard(cards.get(4));
-		mOptionE.setSelected(false);
+//		mOptionA.setCard(cards.get(0));
+//		mOptionA.setSelected(false);
+//		mOptionB.setCard(cards.get(1));
+//		mOptionB.setSelected(false);
+//		mOptionC.setCard(cards.get(2));
+//		mOptionC.setSelected(false);
+//		mOptionD.setCard(cards.get(3));
+//		mOptionD.setSelected(false);
+//		mOptionE.setCard(cards.get(4));
+//		mOptionE.setSelected(false);
 
 		// }
 

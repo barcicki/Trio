@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true">
-        <shape>
+    <item android:state_pressed="true"><shape>
             <gradient android:angle="270" android:endColor="@color/NiceButtonStartColor" android:startColor="@color/NiceButtonEndColor" />
 
-            <stroke android:width="3dp" android:color="@color/NiceButtonBorderColor" />
+            <stroke android:width="@dimen/button_stroke" android:color="@color/NiceButtonBorderColor" />
 
             <corners android:radius="5dp" />
 
@@ -14,7 +13,7 @@
     <item android:state_focused="true"><shape>
             <gradient android:angle="270" android:endColor="@color/NiceButtonEndColor" android:startColor="@color/NiceButtonStartColor" />
 
-            <stroke android:width="5dp" android:color="@color/NiceButtonBorderColor" />
+            <stroke android:width="@dimen/button_stroke" android:color="@color/NiceButtonBorderColor" />
 
             <corners android:radius="3dp" />
 
@@ -23,7 +22,7 @@
     <item android:state_enabled="false"><shape>
             <gradient android:angle="270" android:endColor="@color/NiceButtonDisabledEndColor" android:startColor="@color/NiceButtonDisabledStartColor" />
 
-            <stroke android:width="3dp" android:color="@color/NiceButtonBorderColor" />
+            <stroke android:width="@dimen/button_stroke" android:color="@color/NiceButtonBorderColor" />
 
             <corners android:radius="5dp" />
 
@@ -32,7 +31,7 @@
     <item><shape>
             <gradient android:angle="270" android:endColor="@color/NiceButtonEndColor" android:startColor="@color/NiceButtonStartColor" />
 
-            <stroke android:width="3dp" android:color="@color/NiceButtonBorderColor" />
+            <stroke android:width="@dimen/button_stroke" android:color="@color/NiceButtonBorderColor" />
 
             <corners android:radius="5dp" />
 

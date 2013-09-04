@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.barcicki.trio.R;
 import com.barcicki.trio.core.Card;
-import com.barcicki.trio.core.CardView;
+import com.barcicki.trio.views.CardView;
 
 public class Tutorial1Fragment extends Fragment {
 	

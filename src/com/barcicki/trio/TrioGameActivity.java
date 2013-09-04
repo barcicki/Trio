@@ -1,4 +1,4 @@
-package com.barcicki.trio.core;
+package com.barcicki.trio;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -11,22 +11,21 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.barcicki.trio.R;
-import com.barcicki.trio.SettingsActivity;
-import com.barcicki.trio.TutorialActivity;
+import com.barcicki.trio.core.CardList;
+import com.barcicki.trio.core.HelpAdapter;
+import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
+import com.barcicki.trio.core.TrioSettings;
 import com.viewpagerindicator.CirclePageIndicator;
 
 abstract public class TrioGameActivity extends TrioActivity {
 	
-	private static final String START_TIME = "0:00";
-	private static final long TIME_LIMIT = 60000L; 
+	private static final long TIME_LIMIT = 60000L;
+	private static final long REMAINING_EXTRA_SECOND = 1000L;
 
 	private View mPauseOverlay;
 	private View mHelpOverlay;
@@ -43,7 +42,7 @@ abstract public class TrioGameActivity extends TrioActivity {
 	
 	private boolean mCountdownEnabled = false;
 	private long mCountdownStart = TIME_LIMIT;
-	private long mRemainingTime = 0L;
+//	private long mRemainingTime = 0L;
 	
 	private boolean mIsGameFinished = false;
 	
@@ -223,9 +222,7 @@ abstract public class TrioGameActivity extends TrioActivity {
 			mElapsedTime = System.currentTimeMillis() - mTimerStart;
 			
 			if (mCountdownEnabled) {
-				mRemainingTime = mCountdownStart - mElapsedTime;
-				
-				if (mRemainingTime < 0) {
+				if (getRemainingTime() < 0) {
 					onCountdownFinish();
 					mCountdownEnabled = false;
 				}
@@ -324,15 +321,11 @@ abstract public class TrioGameActivity extends TrioActivity {
 	}
 	
 	public long getRemainingTime() {
-		return mRemainingTime;
-	}
-	
-	public void setRemaingingTime(long time) {
-		mRemainingTime = time;
+		return mCountdownStart - mElapsedTime;
 	}
 	
 	public String getRemainingTimeAsString() {
-		return timeToString(mRemainingTime);
+		return timeToString(getRemainingTime() + REMAINING_EXTRA_SECOND);
 	}
 	
 	private String timeToString(long value) {

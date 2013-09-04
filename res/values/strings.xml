@@ -56,7 +56,7 @@
     <string name="tutorial_wrong_fill">Filling is wrong. One card is different.</string>
     <string name="tutorial_wrong_message">Wrong: %1$s </string>
     <string name="tutorial_back">Back</string>
-    <string name="tutorial_quit">Quit to menu</string>
+    <string name="tutorial_quit">Back to Menu</string>
     <string name="tutorial_step3_header">Complete a trio. Find missing card</string>
     <string name="tutorial_end">Congratulations!</string>
     <string name="tutorial_end_message">You are ready to play Trio. Choose a game mode to start with</string>

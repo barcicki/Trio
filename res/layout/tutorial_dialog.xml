@@ -23,26 +23,6 @@
         android:text="@string/tutorial_end_message"
         android:textSize="@dimen/button_text_size" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center">
-
-        <Button
-            android:id="@+id/startClassic"
-            style="@style/nice_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_size"
-            android:text="@string/game_classic_new_game" android:layout_gravity="center" android:layout_width="@dimen/home_button_width"/>
-
-        <Button
-            android:id="@+id/startChallenge"
-            style="@style/nice_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_size"
-            android:text="@string/game_challenge_new_game" android:layout_gravity="center" android:layout_width="@dimen/home_button_width"/>
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/justQuit"
         style="@style/nice_button"

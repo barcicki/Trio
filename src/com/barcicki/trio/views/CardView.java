@@ -1,16 +1,12 @@
-package com.barcicki.trio.core;
+package com.barcicki.trio.views;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.Paint.Style;
-import android.graphics.Shader.TileMode;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -22,6 +18,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.barcicki.trio.R;
+import com.barcicki.trio.core.Card;
+import com.barcicki.trio.core.CardFlipAnimation;
+import com.barcicki.trio.core.CardViewResources;
+import com.barcicki.trio.core.FailAnimation;
 
 public class CardView extends ImageView  {
 

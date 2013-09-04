@@ -18,10 +18,9 @@ import android.widget.Toast;
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardGrid;
 import com.barcicki.trio.core.CardList;
-import com.barcicki.trio.core.CardView;
 import com.barcicki.trio.core.Trio;
-import com.barcicki.trio.core.TrioGameActivity;
 import com.barcicki.trio.core.TrioSettings;
+import com.barcicki.trio.views.CardView;
 
 public class PracticeGameActivity extends TrioGameActivity {
 	private static int NUMBER_OF_TRIOS = 3;

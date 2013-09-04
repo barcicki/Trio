@@ -31,21 +31,21 @@
             android:layout_weight="1" >
         </FrameLayout>
 
-        <com.barcicki.trio.core.CardView
+        <com.barcicki.trio.views.CardView
             android:id="@+id/card1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/square_reverse" />
 
-        <com.barcicki.trio.core.CardView
+        <com.barcicki.trio.views.CardView
             android:id="@+id/card2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/square_reverse" />
 
-        <com.barcicki.trio.core.CardView
+        <com.barcicki.trio.views.CardView
             android:id="@+id/card3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -88,7 +88,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/tutorial_solution_size" />
 
-            <com.barcicki.trio.core.CardView
+            <com.barcicki.trio.views.CardView
                 android:id="@+id/card4"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -112,7 +112,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/tutorial_solution_size" />
 
-            <com.barcicki.trio.core.CardView
+            <com.barcicki.trio.views.CardView
                 android:id="@+id/card5"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -136,7 +136,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/tutorial_solution_size" />
 
-            <com.barcicki.trio.core.CardView
+            <com.barcicki.trio.views.CardView
                 android:id="@+id/card6"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -160,7 +160,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/tutorial_solution_size" />
 
-            <com.barcicki.trio.core.CardView
+            <com.barcicki.trio.views.CardView
                 android:id="@+id/card7"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -184,7 +184,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/tutorial_solution_size" />
 
-            <com.barcicki.trio.core.CardView
+            <com.barcicki.trio.views.CardView
                 android:id="@+id/card8"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

@@ -5,11 +5,6 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -17,12 +12,11 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.barcicki.trio.core.MenuDescription;
-import com.barcicki.trio.core.MenuDescription.MenuDescriptionListener;
-import com.barcicki.trio.core.MenuDescription.MenuDescriptionType;
-import com.barcicki.trio.core.TrioActivity;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
+import com.barcicki.trio.views.MenuDescription;
+import com.barcicki.trio.views.MenuDescription.MenuDescriptionListener;
+import com.barcicki.trio.views.MenuDescription.MenuDescriptionType;
 import com.barcicki.trio.views.MenuDescriptionButton;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder.MenuDescriptionGestureListener;
@@ -34,8 +28,6 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 	private HashMap<MenuDescriptionType, MenuDescription> mMenu = new HashMap<MenuDescription.MenuDescriptionType, MenuDescription>();
 	private ArrayList<MenuDescriptionButton> mButtons = new ArrayList<MenuDescriptionButton>();
 	private MenuDescription mCurrentMenu = null;
-
-	private GestureDetector mGestureDetector;
 
 	private boolean mUIBlocked = false;
 

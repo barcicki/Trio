@@ -63,44 +63,41 @@
             android:layout_weight="0.5"
             android:clipChildren="false" >
 
-            <com.barcicki.trio.core.MenuDescription
+            <com.barcicki.trio.views.MenuDescription
                 android:id="@+id/menuClassic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_size"
                 android:layout_weight="1"
-                android:visibility="gone"
+                android:visibility="visible"
                 barcicki:type="CLASSIC" />
 
-            <com.barcicki.trio.core.MenuDescription
+            <com.barcicki.trio.views.MenuDescription
                 android:id="@+id/menuTriple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_size"
                 android:layout_weight="1"
                 android:visibility="gone"
-                barcicki:type="TRIPLE" >
-            </com.barcicki.trio.core.MenuDescription>
+                barcicki:type="TRIPLE" />
 
-            <com.barcicki.trio.core.MenuDescription
+            <com.barcicki.trio.views.MenuDescription
                 android:id="@+id/menuSpeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_size"
                 android:layout_weight="1"
                 android:visibility="gone"
-                barcicki:type="SPEED" >
-            </com.barcicki.trio.core.MenuDescription>
+                barcicki:type="SPEED" />
 
-            <com.barcicki.trio.core.MenuDescription
+            <com.barcicki.trio.views.MenuDescription
                 android:id="@+id/menuHelp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_size"
                 android:layout_weight="1"
                 android:visibility="gone"
-                barcicki:type="HELP" >
-            </com.barcicki.trio.core.MenuDescription>
+                barcicki:type="HELP" />
         </com.barcicki.trio.views.MenuDescriptionPlaceholder>
 
         <LinearLayout
