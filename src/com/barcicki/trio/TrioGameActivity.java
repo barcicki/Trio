@@ -49,6 +49,7 @@ abstract public class TrioGameActivity extends TrioActivity {
 				
 	@Override
 	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
 		
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mHelpOverlay = findViewById(R.id.gameHelp);
@@ -68,8 +69,6 @@ abstract public class TrioGameActivity extends TrioActivity {
 		}
 		
 		TrioSettings.setHavePlayed(true);
-		
-		super.onCreate(arg0);
 	}
 	
 	public void setHelpFragments(Integer... resId) {

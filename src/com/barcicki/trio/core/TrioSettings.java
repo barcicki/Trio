@@ -26,6 +26,10 @@ public class TrioSettings {
 	}
 	
 	private static boolean writeBooleanPreference(String preferenceName, boolean value) {
+		if (!isInitialized) {
+			return false;
+		}
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(settingsContext);
 		SharedPreferences.Editor ed = prefs.edit();
 		ed.putBoolean(preferenceName, value);	
@@ -33,6 +37,10 @@ public class TrioSettings {
 	}
 	
 	private static boolean readBooleanPreference(String preferenceName, boolean defaultValue) {
+		if (!isInitialized) {
+			return defaultValue;
+		}
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(settingsContext);
 		return prefs.getBoolean(preferenceName, defaultValue);
 	}
