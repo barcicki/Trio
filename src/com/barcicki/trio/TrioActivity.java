@@ -3,18 +3,19 @@ package com.barcicki.trio;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.barcicki.trio.core.CardViewResources;
 import com.barcicki.trio.core.SoundManager;
 import com.barcicki.trio.core.TrioSettings;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
-public class TrioActivity extends FragmentActivity {	
+public class TrioActivity extends BaseGameActivity {	
 	
 	private SoundManager mSoundManager;
 	
@@ -174,12 +175,10 @@ public class TrioActivity extends FragmentActivity {
 		super.onDestroy();
 	}
 
-//	public void onSignInFailed() {
-////		Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show();
-//	}
-//
-//	public void onSignInSucceeded() {
-////		Toast.makeText(this, "Succeded to sign in", Toast.LENGTH_SHORT).show();
-//	}
+	public void onSignInFailed() {
+	}
+
+	public void onSignInSucceeded() {
+	}
 	
 }

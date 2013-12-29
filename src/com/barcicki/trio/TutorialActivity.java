@@ -98,7 +98,8 @@ public class TutorialActivity extends TrioActivity {
 		makeClickSound();
 		int currentPage = mTutorialPager.getCurrentItem();
 		int size = mTutorialAdapter.getCount();
-		int nextPage = (currentPage + 1 < size) ? currentPage + 1 : size - 1; 
+		int nextPage = (currentPage + 1 < size) ? currentPage + 1 : size - 1;
+		
 		mTutorialPager.setCurrentItem( nextPage, true);
 		updateControlVisibility();
 	}

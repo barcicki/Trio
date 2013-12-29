@@ -7,4 +7,8 @@
     <declare-styleable name="MenuDescriptionButton">
         <attr name="state_active" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="StylishTextView">
+        <attr name="font" format="string"/>
+        <attr name="shadow" format="integer"/>
+    </declare-styleable>
 </resources>

@@ -23,6 +23,7 @@
 	<dimen name="home_card_size">200dp</dimen>
 	<dimen name="home_card_overshoot">140dp</dimen>
 	<dimen name="home_logo_height">140dp</dimen>
+	<dimen name="home_description_top_margin">180dp</dimen><!-- logo_height + 2 * margin -->
 	<dimen name="home_logo_width">400dp</dimen>
 	<dimen name="home_font_size">22sp</dimen>
 	<dimen name="home_button_width">170dp</dimen>

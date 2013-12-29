@@ -36,7 +36,6 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		setContentView(R.layout.speed);
 		super.onCreate(savedInstanceState);
 
@@ -86,10 +85,17 @@ public class SpeedGameActivity extends TrioGameActivity {
 		pauseTimer();
 	}
 
-	
 	@Override
 	public void onGameFinished() {
 		showEndingPause();
+		
+		if (isSignedIn()) {
+			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_amateur), 1);
+			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_pro), 1);
+			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_guru), 1);
+			
+			getGamesClient().submitScore(getString(R.string.leaderboard_speed_trio), gTriosFound);
+		}
 	}
 	
 	@Override
@@ -143,7 +149,6 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 
 	private void attachCardListeners() {
-
 		mCardGrid.setOnItemClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				CardView cv = (CardView) v;
@@ -222,6 +227,8 @@ public class SpeedGameActivity extends TrioGameActivity {
 		gTriosFound += 1;
 		
 		mDeckStatus.setText(Integer.toString(gTriosFound));
+		
+		submitFoundTrioEvents();
 
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
 			finishGame();
@@ -296,8 +303,8 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 	public void onPressedNewGame(View v) {
 		makeClickSound();
-		startGame();
 		resetGame();
+		startGame();
 		hidePauseOverlay();
 	}
 
@@ -312,5 +319,4 @@ public class SpeedGameActivity extends TrioGameActivity {
 		super.onCountdownFinish();
 		finishGame();
 	}
-
 }

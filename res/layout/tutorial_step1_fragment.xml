@@ -7,8 +7,8 @@
     android:paddingLeft="@dimen/margin_size"
     android:paddingRight="@dimen/margin_size" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <com.barcicki.trio.views.StylishTextView
+        android:id="@+id/StylishTextView1"
         style="@style/dark_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -35,8 +35,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/textView2"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -86,8 +86,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/TextView01"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -137,8 +137,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/TextView02"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -188,8 +188,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/TextView03"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"

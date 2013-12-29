@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:barcicki="http://schemas.android.com/apk/res/com.barcicki.trio"
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -7,8 +8,8 @@
     android:paddingLeft="@dimen/margin_size"
     android:paddingRight="@dimen/margin_size" >
 
-    <TextView
-        android:id="@+id/TextView1"
+    <com.barcicki.trio.views.StylishTextView
+        android:id="@+id/StylishTextView1"
         style="@style/dark_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -68,8 +69,8 @@
                     android:layout_weight="4"
                     android:src="@drawable/ok" />
 
-                <TextView
-                    android:id="@+id/TextView2"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -132,8 +133,8 @@
                     android:layout_weight="4"
                     android:src="@drawable/ok" />
 
-                <TextView
-                    android:id="@+id/TextView3"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -196,8 +197,8 @@
                     android:layout_weight="4"
                     android:src="@drawable/ok" />
 
-                <TextView
-                    android:id="@+id/TextView4"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -260,14 +261,15 @@
                     android:layout_weight="4"
                     android:src="@drawable/ok" />
 
-                <TextView
-                    android:id="@+id/TextView7"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/tutorial_no_common"
                     android:textColor="@android:color/black"
+                    barcicki:shadow="@android:color/white"
                     android:textSize="@dimen/tutorial_solution_size" />
             </LinearLayout>
         </LinearLayout>
@@ -323,14 +325,15 @@
                     android:layout_weight="4"
                     android:src="@drawable/wrong" />
 
-                <TextView
-                    android:id="@+id/TextView6"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/tutorial_wrong_shape"
                     android:textColor="@android:color/black"
+                    barcicki:shadow="@android:color/white"
                     android:textSize="@dimen/tutorial_solution_size" />
             </LinearLayout>
         </LinearLayout>
@@ -386,14 +389,15 @@
                     android:layout_weight="4"
                     android:src="@drawable/wrong" />
 
-                <TextView
-                    android:id="@+id/TextView5"
+                <com.barcicki.trio.views.StylishTextView
+                    android:id="@+id/StylishTextView1"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/tutorial_wrong_color"
                     android:textColor="@android:color/black"
+                    barcicki:shadow="@android:color/white"
                     android:textSize="@dimen/tutorial_solution_size" />
             </LinearLayout>
         </LinearLayout>

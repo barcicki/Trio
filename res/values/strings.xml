@@ -105,12 +105,16 @@
     <string name="menu_description_classic">Find Trios on the screen. Each found Trio is replaced with 3 new cards. Play until the deck runs out of them.</string>
     <string name="menu_description_speed">Find as many Trios as possible in 2 minutes. Each found Trio is replace with 3 new cards.</string>
     <string name="menu_description_triple">Find 3 hidden Trios in 12 visible cards as quickly as possible.</string>
-    <string name="menu_description_help">Learn what is Trio and how to find it. Includes simple Quiz</string>
+    <string name="menu_description_help">Learn what is Trio and how to find it. Complete Trio Quiz.</string>
+    <string name="menu_description_play_games">Compete with your friends. Browse leaderboards and your achievements.</string>
     
     <string name="menu_description_button_play">Play!</string>
     <string name="menu_description_button_new_game">New Game</string>
     <string name="menu_description_button_continue">Continue</string>
     <string name="menu_description_button_learn">Learn!</string>
+    <string name="menu_description_button_sign_in">Sign in!</string>
+    <string name="menu_description_button_achievements">Achievements</string>
+    <string name="menu_description_button_leaderbaords">Leaderboards</string>
     <string name="help_speed_4">You\'ve got 2 minutes to find as many as possible</string>
     
 </resources>

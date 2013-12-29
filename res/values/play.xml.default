@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="play_game_id"></string>
+    <string name="achievement_novice"></string>
+    <string name="achievement_amateur"></string>
+    <string name="achievement_professional"></string>
+    <string name="achievement_expert"></string>
+    <string name="achievement_faster_than_rocket"></string>
+    <string name="achievement_faster_than_lightning"></string>
+    <string name="achievement_faster_then_light"></string>
+    <string name="achievement_classic_amateur"></string>
+    <string name="achievement_classic_pro"></string>
+    <string name="achievement_classic_guru"></string>
+    <string name="achievement_speed_amateur"></string>
+    <string name="achievement_speed_pro"></string>
+    <string name="achievement_speed_guru"></string>
+    <string name="achievement_triple_amateur"></string>
+    <string name="achievement_triple_pro"></string>
+    <string name="achievement_triple_guru"></string>
+    <string name="leaderboard_classic_trio"></string>
+    <string name="leaderboard_triple_trio"></string>
+    <string name="leaderboard_speed_trio"></string>
+    <string name="leaderboard_fastest_trio"></string>
+</resources>

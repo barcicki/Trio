@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.barcicki.trio"
-    android:versionCode="9"
-    android:versionName="2.0.1" >
+    android:versionCode="12"
+    android:versionName="2.1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <supports-screens android:resizeable="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:hardwareAccelerated="true"
+        android:allowBackup="true"
         android:configChanges="keyboardHidden"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -12,6 +24,7 @@
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/play_game_id" />
+
         <activity
             android:name="com.barcicki.trio.ClassicGameActivity"
             android:screenOrientation="landscape"
@@ -32,7 +45,7 @@
         <activity
             android:name="com.barcicki.trio.TutorialActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/app_theme"  />
+            android:theme="@style/app_theme" />
         <activity
             android:name="com.barcicki.trio.HomeActivity"
             android:screenOrientation="landscape"
@@ -42,16 +55,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
-
-    <supports-screens android:resizeable="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

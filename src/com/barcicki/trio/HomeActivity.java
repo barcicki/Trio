@@ -10,7 +10,9 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
@@ -20,6 +22,7 @@ import com.barcicki.trio.views.MenuDescription.MenuDescriptionType;
 import com.barcicki.trio.views.MenuDescriptionButton;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder.MenuDescriptionGestureListener;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 
 public class HomeActivity extends TrioActivity implements OnClickListener,
 		MenuDescriptionListener, MenuDescriptionGestureListener {
@@ -28,16 +31,19 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 	private HashMap<MenuDescriptionType, MenuDescription> mMenu = new HashMap<MenuDescription.MenuDescriptionType, MenuDescription>();
 	private ArrayList<MenuDescriptionButton> mButtons = new ArrayList<MenuDescriptionButton>();
 	private MenuDescription mCurrentMenu = null;
+	private MenuDescription mPlayGamesMenu;
 
-	private boolean mUIBlocked = false;
+	private boolean mUiBlocked = false;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
 		mTrioLogo = (ImageView) findViewById(R.id.trioLogo);
+		
+		mPlayGamesMenu = (MenuDescription) findViewById(R.id.menuPlayGames);
 
 		mMenu.put(MenuDescriptionType.CLASSIC,
 				(MenuDescription) findViewById(R.id.menuClassic));
@@ -47,6 +53,8 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 				(MenuDescription) findViewById(R.id.menuSpeed));
 		mMenu.put(MenuDescriptionType.TRIPLE,
 				(MenuDescription) findViewById(R.id.menuTriple));
+		mMenu.put(MenuDescriptionType.PLAY_GAMES, mPlayGamesMenu);
+		
 
 		for (MenuDescription menu : mMenu.values()) {
 			menu.setMenuDescriptionListener(this);
@@ -58,20 +66,24 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		mCurrentMenu.setVisibility(View.VISIBLE);
 		hideMenus(mCurrentMenu.getMenuType());
 
-		for (View view : new View[] { findViewById(R.id.showClassic),
-				findViewById(R.id.showHelp), findViewById(R.id.showSpeed),
-				findViewById(R.id.showTriple), }) {
+		for (View view : new View[] { 
+				findViewById(R.id.showClassic),
+				findViewById(R.id.showHelp), 
+				findViewById(R.id.showSpeed),
+				findViewById(R.id.showTriple),
+				findViewById(R.id.showPlayGames)
+			}) {
 			view.setOnClickListener(this);
 			mButtons.add((MenuDescriptionButton) view);
 		}
-
+		
 		updateActiveButtons(mCurrentMenu.getMenuType());
 
 		applyAnimations();
-
+		
 		((MenuDescriptionPlaceholder) findViewById(R.id.menuSwitcher))
 				.setGestureListener(this);
-
+		
 	}
 
 	@Override
@@ -94,13 +106,13 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 	}
 
 	public void onClick(View view) {
-		if (!mUIBlocked) {
+		if (!mUiBlocked) {
 			makeClickSound();
 
 			MenuDescriptionType type = ((MenuDescriptionButton) view).getType();
 
 			updateActiveButtons(type);
-			switchToDescription(type);
+			switchToDescription(type, 0);
 		}
 	}
 
@@ -118,21 +130,17 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		}
 	}
 	
-	private void switchToDescription(final MenuDescriptionType type) {
-		switchToDescription(type, false);
-	}
-
-	private void switchToDescription(final MenuDescriptionType type, boolean isSlidingDown) {
-		final long duration = 500;
+	private void switchToDescription(final MenuDescriptionType type, int diff) {
+		final long duration = Math.max(700 - Math.abs(diff), 400);
 		Animation slideOut;
 		Animation slideIn;
 
-		if (isSlidingDown) {
-			slideOut = Utils.generateSlideToBottomAnimation(duration);
-			slideIn = Utils.generateSlideFromTopAnimation(duration);
+		if (diff > 0) {
+			slideOut = Utils.generateSlideToBottomAnimation(diff, duration);
+			slideIn = Utils.generateSlideFromTopAnimation(diff, duration);
 		} else {
-			slideOut = Utils.generateSlideToTopAnimation(duration);
-			slideIn = Utils.generateSlideFromBottomAnimation(duration);
+			slideOut = Utils.generateSlideToTopAnimation(diff, duration);
+			slideIn = Utils.generateSlideFromBottomAnimation(diff, duration);
 		}
 
 		if (!type.equals(mCurrentMenu.getMenuType())) {
@@ -143,23 +151,22 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			next.setVisibility(View.VISIBLE);
 
 			slideOut.setAnimationListener(new AnimationListener() {
-				public void onAnimationStart(Animation animation) {
-				}
-
-				public void onAnimationRepeat(Animation animation) {
-				}
-
+				public void onAnimationStart(Animation animation) {}
+				public void onAnimationRepeat(Animation animation) {}
 				public void onAnimationEnd(Animation animation) {
 					mCurrentMenu = next;
 					hideMenus(type);
-					mUIBlocked = false;
+					mUiBlocked = false;
+					findViewById(android.R.id.content).invalidate();
 				}
 			});
 
+			previous.clearAnimation();
 			previous.startAnimation(slideOut);
+			next.clearAnimation();
 			next.startAnimation(slideIn);
 
-			mUIBlocked = true;
+			mUiBlocked = true;
 		}
 	}
 
@@ -170,6 +177,8 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			setMusicContinue(true);
 			startActivity(new Intent(HomeActivity.this,
 					ClassicGameActivity.class));
+		} else if (type.equals(MenuDescriptionType.PLAY_GAMES)) {
+			runPlayGamesIntent(getGamesClient().getAllLeaderboardsIntent());
 		}
 	}
 
@@ -191,6 +200,13 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		case TRIPLE:
 			intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
 			break;
+		case PLAY_GAMES:
+			if (isSignedIn()) {
+				runPlayGamesIntent(getGamesClient().getAchievementsIntent());
+			} else {
+				beginUserInitiatedSignIn();
+			}
+			break;
 		}
 
 		if (intent != null) {
@@ -199,9 +215,52 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		}
 
 	}
+	
+	private void runPlayGamesIntent(final Intent intent) {
+		if (getGamesClient().isConnected()) {
+			startActivityForResult(intent, 1);
+		} else {
+			getGamesClient().registerConnectionCallbacks(new ConnectionCallbacks() {
+				public void onDisconnected() {}
+				public void onConnected(Bundle connectionHint) {
+					startActivityForResult(intent, 1);
+					getGamesClient().unregisterConnectionCallbacks(this);
+				}
+			});
+			getGamesClient().connect();
+		}
+	}
 
-	public void onUp() {
-		if (!mUIBlocked) {
+	public void onUp(int diff) {
+		if (!mUiBlocked) {
+			MenuDescriptionType newType;
+			switch (mCurrentMenu.getMenuType()) {
+			case CLASSIC:
+				newType = MenuDescriptionType.PLAY_GAMES;
+				break;
+			case TRIPLE:
+				newType = MenuDescriptionType.CLASSIC;
+				break;
+			case SPEED:
+				newType = MenuDescriptionType.TRIPLE;
+				break;
+			case HELP:
+				newType = MenuDescriptionType.SPEED;
+				break;
+			case PLAY_GAMES:
+				newType = MenuDescriptionType.HELP;
+				break;
+			default:
+				newType = MenuDescriptionType.CLASSIC;
+			}
+
+			updateActiveButtons(newType);
+			switchToDescription(newType, diff);
+		}
+	}
+
+	public void onDown(int diff) {
+		if (!mUiBlocked) {
 			MenuDescriptionType newType;
 			switch (mCurrentMenu.getMenuType()) {
 			case CLASSIC:
@@ -213,35 +272,58 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			case SPEED:
 				newType = MenuDescriptionType.HELP;
 				break;
+			case HELP:
+				newType = MenuDescriptionType.PLAY_GAMES;
+				break;
 			default:
 				newType = MenuDescriptionType.CLASSIC;
 			}
 
 			updateActiveButtons(newType);
-			switchToDescription(newType, true);
+			switchToDescription(newType, diff);
 		}
 	}
-
-	public void onDown() {
-		if (!mUIBlocked) {
-			MenuDescriptionType newType;
-			switch (mCurrentMenu.getMenuType()) {
-			case CLASSIC:
-				newType = MenuDescriptionType.HELP;
-				break;
-			case TRIPLE:
-				newType = MenuDescriptionType.CLASSIC;
-				break;
-			case SPEED:
-				newType = MenuDescriptionType.TRIPLE;
-				break;
-			default:
-				newType = MenuDescriptionType.SPEED;
-			}
-
-			updateActiveButtons(newType);
-			switchToDescription(newType);
+	
+	public void onMoving(int diff, boolean isMoving) {
+		if (!mUiBlocked) {
+			TranslateAnimation movement = new TranslateAnimation(0, 0, diff, diff);
+			movement.setFillAfter(true);
+			movement.setFillBefore(true);
+			movement.setDuration(0);
+			mCurrentMenu.clearAnimation();
+			mCurrentMenu.startAnimation(movement);
 		}
 	}
-
+	
+	public void onStoppedMoving(int diff) {
+		if (!mUiBlocked) {
+			TranslateAnimation movement = new TranslateAnimation(0, 0, diff, 0);
+			movement.setFillBefore(true);
+			movement.setDuration(200);
+			mCurrentMenu.clearAnimation();
+			mCurrentMenu.startAnimation(movement);
+		}
+	}
+	
+	private void updatePlayGamesStatus() {
+		mPlayGamesMenu.update();
+	}
+	
+	@Override
+	public void onSignInSucceeded() {
+		super.onSignInSucceeded();
+		updatePlayGamesStatus();
+	}
+	
+	@Override
+	public void onSignInFailed() {
+		super.onSignInFailed();
+		updatePlayGamesStatus();
+	}
+	
+	@Override
+	protected void signOut() {
+		super.signOut();
+		updatePlayGamesStatus();
+	}
 }

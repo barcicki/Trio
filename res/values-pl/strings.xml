@@ -37,16 +37,16 @@
     <string name="pause_quit">Wyjdź</string>
     <string name="pause_start">Start</string>
     <string name="tutorial_next">Dalej</string>
-    <string name="tutorial_step1_header">Każda karta ma 4 atrybuty: </string>
+    <string name="tutorial_step1_header">Każda karta posiada 4 cechy: </string>
     <string name="tutorial_shape">Kształt</string>
     <string name="tutorial_number">Liczba elementów</string>
     <string name="tutorial_colour">Kolor</string>
     <string name="tutorial_fill">Wypełnienie</string>
-    <string name="tutorial_step2_header">Trio stanowią takie 3 karty, których wszystkie atrybuty są albo różne albo takie same.</string>
-    <string name="tutorial_1common">1 wspólny atrybut</string>
-    <string name="tutorial_2common">2 wspólne atrybuty</string>
-    <string name="tutorial_3common">3 wspólne atrybuty</string>
-    <string name="tutorial_no_common">Brak wspólnych atrybutów</string>
+    <string name="tutorial_step2_header">Trio stanowią takie 3 karty, dla których każda cecha jest taka sama na wszystkich kartach albo jest zupełnie różna.</string>
+    <string name="tutorial_1common">1 wspólna cecha</string>
+    <string name="tutorial_2common">2 wspólne cechy</string>
+    <string name="tutorial_3common">3 wspólne cechy</string>
+    <string name="tutorial_no_common">Brak wspólnych cech</string>
     <string name="tutorial_wrong_shape">Kształt się nie zgadza. Jedna karta jest inna.</string>
     <string name="tutorial_wrong_number">Liczba się nie zgadza. Jedna karta jest inna.</string>
     <string name="tutorial_wrong_color">Kolor się nie zgadza. Jedna karta jest inna.</string>
@@ -102,15 +102,17 @@
     <string name="menu_description_classic">Znajdź ukryte Trio. W miejscu znalezionych Trio pojawiają się 3 nowe karty. Graj dopóki nie skończy się talia.</string>
     <string name="menu_description_speed">Znajdź jak najwięcej Trio w przeciągu 2 minut. W miejscu znalezionych Trio pojawiają się 3 nowe karty.</string>
     <string name="menu_description_triple">Znajdź 3 ukryte Trio wśród 12 widocznych kart - najszybciej jak potrafisz.</string>
-    <string name="menu_description_help">Dowiedz się co to jest Trio i jak je znajdować. Przejdź przez samouczek</string>
+    <string name="menu_description_help">Dowiedz się co to jest Trio i jak je znajdować. Przejdź przez samouczek.</string>
+    <string name="menu_description_play_games">Rywalizuj i dziel się wynikami ze znajomymi. Przeglądaj tablice wyników i swoje osiągnięcia.</string>
     
     <string name="menu_description_button_play">Gram!</string>
     <string name="menu_description_button_new_game">Nowa gra</string>
     <string name="menu_description_button_continue">Kontynuuj</string>
     <string name="menu_description_button_learn">Chcę się nauczyć!</string>
-    
+    <string name="menu_description_button_sign_in">Zaloguj się!</string>
+    <string name="menu_description_button_achievements">Osiągnięcia</string>
+    <string name="menu_description_button_leaderbaords">Tablica wyników</string>
     <string name="help_speed_4">Masz 2 minuty by znaleźć jak najwięcej Trio.</string>
-    
     <string name="speed_end">Koniec czasu!</string>
     <string name="speed_time_left">Pozostało %1$d sekund</string>
     <string name="speed_found">%1$d Trio</string>

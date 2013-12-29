@@ -5,28 +5,27 @@ import java.util.EnumSet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barcicki.trio.core.CardList;
+import com.barcicki.trio.core.GameTime;
+import com.barcicki.trio.core.GameTime.GameTimeListener;
 import com.barcicki.trio.core.HelpAdapter;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.core.TrioSettings;
+import com.google.android.gms.games.GamesClient;
 import com.viewpagerindicator.CirclePageIndicator;
 
-abstract public class TrioGameActivity extends TrioActivity {
+abstract public class TrioGameActivity extends TrioActivity implements GameTimeListener {
 	
-	private static final long TIME_LIMIT = 60000L;
-	private static final long REMAINING_EXTRA_SECOND = 1000L;
-
 	private View mPauseOverlay;
 	private View mHelpOverlay;
 	private ViewPager mHelpViewPager;
@@ -35,17 +34,10 @@ abstract public class TrioGameActivity extends TrioActivity {
 	
 	private TextView mTimer;
 	private TextView mCountdown;
-	private Handler mHandler = new Handler();
 	
-	private long mTimerStart = 0L;
-	private long mElapsedTime = 0L;
-	
-	private boolean mCountdownEnabled = false;
-	private long mCountdownStart = TIME_LIMIT;
-//	private long mRemainingTime = 0L;
+	private GameTime mTime = new GameTime(this);
 	
 	private boolean mIsGameFinished = false;
-	
 				
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -165,11 +157,11 @@ abstract public class TrioGameActivity extends TrioActivity {
 	}
 	
 	protected void onHidePauseOverlay() {
-		startTimer();
+		continueTime();
 	}
 	
 	protected void onHideHelpOverlay() {
-		startTimer();
+		continueTime();
 	}
 	
 	/* Overlay triggers */
@@ -214,40 +206,24 @@ abstract public class TrioGameActivity extends TrioActivity {
 		}
 	}
 	
-	private Runnable mUpdateTimer = new Runnable() {
-
-		public void run() {
-
-			mElapsedTime = System.currentTimeMillis() - mTimerStart;
-			
-			if (mCountdownEnabled) {
-				if (getRemainingTime() < 0) {
-					onCountdownFinish();
-					mCountdownEnabled = false;
-				}
-			}
-			
-			onTimerTick();
-			
-			mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
-		}
-	};
-	
 	public void startTimer() {
-		mTimerStart = System.currentTimeMillis() - mElapsedTime;
-		mHandler.removeCallbacks(mUpdateTimer);
-		mHandler.postDelayed(mUpdateTimer, 50);
-		if (Trio.LOCAL_LOGV)
-			Log.i("Classic Game", "Timer started");
+		mTime.start(mTime.getElapsedTime());
 	}
 	
-	public void setCountdown(long time) {
-		mCountdownStart = time;
-		mCountdownEnabled = true;
+	public void continueTime() {
+		mTime.unpause();
+	}
+	
+	public void setCountdown(Long time) {
+		mTime.setCountdown(time);
 	}
 	
 	public void pauseTimer() {
-		mHandler.removeCallbacks(mUpdateTimer);
+		mTime.pause();
+	}
+	
+	public void addTime(long time) {
+		mTime.addTime(time);
 	}
 	
 	/* Game Triggers */
@@ -280,6 +256,12 @@ abstract public class TrioGameActivity extends TrioActivity {
 
 	/* Utils */
 	
+	public void inform(String message) {
+		Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 10);
+		toast.show();
+	}
+	
 	public void displayWhatIsWrong(CardList threeCards) {
 		EnumSet<TrioStatus> status = Trio.getTrioStatus(threeCards);
 		ArrayList<String> errors = new ArrayList<String>();
@@ -300,43 +282,52 @@ abstract public class TrioGameActivity extends TrioActivity {
 			errors.add(getString(R.string.tutorial_number));
 		}
 
-		Toast.makeText(
-				this,
-				getString(R.string.tutorial_wrong_message,
-						TextUtils.join(", ", errors)), Toast.LENGTH_SHORT)
-				.show();
+		inform(getString(R.string.tutorial_wrong_message, TextUtils.join(", ", errors)));
 	}
 	
 	public long getElapsedTime() {
-		return mElapsedTime;		
+		return mTime.getElapsedTime();		
 	}
 	
 	public void setElapsedTime(long time) {
-		mElapsedTime = time;
+		mTime.setElapsedTime(time);
 	}
 	
 	public String getElapsedTimeAsString() {
-		return timeToString(mElapsedTime);
+		return mTime.getElapsedTimeAsString();
 	}
 	
 	public long getRemainingTime() {
-		return mCountdownStart - mElapsedTime;
+		return mTime.getRemainingTime();
 	}
 	
 	public String getRemainingTimeAsString() {
-		return timeToString(getRemainingTime() + REMAINING_EXTRA_SECOND);
+		return mTime.getRemainingTimeAsString();
 	}
 	
-	private String timeToString(long value) {
-		StringBuilder timeString = new StringBuilder();
-		int seconds = (int) value / 1000;
-		int minutes = seconds / 60;
-		seconds %= 60;
-		
-		timeString.append(minutes);
-		timeString.append(seconds < 10 ? ":0" : ":");
-		timeString.append(seconds);
-		
-		return timeString.toString();
+	/**
+	 * Play Game Events
+	 */
+	public void submitFoundTrioEvents() {
+		if (isSignedIn()) {
+			GamesClient client = getGamesClient();
+			long time = mTime.checkpoint();
+			
+			client.incrementAchievement(getString(R.string.achievement_novice), 1);
+			client.incrementAchievement(getString(R.string.achievement_amateur), 1);
+			client.incrementAchievement(getString(R.string.achievement_professional), 1);
+			client.incrementAchievement(getString(R.string.achievement_expert), 1);
+			client.submitScore(getString(R.string.leaderboard_fastest_trio), time);
+			
+			if (time < 5000L) {
+				client.unlockAchievement(getString(R.string.achievement_faster_than_rocket));
+				if (time < 3000L) {
+					client.unlockAchievement(getString(R.string.achievement_faster_than_lightning));
+					if (time < 1000L) {
+						client.unlockAchievement(getString(R.string.achievement_faster_then_light));				
+					}
+				}
+			}
+		}
 	}
 }

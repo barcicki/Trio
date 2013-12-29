@@ -6,69 +6,81 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:background="@drawable/bg_static"
-    android:clipChildren="false"
-    android:gravity="center"
-    android:orientation="vertical" >
-
-    <ImageView
-        android:id="@+id/trioLogo"
-        android:layout_width="@dimen/home_logo_width"
-        android:layout_height="@dimen/home_logo_height"
-        android:layout_marginTop="@dimen/margin_size"
-        android:scaleType="fitCenter"
-        android:src="@drawable/trio_static" />
+    android:gravity="center" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_marginBottom="@dimen/margin_size"
         android:layout_marginLeft="@dimen/margin_size"
-        android:layout_marginRight="@dimen/margin_size"
+        android:layout_marginTop="@dimen/margin_size"
         android:layout_weight="1"
-        android:clipChildren="false" >
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showClassic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_size"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_classic_selector"
+            barcicki:type="CLASSIC" />
 
-            <com.barcicki.trio.views.MenuDescriptionButton
-                android:id="@+id/showClassic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/menu_classic_selector"
-                barcicki:type="CLASSIC" />
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showTriple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_triple_selector"
+            barcicki:type="TRIPLE" />
 
-            <com.barcicki.trio.views.MenuDescriptionButton
-                android:id="@+id/showSpeed"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/menu_speed_selector"
-                barcicki:type="SPEED" />
-        </LinearLayout>
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_speed_selector"
+            barcicki:type="SPEED" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/centerWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_marginLeft="@dimen/margin_size"
+        android:layout_marginRight="@dimen/margin_size"
+        android:layout_weight="0.5"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/trioLogo"
+            android:layout_width="@dimen/home_logo_width"
+            android:layout_height="@dimen/home_logo_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_size"
+            android:scaleType="fitCenter"
+            android:src="@drawable/trio_static" />
 
         <com.barcicki.trio.views.MenuDescriptionPlaceholder
             android:id="@+id/menuSwitcher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/margin_size"
-            android:layout_marginRight="@dimen/margin_size"
-            android:layout_weight="0.5"
-            android:clipChildren="false" >
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            >
 
             <com.barcicki.trio.views.MenuDescription
                 android:id="@+id/menuClassic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_size"
-                android:layout_weight="1"
+                android:paddingBottom="@dimen/margin_size"
+                android:paddingTop="@dimen/home_description_top_margin"
+                android:layout_alignParentBottom="true"
                 android:visibility="visible"
                 barcicki:type="CLASSIC" />
 
@@ -76,8 +88,9 @@
                 android:id="@+id/menuTriple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_size"
-                android:layout_weight="1"
+                android:paddingBottom="@dimen/margin_size"
+                android:paddingTop="@dimen/home_description_top_margin"
+                android:layout_alignParentBottom="true"
                 android:visibility="gone"
                 barcicki:type="TRIPLE" />
 
@@ -85,8 +98,9 @@
                 android:id="@+id/menuSpeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_size"
-                android:layout_weight="1"
+                android:paddingBottom="@dimen/margin_size"
+                android:paddingTop="@dimen/home_description_top_margin"
+                android:layout_alignParentBottom="true"
                 android:visibility="gone"
                 barcicki:type="SPEED" />
 
@@ -94,37 +108,60 @@
                 android:id="@+id/menuHelp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_size"
-                android:layout_weight="1"
+          		android:paddingBottom="@dimen/margin_size"
+          		android:paddingTop="@dimen/home_description_top_margin"
+                android:layout_alignParentBottom="true"
                 android:visibility="gone"
                 barcicki:type="HELP" />
-        </com.barcicki.trio.views.MenuDescriptionPlaceholder>
 
-        <LinearLayout
+            <com.barcicki.trio.views.MenuDescription
+                android:id="@+id/menuPlayGames"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/margin_size"
+                android:paddingTop="@dimen/home_description_top_margin"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                barcicki:type="PLAY_GAMES" />
+        </com.barcicki.trio.views.MenuDescriptionPlaceholder>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="@dimen/margin_size"
+        android:layout_marginRight="@dimen/margin_size"
+        android:layout_marginTop="@dimen/margin_size"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showNothing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_size"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_triple_selector"
+            android:visibility="invisible"
+            barcicki:type="PLAY_GAMES" />
 
-            <com.barcicki.trio.views.MenuDescriptionButton
-                android:id="@+id/showTriple"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/menu_triple_selector"
-                barcicki:type="TRIPLE" />
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showHelp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_help_selector"
+            barcicki:type="HELP" />
 
-            <com.barcicki.trio.views.MenuDescriptionButton
-                android:id="@+id/showHelp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/menu_help_selector"
-                barcicki:type="HELP" />
-        </LinearLayout>
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showPlayGames"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_play_games_selector"
+            barcicki:type="PLAY_GAMES" />
     </LinearLayout>
 
 </LinearLayout>

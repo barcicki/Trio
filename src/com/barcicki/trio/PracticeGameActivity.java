@@ -163,6 +163,14 @@ public class PracticeGameActivity extends TrioGameActivity {
 	@Override
 	public void onGameFinished() {
 		showEndingPause();
+		
+		if (isSignedIn()) {
+			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_amateur), 1);
+			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_pro), 1);
+			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_guru), 1);
+			
+			getGamesClient().submitScore(getString(R.string.leaderboard_triple_trio), getElapsedTime());
+		}
 	}
 	
 	private void attachCardListeners() {
@@ -297,6 +305,8 @@ public class PracticeGameActivity extends TrioGameActivity {
 			gTriosRemaines -= 1;
 			
 			mGameStatus.setText("" + gTriosRemaines);
+			
+			submitFoundTrioEvents();
 		}
 		
 		if (gTriosRemaines == 0) {
@@ -395,8 +405,8 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 	public void onPressedNewGame(View v) {
 		makeClickSound();
-		startPractice();
 		resetGame();
+		startPractice();
 //		resetPracticeStatus();
 		hidePauseOverlay();
 	}

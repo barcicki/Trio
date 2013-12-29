@@ -11,14 +11,13 @@ public class MenuDescriptionPlaceholder extends RelativeLayout {
 
 	private MenuDescriptionGestureListener mListener = null;
 
-	private final int SWIPE_MIN_DISTANCE = 100;
+	private final int SWIPE_MIN_DISTANCE = 150;
 
 	private boolean mIsScrolling = false;
 	private float mStartScroll = 0f;
 
 	public MenuDescriptionPlaceholder(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setGestureListener(MenuDescriptionGestureListener listener) {
@@ -30,9 +29,10 @@ public class MenuDescriptionPlaceholder extends RelativeLayout {
 	}
 
 	public interface MenuDescriptionGestureListener {
-		public void onUp();
-
-		public void onDown();
+		public void onUp(int diff);
+		public void onMoving(int diff, boolean isMoving);
+		public void onDown(int diff);
+		public void onStoppedMoving(int diff);
 	}
 
 	@Override
@@ -48,30 +48,32 @@ public class MenuDescriptionPlaceholder extends RelativeLayout {
 				return true;
 	
 			case MotionEvent.ACTION_MOVE:
-				Log.d("EVENT", "moving!");
-				if (mIsScrolling) {
-					return true;
-				}
-	
 				diff = Math.round(event.getY() - mStartScroll);
-	
-				if (Math.abs(diff) > SWIPE_MIN_DISTANCE) {
-					mIsScrolling = true;
+				mIsScrolling = Math.abs(diff) > SWIPE_MIN_DISTANCE;
+				
+				Log.d("EVENT", "moving! " + diff);
+				
+				if (mListener != null) {
+					mListener.onMoving(diff, mIsScrolling);
 				}
 				return true;
 	
 			case MotionEvent.ACTION_CANCEL:
 			case MotionEvent.ACTION_UP:
+				diff = Math.round(event.getY() - mStartScroll);
 				if (mIsScrolling) {
-					diff = Math.round(event.getY() - mStartScroll);
 					if (mListener != null) {
 						if (diff > 0) {
 							Log.d("EVENT", "up!");
-							mListener.onUp();
+							mListener.onUp(diff);
 						} else {
 							Log.d("EVENT", "down!");
-							mListener.onDown();
+							mListener.onDown(diff);
 						}
+					}
+				} else {
+					if (mListener != null) {
+						mListener.onStoppedMoving(diff);
 					}
 				}
 				mIsScrolling = false;

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.barcicki.trio.R;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
 public class MenuDescription extends FrameLayout {
 
@@ -24,11 +25,6 @@ public class MenuDescription extends FrameLayout {
 
 	private MenuDescriptionType mCurrentType = MenuDescriptionType.CLASSIC;
 	private MenuDescriptionListener mListener = null;
-
-	public MenuDescription(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initWithAttrs(attrs);
-	}
 
 	public MenuDescription(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -66,63 +62,77 @@ public class MenuDescription extends FrameLayout {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.menu_description, null);
 
-		mDescription = (TextView) view.findViewById(R.id.menuDescription);
+		if (!isInEditMode()) {
 		
-		if (!this.isInEditMode()) {
-			mDescription.setTypeface(Typeface.createFromAsset(getContext()
-					.getAssets(), "poetsen.otf"));
-
-			mLogo = (ImageView) view.findViewById(R.id.menuLogo);
-			mLeftButton = (Button) view.findViewById(R.id.menuButtonLeft);
-			mRightButton = (Button) view.findViewById(R.id.menuButtonRight);
-
-			setMenuDescription(mCurrentType);
+			mDescription = (TextView) view.findViewById(R.id.menuDescription);
+			
+			if (!this.isInEditMode()) {
+				mDescription.setTypeface(Typeface.createFromAsset(getContext()
+						.getAssets(), "poetsen.otf"));
+	
+				mLogo = (ImageView) view.findViewById(R.id.menuLogo);
+				mLeftButton = (Button) view.findViewById(R.id.menuButtonLeft);
+				mRightButton = (Button) view.findViewById(R.id.menuButtonRight);
+	
+				setMenuDescription(mCurrentType);
+			}
+	
+			addView(view);
+			
 		}
-
-		addView(view);
 	}
 
-	private void updateViews(int logoResource, int descriptionResource,
-			int buttonText, int visibleButtons) {
+	private void updateViews(int logoResource, int descriptionResource, Integer... buttonLabels) {
 
 		mLogo.setImageResource(logoResource);
 		mDescription.setText(getContext().getString(descriptionResource));
-		mRightButton.setText(getContext().getString(buttonText));
-
-		mLeftButton
-				.setVisibility(visibleButtons > 1 ? View.VISIBLE : View.GONE);
-
+		
+		mRightButton.setText(getContext().getString(buttonLabels[0]));
+		
+		if (buttonLabels.length == 2) {
+			mLeftButton.setVisibility(View.VISIBLE);
+			mLeftButton.setText(getContext().getString(buttonLabels[1]));
+		} else {
+			mLeftButton.setVisibility(View.GONE);
+		}
 	}
 
 	private void renderClassicDescription() {
 		if (TrioSettings.isSavedGamePresent()) {
 			updateViews(R.drawable.menu_classic_label,
 					R.string.menu_description_classic,
-							R.string.menu_description_button_new_game, 2);	
+							R.string.menu_description_button_new_game, R.string.menu_description_button_continue);	
 		} else {
 			updateViews(R.drawable.menu_classic_label,
 					R.string.menu_description_classic,
-							R.string.menu_description_button_play, 1);
+							R.string.menu_description_button_play);
 		}
 	}
 
 	private void renderSpeedDescription() {
 		updateViews(R.drawable.menu_speed_label,
 
-		R.string.menu_description_speed, R.string.menu_description_button_play,
-				1);
+		R.string.menu_description_speed, R.string.menu_description_button_play);
 	}
 
 	private void renderTripleDescription() {
 		updateViews(R.drawable.menu_triple_label,
 
 		R.string.menu_description_triple,
-				R.string.menu_description_button_play, 1);
+				R.string.menu_description_button_play);
 	}
 
 	private void renderHelpDescription() {
 		updateViews(R.drawable.menu_help_label, R.string.menu_description_help,
-				R.string.menu_description_button_learn, 1);
+				R.string.menu_description_button_learn);
+	}
+	
+	private void renderPlayGamesDescription() {
+		if (((BaseGameActivity) getContext()).isSignedIn()) {
+			updateViews(R.drawable.menu_play_games_label, R.string.menu_description_play_games, R.string.menu_description_button_achievements, R.string.menu_description_button_leaderbaords);	
+		} else {
+			updateViews(R.drawable.menu_play_games_label, R.string.menu_description_play_games, R.string.menu_description_button_sign_in);
+		}
 	}
 
 	public MenuDescriptionType getMenuType() {
@@ -165,6 +175,9 @@ public class MenuDescription extends FrameLayout {
 		case HELP:
 			renderHelpDescription();
 			break;
+		case PLAY_GAMES:
+			renderPlayGamesDescription();
+			break;
 		}
 	}
 	
@@ -179,7 +192,7 @@ public class MenuDescription extends FrameLayout {
 	}
 
 	public enum MenuDescriptionType {
-		CLASSIC, SPEED, TRIPLE, HELP
+		CLASSIC, SPEED, TRIPLE, HELP, PLAY_GAMES
 	}
 
 }
