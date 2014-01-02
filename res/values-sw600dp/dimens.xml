@@ -14,6 +14,7 @@
 	<dimen name="clock_size">40sp</dimen>
 	<dimen name="score_size">110sp</dimen>
 	<dimen name="margin_size">30dp</dimen>
+	<dimen name="double_margin_size">60dp</dimen>
 	<dimen name="practice_grid_size">400dp</dimen>
 	<dimen name="classic_card_size">80dp</dimen>
 	

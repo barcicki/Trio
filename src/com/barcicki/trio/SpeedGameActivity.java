@@ -228,7 +228,7 @@ public class SpeedGameActivity extends TrioGameActivity {
 		
 		mDeckStatus.setText(Integer.toString(gTriosFound));
 		
-		submitFoundTrioEvents();
+		saveFoundTrio();
 
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
 			finishGame();

@@ -8,7 +8,6 @@
     android:paddingRight="@dimen/margin_size" >
 
     <com.barcicki.trio.views.StylishTextView
-        android:id="@+id/StylishTextView1"
         style="@style/dark_shadow"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -25,6 +24,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1" >
@@ -36,7 +36,6 @@
                 android:orientation="vertical" >
 
                 <com.barcicki.trio.views.StylishTextView
-                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -87,7 +86,6 @@
                 android:orientation="vertical" >
 
                 <com.barcicki.trio.views.StylishTextView
-                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -127,6 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1" >
@@ -138,7 +137,6 @@
                 android:orientation="vertical" >
 
                 <com.barcicki.trio.views.StylishTextView
-                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -189,7 +187,6 @@
                 android:orientation="vertical" >
 
                 <com.barcicki.trio.views.StylishTextView
-                    android:id="@+id/StylishTextView1"
                     style="@style/dark_shadow"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"

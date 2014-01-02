@@ -1,6 +1,7 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 
 import android.content.Intent;
@@ -36,6 +37,8 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	private TextView mCountdown;
 	
 	private GameTime mTime = new GameTime(this);
+	
+	private ArrayList<Long> mTrios = new ArrayList<Long>();
 	
 	private boolean mIsGameFinished = false;
 				
@@ -93,6 +96,7 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 			finish();
 		} else {
 			showPauseOverlay();
+			submitFoundTrios();
 		}
 		
 	}
@@ -198,11 +202,11 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	public void onTimerTick() {
 		if (mTimer != null) {
-			mTimer.setText(getElapsedTimeAsString());
+			mTimer.setText(getElapsedTimeAsString(false));
 		}
 		
 		if (mCountdown != null) {
-			mCountdown.setText(getRemainingTimeAsString());
+			mCountdown.setText(getRemainingTimeAsString(false));
 		}
 	}
 	
@@ -236,11 +240,13 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	final public void finishGame() {
 		mIsGameFinished = true;
 		onGameFinished();
+		submitFoundTrios();
 	}
 	
 	final public void resign() {
 		mIsGameFinished = true;
 		onGameResign();
+		submitFoundTrios();
 	}
 	
 	final public boolean isGameFinished() {
@@ -293,41 +299,54 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		mTime.setElapsedTime(time);
 	}
 	
-	public String getElapsedTimeAsString() {
-		return mTime.getElapsedTimeAsString();
+	public String getElapsedTimeAsString(boolean withMiliseconds) {
+		return mTime.getElapsedTimeAsString(withMiliseconds);
 	}
 	
 	public long getRemainingTime() {
 		return mTime.getRemainingTime();
 	}
 	
-	public String getRemainingTimeAsString() {
-		return mTime.getRemainingTimeAsString();
+	public String getRemainingTimeAsString(boolean withMiliseconds) {
+		return mTime.getRemainingTimeAsString(withMiliseconds);
 	}
 	
 	/**
 	 * Play Game Events
 	 */
-	public void submitFoundTrioEvents() {
-		if (isSignedIn()) {
+	public void saveFoundTrio() {
+		mTrios.add(mTime.checkpoint());
+	}
+	
+	public void submitFoundTrios() {
+		int triosFound = mTrios.size();
+		
+		if (isSignedIn() && triosFound > 0) {
+			
 			GamesClient client = getGamesClient();
-			long time = mTime.checkpoint();
 			
-			client.incrementAchievement(getString(R.string.achievement_novice), 1);
-			client.incrementAchievement(getString(R.string.achievement_amateur), 1);
-			client.incrementAchievement(getString(R.string.achievement_professional), 1);
-			client.incrementAchievement(getString(R.string.achievement_expert), 1);
-			client.submitScore(getString(R.string.leaderboard_fastest_trio), time);
+			Collections.sort(mTrios);
+			long bestTime = mTrios.get(0);
 			
-			if (time < 5000L) {
+			client.incrementAchievement(getString(R.string.achievement_novice), triosFound);
+			client.incrementAchievement(getString(R.string.achievement_amateur), triosFound);
+			client.incrementAchievement(getString(R.string.achievement_professional), triosFound);
+			client.incrementAchievement(getString(R.string.achievement_expert), triosFound);
+			
+			if (bestTime < 1000L) {
+				client.unlockAchievement(getString(R.string.achievement_faster_then_light));				
+			} 
+			
+			if (bestTime < 3000L) {
+				client.unlockAchievement(getString(R.string.achievement_faster_than_lightning));
+			}
+			
+			if (bestTime < 5000L) {
 				client.unlockAchievement(getString(R.string.achievement_faster_than_rocket));
-				if (time < 3000L) {
-					client.unlockAchievement(getString(R.string.achievement_faster_than_lightning));
-					if (time < 1000L) {
-						client.unlockAchievement(getString(R.string.achievement_faster_then_light));				
-					}
-				}
 			}
 		}
+		
+		mTrios.clear();
 	}
+	
 }

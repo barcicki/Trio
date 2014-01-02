@@ -39,14 +39,12 @@ public class SoundManager {
 	public static SoundManager getInstance(Context context) {
 		if (mInstance == null) {
 			mInstance = new SoundManager(context);
-			mInstance.loadSounds();
 		}
 		return mInstance;
 	}
 
-	public void loadSounds() {
+	public void loadSoundsIfNecessary() {
 		if (!mLoadedSounds) {
-			mBackgroundPlayer = MediaPlayer.create(mContext, R.raw.music);
 			addSound(SOUND_CLICK, R.raw.select);
 			addSound(SOUND_SUCCESS, R.raw.success);
 			addSound(SOUND_FAIL, R.raw.fail);
@@ -59,6 +57,10 @@ public class SoundManager {
 	}
 
 	public void playBackground() {
+		if (mBackgroundPlayer == null) {
+			mBackgroundPlayer = MediaPlayer.create(mContext, R.raw.music);
+		}
+		
 		if (!mBackgroundPlayer.isPlaying()) {
 			mBackgroundPlayer.setLooping(true);
 			mBackgroundPlayer.start();
@@ -66,43 +68,45 @@ public class SoundManager {
 	}
 
 	public void pauseBackground() {
-		if (mBackgroundPlayer.isPlaying()) {
+		if (mBackgroundPlayer != null && mBackgroundPlayer.isPlaying()) {
 			mBackgroundPlayer.pause();
 		}
 	}
 
 	public void stopBackground() {
-		mBackgroundPlayer.stop();
+		if (mBackgroundPlayer != null) {
+			mBackgroundPlayer.stop();
+		}
 	}
 
 	public boolean isBackgroundPlaying() {
-		return mBackgroundPlayer.isPlaying();
+		return mBackgroundPlayer != null ? mBackgroundPlayer.isPlaying() : false;
 	}
 
 	public void playSound(int index) {
-		float streamVolume = mAudioManager
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume
-				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
-				1, 0, 1f);
+		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		
+		loadSoundsIfNecessary();
+		
+		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	}
 
-	public void playLoopedSound(int index) {
-		float streamVolume = mAudioManager
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume
-				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
-				1, -1, 1f);
-	}
+//	public void playLoopedSound(int index) {
+//		float streamVolume = mAudioManager
+//				.getStreamVolume(AudioManager.STREAM_MUSIC);
+//		streamVolume = streamVolume
+//				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+//		mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
+//				1, -1, 1f);
+//	}
 
 	public void stopSound(int index) {
-		mSoundPool.stop(mSoundPoolMap.get(index));
+		mSoundPool.stop(mSoundPoolMap.get(index, 0));
 	}
 
 	public void pauseSound(int index) {
-		mSoundPool.pause(mSoundPoolMap.get(index));
+		mSoundPool.pause(mSoundPoolMap.get(index, 0));
 	}
 
 	public void pauseAll() {

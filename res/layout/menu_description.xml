@@ -34,19 +34,17 @@
         <Button
             android:id="@+id/menuButtonLeft"
             style="@style/nice_button"
-            android:layout_width="@dimen/home_button_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_size"
-            android:layout_weight="0"
             android:text="@string/menu_description_button_continue"
             android:textSize="@dimen/home_font_size" />
 
         <Button
             android:id="@+id/menuButtonRight"
             style="@style/nice_button"
-            android:layout_width="@dimen/home_button_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:text="@string/game_start"
             android:textSize="@dimen/home_font_size" />
 

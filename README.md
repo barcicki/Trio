@@ -6,6 +6,9 @@ Simple game for Android, where the goal is to find three matching cards.
 
 The game is available in __Google Play Store__: [Trio](https://play.google.com/store/apps/details?id=com.barcicki.trio)
 
+* Current Google Play version: 2.0
+* Current development version: 2.1
+
 ## Pre-releases
 
 As changes are made in the source, the newest build of application is available [here](http://dl.dropbox.com/u/17490565/Trio.apk).
@@ -25,11 +28,14 @@ __Trio__ is a set of three cards, for which each attribute is either the same (e
 
 ## Game modes
 
-### ClassicTrio
+### Classic Trio
 It is played using all 81 cards. 12 of them are put on a table. Once Trio is found, three cards are replaced with new ones from the deck. If there's no Trio on new table, system automatically adds as many cards as needed to have at least one Trio on a table. Game ends when there's no Trio on a table and there's no card to add from the deck.
 
-### TrioChallenge
-Quicker than ClassicTrio. Find three hidden Trio on the table.
+### Triple Trio
+Quicker than ClassicTrio. Find three hidden Trios on the table.
+
+### Speed Trio
+Time-limited version of Classic Trio. You've got 2 minutes to find as many Trios as possible.
 
 ## Licence
 

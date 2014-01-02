@@ -127,7 +127,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		TextView trioView = (TextView) getPauseOverlay().findViewById(
 				R.id.gameTrioCount);
 
-		timeView.setText(getElapsedTimeAsString());
+		timeView.setText(getElapsedTimeAsString(true));
 		hintsView
 				.setText(getString(R.string.classic_hint_count, gHintsRemained));
 		trioView.setText(getString(R.string.classic_trio_count, gTriosFound));
@@ -243,7 +243,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 		gTriosFound += 1;
 		
-		submitFoundTrioEvents();
+		saveFoundTrio();
 		
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
 			finishGame();

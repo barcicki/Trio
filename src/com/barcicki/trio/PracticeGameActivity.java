@@ -43,7 +43,6 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		setContentView(R.layout.practice);
 		super.onCreate(savedInstanceState);
 		
@@ -139,17 +138,6 @@ public class PracticeGameActivity extends TrioGameActivity {
 		gSelectedViews = new ArrayList<CardView>();
 	}
 	
-//	private void resetPracticeStatus() {
-//		gGameEnded = false;
-//		gElapsedTime = 0L;
-//		gTriosFound = 0;
-//		gTriosRemaines = NUMBER_OF_TRIOS;
-//		mGameStatus.setText("" + gTriosRemaines);
-//		gFoundTrios = new ArrayList<CardList>();
-//		gSelectedCards = new CardList();
-//		gSelectedViews = new ArrayList<CardView>();
-//	}
-	
 	private void pausePractice() {
 		mCardGrid.showReverse();
 		pauseTimer();
@@ -171,6 +159,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 			
 			getGamesClient().submitScore(getString(R.string.leaderboard_triple_trio), getElapsedTime());
 		}
+		
 	}
 	
 	private void attachCardListeners() {
@@ -306,7 +295,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 			
 			mGameStatus.setText("" + gTriosRemaines);
 			
-			submitFoundTrioEvents();
+			saveFoundTrio();
 		}
 		
 		if (gTriosRemaines == 0) {
@@ -321,7 +310,7 @@ public class PracticeGameActivity extends TrioGameActivity {
 		pausePractice();
 		
 		TextView timeView = (TextView) getPauseOverlay().findViewById(R.id.gameTime);
-		timeView.setText(getElapsedTimeAsString());
+		timeView.setText(getElapsedTimeAsString(true));
 		
 		TextView trioView = (TextView) getPauseOverlay().findViewById(R.id.gameTrioCount);
 		trioView.setText(getString(R.string.practice_trio_count, gTriosFound, NUMBER_OF_TRIOS ));
@@ -407,22 +396,8 @@ public class PracticeGameActivity extends TrioGameActivity {
 		makeClickSound();
 		resetGame();
 		startPractice();
-//		resetPracticeStatus();
 		hidePauseOverlay();
 	}
-	
-//	public void onPressedRestartGame(View v) {
-//		makeClickSound();
-//		CardList set = CardList.fromString(mTrio.getDeck(), gPracticeString);
-//		
-//		mCardGrid.setCards( set );				
-//		mTriosGrid.setCards( set.getTrios() );
-//		mTriosGrid.showReverse();
-//		
-//		resetPracticeStatus();
-//
-//		hidePauseOverlay();
-//	}
 	
 	public void onPressedQuitGame(View v) {
 		makeClickSound();

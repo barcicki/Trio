@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="tutorial_desc_size">19sp</dimen>
 	<dimen name="home_button_size">50dp</dimen>
 	<dimen name="home_card_size">160dp</dimen>
     <dimen name="home_card_top">110dp</dimen>

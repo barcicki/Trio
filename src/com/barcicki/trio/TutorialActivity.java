@@ -43,20 +43,11 @@ public class TutorialActivity extends TrioActivity {
 		mTutorialIndicator.setStrokeWidth(2f);
 		
 		mTutorialIndicator.setOnPageChangeListener(new OnPageChangeListener() {
-			
 			public void onPageSelected(int arg0) {
 				updateControlVisibility();
 			}
-			
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onPageScrolled(int arg0, float arg1, int arg2) {}
+			public void onPageScrollStateChanged(int arg0) {}
 		});
 		
 		mPrev = (Button) findViewById(R.id.slidePrev);
@@ -95,21 +86,20 @@ public class TutorialActivity extends TrioActivity {
 	}
 	
 	public void onNextSlidePressed(View v) {
-		makeClickSound();
 		int currentPage = mTutorialPager.getCurrentItem();
 		int size = mTutorialAdapter.getCount();
-		int nextPage = (currentPage + 1 < size) ? currentPage + 1 : size - 1;
-		
-		mTutorialPager.setCurrentItem( nextPage, true);
-		updateControlVisibility();
+		if (currentPage < size - 1) {
+			makeClickSound();
+			mTutorialPager.setCurrentItem(currentPage + 1, true);
+		}
 	}
 	
 	public void onPrevSlidePressed(View v) {
-		makeClickSound();
 		int currentPage = mTutorialPager.getCurrentItem();
-		int prevPage = (currentPage - 1 >= 0) ? currentPage - 1 : 0; 
-		mTutorialPager.setCurrentItem( prevPage, true);
-		updateControlVisibility();
+		if (currentPage > 0) {
+			makeClickSound();
+			mTutorialPager.setCurrentItem(currentPage - 1, true);
+		}
 	}
 	
 	

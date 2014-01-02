@@ -120,16 +120,16 @@ public class GameTime {
 		return mIsTicking ? System.currentTimeMillis() - mTimerStart : mSavedTime;
 	}
 	
-	public String getElapsedTimeAsString() {
-		return timeToString(getElapsedTime());
+	public String getElapsedTimeAsString(boolean withMiliseconds) {
+		return timeToString(getElapsedTime(), withMiliseconds);
 	}
 	
 	public long getRemainingTime() {
 		return mCountdown - getElapsedTime() + SECOND;
 	}
 	
-	public String getRemainingTimeAsString() {
-		return timeToString(getRemainingTime());
+	public String getRemainingTimeAsString(boolean withMiliseconds) {
+		return timeToString(getRemainingTime(), withMiliseconds);
 	}
 	
 	public interface GameTimeListener {
@@ -137,15 +137,21 @@ public class GameTime {
 		public void onCountdownFinish();
 	}
 	
-	public static String timeToString(long value) {
+	public static String timeToString(long value, boolean withMiliseconds) {
 		StringBuilder timeString = new StringBuilder();
-		int seconds = (int) value / 1000;
-		int minutes = seconds / 60;
+		long seconds = value / 1000;
+		long minutes = seconds / 60;
 		seconds %= 60;
+		long miliseconds = value % 1000;
 		
 		timeString.append(minutes);
 		timeString.append(seconds < 10 ? ":0" : ":");
 		timeString.append(seconds);
+		
+		if (withMiliseconds) {
+			timeString.append(miliseconds < 100 ? (miliseconds < 10 ? "00:" : "0:"): ":");
+			timeString.append(miliseconds);
+		}
 		
 		return timeString.toString();
 	}

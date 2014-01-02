@@ -3,7 +3,7 @@
 
     <dimen name="tutorial_dock_height">65dp</dimen>
     <dimen name="tutorial_task_size">20sp</dimen>
-    <dimen name="tutorial_desc_size">20sp</dimen>
+    <dimen name="tutorial_desc_size">19sp</dimen>
     <dimen name="tutorial_solution_size">9sp</dimen>
     <dimen name="tutorial_attributes_size">18sp</dimen>
     <dimen name="button_text_size">14sp</dimen>

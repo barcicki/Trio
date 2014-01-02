@@ -18,7 +18,6 @@ import com.google.example.games.basegameutils.BaseGameActivity;
 public class TrioActivity extends BaseGameActivity {	
 	
 	private SoundManager mSoundManager;
-	
 	private boolean mSoundContinue = false;
 	
 	@Override
@@ -26,7 +25,6 @@ public class TrioActivity extends BaseGameActivity {
 		super.onCreate(arg0);
 		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
 		
-		mSoundManager = SoundManager.getInstance(this);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 		
 		CardViewResources.initialize(this);
@@ -35,7 +33,6 @@ public class TrioActivity extends BaseGameActivity {
 	
 	@Override
 	protected void onResume() {
-		mSoundManager = SoundManager.getInstance(this);
 		playBackgroundMusic();
 		mSoundContinue = false;
 		updateMusicButtonStatus();
@@ -44,8 +41,8 @@ public class TrioActivity extends BaseGameActivity {
 	
 	@Override
 	protected void onPause() {
-		if (mSoundManager != null && mSoundManager.isBackgroundPlaying() && !mSoundContinue) {
-			mSoundManager.pauseBackground();
+		if (getSoundManager().isBackgroundPlaying() && !mSoundContinue) {
+			getSoundManager().pauseBackground();
 		}
 		super.onPause();
 	}
@@ -95,7 +92,7 @@ public class TrioActivity extends BaseGameActivity {
 	
 	public void playBackgroundMusic() {
 		if (TrioSettings.isMusicEnabled()) {
-			mSoundManager.playBackground();
+			getSoundManager().playBackground();
 		}
 	}
 	
@@ -111,12 +108,15 @@ public class TrioActivity extends BaseGameActivity {
 	}
 	
 	public SoundManager getSoundManager() {
+		if (mSoundManager == null) {
+			mSoundManager = SoundManager.getInstance(this);
+		}
 		return mSoundManager;
 	}
 	
 	public void makeSound(int type) {
 		if (TrioSettings.isSoundEffectsEnabled()) {
-			mSoundManager.playSound(type);
+			getSoundManager().playSound(type);
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class TrioActivity extends BaseGameActivity {
 	private void updateMusicButtonStatus() {
 		Button musicButton = (Button) findViewById(R.id.buttonMusicSwitch);
 		if (musicButton != null) {
-			if (mSoundManager.isBackgroundPlaying()) {
+			if (getSoundManager().isBackgroundPlaying()) {
 				musicButton.setBackgroundResource(R.drawable.nice_button);
 			} else {
 				musicButton.setBackgroundResource(R.drawable.no_music_button);
