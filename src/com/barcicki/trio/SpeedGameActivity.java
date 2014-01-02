@@ -124,6 +124,7 @@ public class SpeedGameActivity extends TrioGameActivity {
 
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setText(getString(R.string.pause_continue));
+		buttonContinue.setVisibility(View.VISIBLE);
 
 		Button buttonNewGame = (Button) findViewById(R.id.gameNew);
 		buttonNewGame.setVisibility(View.VISIBLE);
