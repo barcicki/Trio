@@ -2,6 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:barcicki="http://schemas.android.com/apk/res/com.barcicki.trio">
 
     <item android:drawable="@drawable/menu_help_button_selected" barcicki:state_active="true"/>
+    <item android:drawable="@drawable/menu_help_button_selected" android:state_pressed="true"/>
     <item android:drawable="@drawable/menu_help_button"/>
 
 </selector>

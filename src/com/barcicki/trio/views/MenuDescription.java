@@ -192,7 +192,7 @@ public class MenuDescription extends FrameLayout {
 	}
 
 	public enum MenuDescriptionType {
-		CLASSIC, SPEED, TRIPLE, HELP, PLAY_GAMES
+		CLASSIC, SPEED, TRIPLE, HELP, PLAY_GAMES, SETTINGS
 	}
 
 }

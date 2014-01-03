@@ -136,16 +136,6 @@
         android:orientation="vertical" >
 
         <com.barcicki.trio.views.MenuDescriptionButton
-            android:id="@+id/showNothing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu_triple_selector"
-            android:visibility="invisible"
-            barcicki:type="PLAY_GAMES" />
-
-        <com.barcicki.trio.views.MenuDescriptionButton
             android:id="@+id/showHelp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -162,6 +152,15 @@
             android:scaleType="fitCenter"
             android:src="@drawable/menu_play_games_selector"
             barcicki:type="PLAY_GAMES" />
+        
+        <com.barcicki.trio.views.MenuDescriptionButton
+            android:id="@+id/showSettings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_settings_selector"
+            barcicki:type="SETTINGS" />
     </LinearLayout>
 
 </LinearLayout>

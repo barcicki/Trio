@@ -64,13 +64,17 @@ public class TrioActivity extends BaseGameActivity {
 		return true;
 	}
 	
+	public void openSettingsActvity() {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.settings:
-			Intent intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
+			openSettingsActvity();
 			return true;
 		case R.id.mute:
 			if (!getSoundManager().isBackgroundPlaying()) {

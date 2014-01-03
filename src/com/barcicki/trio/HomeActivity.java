@@ -72,7 +72,8 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 				findViewById(R.id.showHelp), 
 				findViewById(R.id.showSpeed),
 				findViewById(R.id.showTriple),
-				findViewById(R.id.showPlayGames)
+				findViewById(R.id.showPlayGames),
+				findViewById(R.id.showSettings)
 			}) {
 			view.setOnClickListener(this);
 			mButtons.add((MenuDescriptionButton) view);
@@ -114,9 +115,14 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			makeClickSound();
 
 			MenuDescriptionType type = ((MenuDescriptionButton) view).getType();
-
-			updateActiveButtons(type);
-			switchToDescription(type, 0);
+			
+			if (type.equals(MenuDescriptionType.SETTINGS)) {
+				openSettingsActvity();
+				
+			} else {
+				updateActiveButtons(type);
+				switchToDescription(type, 0);
+			}
 		}
 	}
 
