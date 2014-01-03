@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -12,7 +14,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
@@ -83,6 +84,9 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		
 		((MenuDescriptionPlaceholder) findViewById(R.id.menuSwitcher))
 				.setGestureListener(this);
+		
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		Log.d("DENSITY", metrics.density + " " + metrics.densityDpi);
 		
 	}
 

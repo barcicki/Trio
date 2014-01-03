@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.barcicki.trio.core.TutorialAdapter;
-import com.barcicki.trio.tutorial.Tutorial1Fragment;
-import com.barcicki.trio.tutorial.Tutorial2Fragment;
-import com.barcicki.trio.tutorial.Tutorial3Fragment;
+import com.barcicki.trio.tutorial.TutorialStepTrioFragment;
+import com.barcicki.trio.tutorial.TutorialStepFragment;
+import com.barcicki.trio.tutorial.TutorialStepQuizFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class TutorialActivity extends TrioActivity {
@@ -26,18 +26,26 @@ public class TutorialActivity extends TrioActivity {
 		super.onCreate(arg0);
 		
 		mTutorialAdapter = new TutorialAdapter(this);
-		mTutorialAdapter.addFragment(Tutorial1Fragment.class);
-		mTutorialAdapter.addFragment(Tutorial2Fragment.class);
-		mTutorialAdapter.addFragment(Tutorial3Fragment.class);
+		mTutorialAdapter.addFragment(TutorialStepFragment.FeatureColor.class);
+		mTutorialAdapter.addFragment(TutorialStepFragment.FeatureQuantity.class);
+		mTutorialAdapter.addFragment(TutorialStepFragment.FeatureShape.class);
+		mTutorialAdapter.addFragment(TutorialStepFragment.FeatureFill.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.TrioWithThreeSharedFeatures.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.TrioWithTwoSharedFeatures.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.TrioWithOneSharedFeature.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.TrioWithNoSharedFeatures.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.WrongTrioBadColorFeatures.class);
+		mTutorialAdapter.addFragment(TutorialStepTrioFragment.WrongTrioBadFillFeatures.class);
+		mTutorialAdapter.addFragment(TutorialStepQuizFragment.class);
 		
 		mTutorialPager = (ViewPager) findViewById(R.id.tutorialHolder);
-		mTutorialPager.setOffscreenPageLimit(5);
+		mTutorialPager.setOffscreenPageLimit(11);
 		mTutorialPager.setAdapter(mTutorialAdapter);
 		
 		mTutorialIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		mTutorialIndicator.setViewPager(mTutorialPager);
 		final float density = getResources().getDisplayMetrics().density;
-		mTutorialIndicator.setRadius(10 * density);
+		mTutorialIndicator.setRadius(9 * density);
 		mTutorialIndicator.setFillColor(getResources().getColor(R.color.blue));
 		mTutorialIndicator.setStrokeColor(getResources().getColor(R.color.black));
 		mTutorialIndicator.setStrokeWidth(2f);

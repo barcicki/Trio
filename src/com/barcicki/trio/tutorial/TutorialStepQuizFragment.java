@@ -29,7 +29,7 @@ import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.views.CardView;
 
-public class Tutorial3Fragment extends Fragment {
+public class TutorialStepQuizFragment extends Fragment {
 	private static final int NUMBER_OF_ADDITIONAL_CARDS = 4;
 	private int mCurrentSet = 0;
 	private ArrayList<TrioSet> mSets = new ArrayList<TrioSet>();
@@ -40,12 +40,6 @@ public class Tutorial3Fragment extends Fragment {
 	private CardView mCardA;
 	private CardView mCardB;
 	private CardView mCardToGuess;
-
-//	private CardView mOptionA;
-//	private CardView mOptionB;
-//	private CardView mOptionC;
-//	private CardView mOptionD;
-//	private CardView mOptionE;
 	
 	private ArrayList<CardView> mOptions = new ArrayList<CardView>();
 	
@@ -62,14 +56,12 @@ public class Tutorial3Fragment extends Fragment {
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		
 		mActivity = (TrioActivity) getActivity();
 
 		mPrev = (Button) getView().findViewById(R.id.buttonPrev);
 		mNext = (Button) getView().findViewById(R.id.buttonNext);
-		// mQuit = (Button) getView().findViewById(R.id.buttonQuit);
 
 		mCardA = (CardView) getView().findViewById(R.id.card1);
 		mCardB = (CardView) getView().findViewById(R.id.card2);
@@ -84,12 +76,6 @@ public class Tutorial3Fragment extends Fragment {
 		}) {
 			mOptions.add((CardView) getView().findViewById(id));
 		}
-		
-//		mOptionA = (CardView) getView().findViewById(R.id.card4);
-//		mOptionB = (CardView) getView().findViewById(R.id.card5);
-//		mOptionC = (CardView) getView().findViewById(R.id.card6);
-//		mOptionD = (CardView) getView().findViewById(R.id.card7);
-//		mOptionE = (CardView) getView().findViewById(R.id.card8);
 
 		attachListeners();
 		showSet();
@@ -121,18 +107,11 @@ public class Tutorial3Fragment extends Fragment {
 		for (CardView view : mOptions) {
 			view.setOnClickListener(selectCardsListener);
 		}
-		
-//		mOptionA.setOnClickListener(selectCardsListener);
-//		mOptionB.setOnClickListener(selectCardsListener);
-//		mOptionC.setOnClickListener(selectCardsListener);
-//		mOptionD.setOnClickListener(selectCardsListener);
-//		mOptionE.setOnClickListener(selectCardsListener);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		return inflater.inflate(R.layout.tutorial_step3_fragment, container,
 				false);
 	}
@@ -245,37 +224,57 @@ public class Tutorial3Fragment extends Fragment {
 	}
 
 	private void prepareSets() {
-		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_RED,
-				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_SQUARE,
-				Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED,
-				Card.FILL_EMPTY, Card.NUMBER_TWO), new Card(Card.SHAPE_SQUARE,
-				Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_TWO)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
-				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(
-				Card.SHAPE_TRIANGLE, Card.COLOR_GREEN, Card.FILL_HALF,
-				Card.NUMBER_TWO)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
-				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_SQUARE,
-				Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_TWO)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN,
-				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
-				Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED,
-				Card.FILL_EMPTY, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
-				Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE,
-				Card.FILL_HALF, Card.NUMBER_THREE), new Card(Card.SHAPE_CIRCLE,
-				Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_THREE)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
-				Card.FILL_EMPTY, Card.NUMBER_TWO), new Card(Card.SHAPE_SQUARE,
-				Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN,
-				Card.FILL_HALF, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
-				Card.COLOR_RED, Card.FILL_HALF, Card.NUMBER_ONE)));
-		mSets.add(new TrioSet(new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE,
-				Card.FILL_HALF, Card.NUMBER_ONE), new Card(Card.SHAPE_CIRCLE,
-				Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
+		
+		// 3 common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_ONE), 
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO)));
+
+		// 3 common features 
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED, Card.FILL_FULL, Card.NUMBER_THREE), 
+				new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
+		
+		// 2 common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO), 
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_TWO)));
+		
+		// 2 common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_ONE),
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
+		
+		// 2 common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_BLUE, Card.FILL_HALF, Card.NUMBER_THREE), 
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_THREE)));
+	
+		
+		// 1 common feature
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_ONE), 
+				new Card(Card.SHAPE_TRIANGLE, Card.COLOR_GREEN, Card.FILL_HALF, Card.NUMBER_TWO)));
+		
+		// 1 common feature
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_EMPTY, Card.NUMBER_TWO), 
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
+		
+		// 1 common feature
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_TWO),
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_FULL, Card.NUMBER_TWO)));
+		
+		// no common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_TRIANGLE, Card.COLOR_RED, Card.FILL_EMPTY, Card.NUMBER_ONE), 
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_GREEN, Card.FILL_FULL, Card.NUMBER_THREE)));
+		
+		// no common features
+		mSets.add(new TrioSet(
+				new Card(Card.SHAPE_SQUARE, Card.COLOR_BLUE, Card.FILL_HALF, Card.NUMBER_ONE), 
+				new Card(Card.SHAPE_CIRCLE, Card.COLOR_GREEN, Card.FILL_EMPTY, Card.NUMBER_THREE)));
 
 	}
 

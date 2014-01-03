@@ -1,229 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_size"
-    android:paddingRight="@dimen/margin_size" >
+    android:padding="@dimen/margin_size"
+    android:layout_height="fill_parent" >
 
     <com.barcicki.trio.views.StylishTextView
+        android:id="@+id/slideTitle"
         style="@style/dark_shadow"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:gravity="center_vertical"
         android:text="@string/tutorial_step1_header"
         android:textColor="@color/white"
-        android:textSize="@dimen/tutorial_desc_size" />
+        android:textSize="@dimen/tutorial_task_size" />
+
+    <com.barcicki.trio.views.StylishTextView
+        android:id="@+id/slideSubtitle"
+        style="@style/dark_shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slideTitle"
+        android:layout_marginTop="@dimen/margin_size"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/tutorial_shape"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/tutorial_task_size" />
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.2"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size"
+        android:layout_below="@+id/slideSubtitle"
+       >
 
-        <LinearLayout
-            android:baselineAligned="false"
+        <com.barcicki.trio.views.CardView
+            android:id="@+id/card1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="0.2"
+            android:src="@drawable/square_reverse" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <com.barcicki.trio.views.StylishTextView
-                    style="@style/dark_shadow"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/tutorial_shape"
-                    android:textColor="@color/yellow"
-                    android:textSize="@dimen/tutorial_attributes_size" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" >
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/shape1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/shape2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/shape3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.7" >
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <com.barcicki.trio.views.StylishTextView
-                    style="@style/dark_shadow"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/tutorial_number"
-                    android:textColor="@color/yellow"
-                    android:textSize="@dimen/tutorial_attributes_size" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" >
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/quantity1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/quantity2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/quantity3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:baselineAligned="false"
+        <com.barcicki.trio.views.CardView
+            android:id="@+id/card2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" >
+            android:layout_weight="0.2"
+            android:src="@drawable/square_reverse" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <com.barcicki.trio.views.StylishTextView
-                    style="@style/dark_shadow"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/tutorial_colour"
-                    android:textColor="@color/yellow"
-                    android:textSize="@dimen/tutorial_attributes_size" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" >
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/color1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/color2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/color3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.7" >
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <com.barcicki.trio.views.StylishTextView
-                    style="@style/dark_shadow"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="2"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/tutorial_fill"
-                    android:textColor="@color/yellow"
-                    android:textSize="@dimen/tutorial_attributes_size" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" >
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/fill1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/fill2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-
-                    <com.barcicki.trio.views.CardView
-                        android:id="@+id/fill3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="10"
-                        android:src="@drawable/square_reverse" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+        <com.barcicki.trio.views.CardView
+            android:id="@+id/card3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:src="@drawable/square_reverse" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -2,7 +2,7 @@
 <resources>
 	<dimen name="tutorial_dock_height">100dp</dimen>
     <dimen name="tutorial_task_size">25sp</dimen>
-    <dimen name="tutorial_desc_size">22sp</dimen>
+    <dimen name="tutorial_desc_size">20sp</dimen>
     <dimen name="tutorial_solution_size">12sp</dimen>
     <dimen name="tutorial_attributes_size">22sp</dimen>
     <dimen name="button_text_size">16sp</dimen>
