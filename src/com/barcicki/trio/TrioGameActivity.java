@@ -333,6 +333,8 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 			client.incrementAchievement(getString(R.string.achievement_professional), triosFound);
 			client.incrementAchievement(getString(R.string.achievement_expert), triosFound);
 			
+			client.submitScore(getString(R.string.leaderboard_fastest_trio), bestTime);
+			
 			if (bestTime < 1000L) {
 				client.unlockAchievement(getString(R.string.achievement_faster_then_light));				
 			} 

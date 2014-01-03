@@ -149,7 +149,7 @@ public class GameTime {
 		timeString.append(seconds);
 		
 		if (withMiliseconds) {
-			timeString.append(miliseconds < 100 ? (miliseconds < 10 ? "00:" : "0:"): ":");
+			timeString.append(miliseconds < 100 ? (miliseconds < 10 ? ":00" : ":0"): ":");
 			timeString.append(miliseconds);
 		}
 		
