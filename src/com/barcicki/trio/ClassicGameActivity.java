@@ -70,6 +70,12 @@ public class ClassicGameActivity extends TrioGameActivity {
 		}
 
 	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		showPauseOverlay();
+		super.onRestoreInstanceState(savedInstanceState);
+	}
 
 	private void startGame() {
 		mCardGrid.setCards(mTrio.getTable());
@@ -210,7 +216,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 		if (!isGameFinished()) {
 			saveGame();
 		}
-		showPauseOverlay();
 		super.onPause();
 	}
 

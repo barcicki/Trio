@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barcicki.trio.core.Card;
 import com.barcicki.trio.core.CardGrid;
@@ -66,12 +67,21 @@ public class SpeedGameActivity extends TrioGameActivity {
 		}
 
 	}
+	
+	private void setGame() {
+		if (mCardGrid != null) {
+			mCardGrid.setCards(mTrio.getTable());
+			mCardGrid.hideReverse();
+		}
+		
+		if (mDeckStatus != null) {
+			mDeckStatus.setText("" + gTriosFound);
+		}
+	}
 
 	private void startGame() {
 		mTrio.newGame();
-		mCardGrid.setCards(mTrio.getTable());
-		mCardGrid.hideReverse();
-		mDeckStatus.setText(Integer.toString(0));
+		setGame();
 		startTimer();
 	}
 
@@ -193,12 +203,6 @@ public class SpeedGameActivity extends TrioGameActivity {
 		});
 	}
 
-	@Override
-	protected void onPause() {
-		showPauseOverlay();
-		super.onPause();
-	}
-
 	protected void onNotTrioFound(CardList selectedCards,
 			ArrayList<CardView> selectedViews) {
 		if (Trio.LOCAL_LOGV)
@@ -248,29 +252,37 @@ public class SpeedGameActivity extends TrioGameActivity {
 	
 	private void restoreGame(Bundle savedInstanceState) {
 		resetGame();
-				
-		String game = savedInstanceState.getString("game");
-		String table = savedInstanceState.getString("table");
-		String gameString = savedInstanceState.getString("game_string");
-		gTriosFound = savedInstanceState.getInt("trios_found");
 		
-		setElapsedTime(savedInstanceState.getLong("time"));
-		
-		onTimerTick();
-		
-		if (!game.equals("") && !table.equals("")) {
-
-			mTrio.setGame(CardList.fromString(mTrio.getDeck(), game));
-			mTrio.setTable(CardList.fromString(mTrio.getDeck(), table));
-			mTrio.setGameString(gameString);
-
-		} else {
-			Log.e("TrioState", "failed to restore saved game");
+		if (savedInstanceState != null) {
+			String game = savedInstanceState.getString("game");
+			String table = savedInstanceState.getString("table");
+			String gameString = savedInstanceState.getString("game_string");
+			gTriosFound = savedInstanceState.getInt("trios_found");
 			
-			resetGame();
-			startGame();
+			setElapsedTime(savedInstanceState.getLong("time"));
+			
+			if (!game.equals("") && !table.equals("")) {
+	
+				mTrio.setGameString(gameString);
+				mTrio.setGame(CardList.fromString(mTrio.getDeck(), game));
+				mTrio.setTable(CardList.fromString(mTrio.getDeck(), table));
+				mCardGrid.setCards(mTrio.getTable());
+	
+			} else {
+				Log.e("TrioState", "failed to restore saved game");
+				
+				resetGame();
+			}
 		}
 		
+		setGame();
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		restoreGame(savedInstanceState);
+		showPauseOverlay();
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 	
 	/**

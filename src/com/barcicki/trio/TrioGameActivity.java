@@ -77,7 +77,6 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
-		pauseTimer();
 		showPauseOverlay();
 		return super.onMenuOpened(featureId, menu);
 	}
@@ -99,6 +98,20 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 			submitFoundTrios();
 		}
 		
+	}
+	
+	@Override
+	protected void onPause() {
+		showPauseOverlay();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		if (!isPauseOverlayVisible()) {
+			showPauseOverlay();
+		}
+		super.onStop();
 	}
 	
 	/* Overlays */

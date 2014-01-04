@@ -1,6 +1,7 @@
 package com.barcicki.trio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,16 +24,17 @@ import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.views.CardView;
 
 public class PracticeGameActivity extends TrioGameActivity {
-	private static int NUMBER_OF_TRIOS = 3;
+	private static final String	TRIO_LIST_DELIMITER	= ";";
+	private static final int NUMBER_OF_TRIOS = 3;
 	
 	SharedPreferences mPrefs;
 	Trio mTrio = new Trio();
 	
+	CardList mGame = new CardList();
 	CardList gSelectedCards = new CardList();
 	ArrayList<CardView> gSelectedViews = new ArrayList<CardView>();
 	ArrayList<CardList> gFoundTrios = new ArrayList<CardList>();
 	
-	String gPracticeString;
 	int gTriosFound = 0;
 	int gTriosRemaines = NUMBER_OF_TRIOS;
 	
@@ -71,53 +73,77 @@ public class PracticeGameActivity extends TrioGameActivity {
 	
 	private void restoreGame(Bundle savedInstanceState) {
 		resetGame();
-		
+
 		setElapsedTime(savedInstanceState.getLong("time"));
-		
+
 		String foundTrios = savedInstanceState.getString("found");
+		String challenge = savedInstanceState.getString("challenge");
 		CardList three = new CardList();
-		for (String card : TextUtils.split(foundTrios, " ")) {
-			three.addAll(CardList.fromString(mTrio.getDeck(), card));
-			if (three.size() == 3) {
-				gFoundTrios.add(new CardList(three));
-				three.clear();
+
+		if (foundTrios != null && !foundTrios.equals("")) {
+			for (String card : TextUtils.split(foundTrios, TRIO_LIST_DELIMITER)) {
+				three.addAll(CardList.fromString(mTrio.getDeck(), card));
+				if (three.size() == 3) {
+					gFoundTrios.add(new CardList(three));
+					three.clear();
+				}
 			}
+		} else {
+			Log.d("TripleTrio", "Could not restore found trios");
 		}
-		
+
 		gTriosFound = gFoundTrios.size();
 		gTriosRemaines = NUMBER_OF_TRIOS - gTriosFound;
-		mGameStatus.setText("" + gTriosRemaines);
-		
+
+		if (mGameStatus != null) {
+			mGameStatus.setText("" + gTriosRemaines);
+		}
+
 		gSelectedCards = new CardList();
 		gSelectedViews = new ArrayList<CardView>();
+
+		mGame = CardList.fromString(mTrio.getDeck(), challenge);
+
+		if (mCardGrid != null) {
+			mCardGrid.setCards(mGame);
+		}
+		if (mTriosGrid != null) {
+			mTriosGrid.setEmptyCardList(9);
+			mTriosGrid.setResourceImageForAll(R.drawable.square_question);
+			mTriosGrid.showReverse();
+		}
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			restoreGame(savedInstanceState);
+		} else {
+			startPractice();
+		}
 		
-		CardList set = CardList.fromString(mTrio.getDeck(), savedInstanceState.getString("challenge"));
-		mCardGrid.setCards( set );
-		
-		mTriosGrid.setEmptyCardList(9);
-		mTriosGrid.setResourceImageForAll(R.drawable.square_question);
-		mTriosGrid.showReverse();
+		showPauseOverlay();
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString("challenge", gPracticeString);
-		StringBuilder foundTrio = new StringBuilder();
-		for (CardList trios : gFoundTrios) {
-			foundTrio.append(trios);
+		List<String> foundTrio = new ArrayList<String>();
+		for (CardList trio : gFoundTrios) {
+			foundTrio.add(trio.toString());
 		}
-		outState.putString("found", foundTrio.toString());
+		outState.putString("challenge", mGame.toString());
+		outState.putString("found", TextUtils.join(TRIO_LIST_DELIMITER, foundTrio));
 		outState.putLong("time", getElapsedTime());
 		super.onSaveInstanceState(outState);
 	}
 	
 	private void startPractice() {
 		
-		CardList set = mTrio.getSetWithTrios( NUMBER_OF_TRIOS );
-		gPracticeString = set.toString();
+		mGame = mTrio.getSetWithTrios( NUMBER_OF_TRIOS );
 		mGameStatus.setText("" + gTriosRemaines);
 		
-		mCardGrid.setCards( set );
+		mCardGrid.setCards(mGame);
 		
 		mTriosGrid.setEmptyCardList(9);
 		mTriosGrid.setResourceImageForAll(R.drawable.square_question);
@@ -208,12 +234,6 @@ public class PracticeGameActivity extends TrioGameActivity {
 				
 			}
 		});
-	}
-	
-	@Override
-	protected void onPause() {
-		showPauseOverlay();
-		super.onPause();
 	}
 	
 	protected void onNotTrioFound(CardList selectedCards, ArrayList<CardView> selectedViews) {
