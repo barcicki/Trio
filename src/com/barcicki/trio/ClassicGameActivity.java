@@ -36,70 +36,106 @@ public class ClassicGameActivity extends TrioGameActivity {
 	int gHintsRemained = NUMBER_OF_HINTS;
 	boolean gRestoredGame = false;
 
+	boolean mIsAlreadyRestored = false; 
 	CardGrid mCardGrid;
+	
+	final static int[] HELP_FRAGMENTS = {
+		R.layout.help_classic_fragment1,
+		R.layout.help_classic_fragment2,
+		R.layout.help_classic_fragment3
+	};
 
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) {
+//		setContentView(R.layout.classic);
+//		super.onCreate(savedInstanceState);
+//
+//
+//		
+//		resetGame();
+//		
+//		if (!restoreSavedGame()) {
+//			mTrio.newGame();
+//		}
+//
+//		startGame();
+//
+//		
+//
+//	}
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.classic);
-		super.onCreate(savedInstanceState);
-
-		setHelpFragments(
-				R.layout.help_classic_fragment1,
-				R.layout.help_classic_fragment2,
-				R.layout.help_classic_fragment3);
-
+	public int getContentView() {
+		return R.layout.classic;
+	}
+	
+	@Override
+	public int[] getHelpFragments() {
+		return HELP_FRAGMENTS;
+	}
+	
+	@Override
+	public void initGame() {
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		mCardGrid = (CardGrid) findViewById(R.id.cardsContainer);
 		mHintButton = (Button) findViewById(R.id.gameHintButton);
 		mDeckStatus = (TextView) findViewById(R.id.gameDeckStatus);
 		
-		if (restoreSavedGame()) {
-			gRestoredGame = true;
-		} else {
-			mTrio.newGame();
-		}
-
 		attachCardListeners();
-		startGame();
-
-		hideOverlays();
+	}
+	
+	@Override
+	public void onGameInit() {
+		super.onGameInit();
+		mIsAlreadyRestored = restoreSavedGame();
+	}
+	
+	@Override
+	public void restoreGame(Bundle game) {
+		if (mIsAlreadyRestored) {
+			return;
+		}
+		
+		if (!restoreSavedGame()) {
+			mTrio.newGame();
+			
+			gTriosFound = 0;
+			gHintsRemained = NUMBER_OF_HINTS;
+			gSelectedCards.clear();
+			gSelectedViews.clear();
+		}
+	}
+	
+	@Override
+	public Bundle storeGame(Bundle stateToModify) {
+		saveGame();
+		return stateToModify;
+	}
+	
+	@Override
+	public void onGameReset() {
+		super.onGameReset();
+		
+		mCardGrid.setCards(mTrio.getTable());
+	}
+	
+	@Override
+	public void onGameStarted() {
+		super.onGameStarted();
 		
 		if (!TrioSettings.hasSeenClassicHelp()) {
-			showHelpOverlay();
+			pauseGameForHelp();
 			TrioSettings.setSeenClassicHelp(true);
+		} else {
+			mCardGrid.hideReverse();
 		}
-
 	}
 	
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showPauseOverlay();
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	private void startGame() {
-		mCardGrid.setCards(mTrio.getTable());
-		mCardGrid.hideReverse();
-		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
-		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
-		startTimer();
-	}
-
-	private void resumeGame() {
-		mCardGrid.hideReverse();
-		startTimer();
-	}
-
-	private void pauseGame() {
-		mCardGrid.showReverse();
-		pauseTimer();
-	}
-	
-	@Override
-	public void onGameFinished() {
-		showEndingPause();
+	public void onGameEnded(boolean won) {
+		super.onGameEnded(won);
 		
-		if (isSignedIn()) {
+		if (won && isSignedIn()) {
 			getGamesClient().unlockAchievement(getString(R.string.achievement_classic_amateur));
 			getGamesClient().incrementAchievement(getString(R.string.achievement_classic_pro), 1);
 			getGamesClient().incrementAchievement(getString(R.string.achievement_classic_guru), 1);
@@ -107,38 +143,34 @@ public class ClassicGameActivity extends TrioGameActivity {
 			getGamesClient().submitScore(getString(R.string.leaderboard_classic_trio), getElapsedTime());
 		}
 	}
+	@Override
+	public void onGameUpdate() {
+		super.onGameUpdate();
+		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
+		mDeckStatus.setText("" + mTrio.getGame().size());
+	}
 	
 	@Override
-	public void onGameReset() {
-		gRestoredGame = false;
-		setElapsedTime(0L);
-		gTriosFound = 0;
-		gHintsRemained = NUMBER_OF_HINTS;
-		gSelectedCards = new CardList();
-		gSelectedViews = new ArrayList<CardView>();
-		mHintButton.setText(getString(R.string.classic_hint, gHintsRemained));
-		mDeckStatus.setText(((Integer) mTrio.getGame().size()).toString());
+	public void onGamePaused() {
+		mCardGrid.showReverse();
 	}
-
-	@Override
-	protected void onShowPauseOverlay() {
-		pauseGame();
-
-		TextView timeView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameTime);
-		TextView hintsView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameHintCount);
-		TextView statusView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameStatus);
-		TextView trioView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameTrioCount);
-
+	
+	private void updateOverlayLabels() {
+		TextView timeView = (TextView) getPauseOverlay().findViewById(R.id.gameTime);
+		TextView hintsView = (TextView) getPauseOverlay().findViewById(R.id.gameHintCount);
+		TextView trioView = (TextView) getPauseOverlay().findViewById(R.id.gameTrioCount);
+		
 		timeView.setText(getElapsedTimeAsString(true));
-		hintsView
-				.setText(getString(R.string.classic_hint_count, gHintsRemained));
+		hintsView.setText(getString(R.string.classic_hint_count, gHintsRemained));
 		trioView.setText(getString(R.string.classic_trio_count, gTriosFound));
-		statusView.setText(getString(R.string.classic_status, mTrio.getGame()
-				.size()));
+	}
+	
+	@Override
+	public void onPauseOverlayShow() {
+		updateOverlayLabels();
+		
+		TextView statusView = (TextView) getPauseOverlay().findViewById(R.id.gameStatus);
+		statusView.setText(getString(R.string.classic_status, mTrio.getGame().size()));
 
 		Button buttonContinue = (Button) findViewById(R.id.gameContinue);
 		buttonContinue.setText(getString(R.string.pause_continue));
@@ -150,20 +182,22 @@ public class ClassicGameActivity extends TrioGameActivity {
 		Button buttonQuit = (Button) findViewById(R.id.gameQuit);
 		buttonQuit.setText(getString(R.string.pause_save_quit));
 	}
-
+	
 	@Override
-	protected void onHidePauseOverlay() {
-		resumeGame();
-	}
+	public void onEndingOverlayShow() {
+		updateOverlayLabels();
+		
+		TextView statusView = (TextView) getPauseOverlay().findViewById(R.id.gameStatus);
+		statusView.setText(getString(R.string.classic_end));
 
-	@Override
-	protected void onShowHelpOverlay() {
-		pauseGame();
-	}
+		Button buttonContinue = (Button) getPauseOverlay().findViewById(R.id.gameContinue);
+		buttonContinue.setVisibility(View.GONE);
 
-	@Override
-	protected void onHideHelpOverlay() {
-		resumeGame();
+		Button buttonNewGame = (Button) getPauseOverlay().findViewById(R.id.gameNew);
+		buttonNewGame.setVisibility(View.VISIBLE);
+
+		Button buttonQuit = (Button) getPauseOverlay().findViewById(R.id.gameQuit);
+		buttonQuit.setText(getString(R.string.pause_quit));
 	}
 
 	private void attachCardListeners() {
@@ -252,7 +286,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 		saveFoundTrio();
 		
 		if (!mTrio.getTable().hasTrio() && !mTrio.getGame().hasNext()) {
-			finishGame();
+			endGame(true);
 		} else {
 
 		}
@@ -297,7 +331,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 	}
 
 	private boolean restoreSavedGame() {
-		
 		if (mPrefs.getBoolean("saved_game", false)) {
 
 			String game = mPrefs.getString("game", "");
@@ -306,8 +339,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 			gHintsRemained = mPrefs.getInt("hints", NUMBER_OF_HINTS);
 			gTriosFound = mPrefs.getInt("trios_found", 0);
 			setElapsedTime(mPrefs.getLong("time", 0L));
-
-			onTimerTick();
 
 			if (!game.equals("") && !table.equals("")) {
 
@@ -324,7 +355,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 			}
 
 		}
-
 		return false;
 	}
 
@@ -418,41 +448,11 @@ public class ClassicGameActivity extends TrioGameActivity {
 		addTime(HINT_COST);
 	}
 
-	public void showEndingPause() {
-		showPauseOverlay();
-
-		TextView statusView = (TextView) getPauseOverlay().findViewById(
-				R.id.gameStatus);
-		statusView.setText(getString(R.string.classic_end));
-
-		Button buttonContinue = (Button) getPauseOverlay().findViewById(
-				R.id.gameContinue);
-		buttonContinue.setVisibility(View.GONE);
-
-		Button buttonNewGame = (Button) getPauseOverlay().findViewById(
-				R.id.gameNew);
-		buttonNewGame.setVisibility(View.VISIBLE);
-
-		Button buttonQuit = (Button) getPauseOverlay().findViewById(
-				R.id.gameQuit);
-		buttonQuit.setText(getString(R.string.pause_quit));
-	}
-
-	public void onPressedContinue(View v) {
-		makeClickSound();
-		hidePauseOverlay();
-	}
-
 	public void onPressedNewGame(View v) {
 		makeClickSound();
-		
 		mTrio.newGame();
-		
-		mCardGrid.setCards(mTrio.getTable());
-		
 		resetGame();
-		
-		hidePauseOverlay();
+		startGame();
 	}
 
 	public void onPressedQuitGame(View v) {

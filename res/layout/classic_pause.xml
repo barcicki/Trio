@@ -27,7 +27,7 @@
                 style="@style/nice_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onPressedContinue"
+                android:onClick="onContinuePressed"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="@string/pause_continue" />

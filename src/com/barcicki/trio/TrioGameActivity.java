@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 abstract public class TrioGameActivity extends TrioActivity implements GameTimeListener {
 	
+	private static final String	IS_GAME_FINISHED_KEY	= "game_has_finished";
 	private View mPauseOverlay;
 	private View mHelpOverlay;
 	private ViewPager mHelpViewPager;
@@ -40,11 +40,13 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	private ArrayList<Long> mTrios = new ArrayList<Long>();
 	
+	private boolean mIsGamePaused = true;
 	private boolean mIsGameFinished = false;
 				
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
+	protected void onCreate(Bundle savedInstance) {
+		super.onCreate(savedInstance);
+		setContentView(getContentView());
 		
 		mPauseOverlay = findViewById(R.id.gamePause);
 		mHelpOverlay = findViewById(R.id.gameHelp);
@@ -64,9 +66,26 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		}
 		
 		TrioSettings.setHavePlayed(true);
+		
+		setHelpFragments(getHelpFragments());
+		
+		initGame();
+		
+		hideOverlays();
+		
+		resetGame();
+		
+		onGameInit();
+		
+		if (savedInstance == null) {
+			startGame();		
+		}
 	}
 	
-	public void setHelpFragments(Integer... resId) {
+	abstract public int getContentView();
+	abstract public int[] getHelpFragments();
+	
+	private void setHelpFragments(int[] resId) {
 		if (mHelpOverlay != null) {
 			 for (int id : resId) {
 				 mHelpAdapter.addFragment(id);
@@ -77,16 +96,14 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
-		showPauseOverlay();
+		pauseGame();
 		return super.onMenuOpened(featureId, menu);
 	}
 	
 	@Override
 	public void onBackPressed() {
-		
 		if (isHelpOverlayVisible()) {
-			hideHelpOverlay();
-			hidePauseOverlay();
+			startGame();
 			return;
 		}
 		
@@ -94,24 +111,43 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 			startHomeActivity();
 			finish();
 		} else {
-			showPauseOverlay();
-			submitFoundTrios();
+			pauseGame();
 		}
-		
+	}
+	
+	private void pauseGameIfNeeded() {
+		if (!isHelpOverlayVisible() && !isPauseOverlayVisible()) {
+			pauseGame();
+		}
 	}
 	
 	@Override
 	protected void onPause() {
-		showPauseOverlay();
+		pauseGameIfNeeded();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onStop() {
-		if (!isPauseOverlayVisible()) {
-			showPauseOverlay();
-		}
+		pauseGameIfNeeded();
 		super.onStop();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		pauseGameIfNeeded();
+		outState.putBoolean(IS_GAME_FINISHED_KEY, mIsGameFinished);
+		super.onSaveInstanceState(storeGame(outState));
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			mIsGameFinished = savedInstanceState.getBoolean(IS_GAME_FINISHED_KEY, false);
+		}
+		restoreGame(savedInstanceState);
+		pauseGameIfNeeded();
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 	
 	/* Overlays */
@@ -137,67 +173,147 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		hidePauseOverlay();
 	}
 
-	public void showPauseOverlay() {
+	private void showPauseOverlay() {
 		if (!isPauseOverlayVisible()) {
 			mPauseOverlay.setVisibility(View.VISIBLE);
-			onShowPauseOverlay();
+			
+			if (isGameFinished()) {
+				onEndingOverlayShow();
+			} else {
+				onPauseOverlayShow();
+			}
 		}
 	}
 	
-	public void hidePauseOverlay() {
+	private void hidePauseOverlay() {
 		if (isPauseOverlayVisible()) {
 			mPauseOverlay.setVisibility(View.INVISIBLE);
-			onHidePauseOverlay();
+			onPauseOverlayHide();
 		}
 	}
 	
-	public void showHelpOverlay() {
+	private void showHelpOverlay() {
 		if (!isHelpOverlayVisible()) {
 			mHelpOverlay.setVisibility(View.VISIBLE);
-			onShowHelpOverlay();
+			onHelpOverlayShow();
 		}
 	}
 	
-	public void hideHelpOverlay() {
+	private void hideHelpOverlay() {
 		if (isHelpOverlayVisible()) {
 			mHelpOverlay.setVisibility(View.INVISIBLE);
-			onHideHelpOverlay();
+			onHelpOverlayHide();
 		}
 	}
 	
-	protected void onShowPauseOverlay() {
+	/* Game controls */
+	
+	/**
+	 * Initialization of game - creating view references etc.
+	 */
+	abstract public void initGame();
+	
+	/**
+	 * Create game from saved state if possible, otherwise creates new game
+	 * @param game
+	 */
+	abstract public void restoreGame(Bundle game);
+	
+	/**
+	 * Saves game into a bundle
+	 * @return
+	 */
+	abstract public Bundle storeGame(Bundle stateToModify);
+	
+	final public void resetGame() {
+		resetTimer();
+		mIsGameFinished = false;
+		mIsGamePaused = true;
+		
+		restoreGame(null);
+		
+		onGameReset();
+	}
+	
+	final public void startGame() {
+		startTimer();
+		mIsGamePaused = false;
+		
+		onGameStarted();
+
+		updateGame();
+		hideOverlays();		
+	}
+	
+	final public void pauseGame() {
 		pauseTimer();
+		mIsGamePaused = true;
+		
+		showPauseOverlay();
+		
+		onGamePaused();
+		
+		submitFoundTrios();
 	}
 	
-	protected void onShowHelpOverlay() {
+	final public void pauseGameForHelp() {
 		pauseTimer();
+		mIsGamePaused = true;
+		
+		showHelpOverlay();
+		
+		onGamePaused();
 	}
 	
-	protected void onHidePauseOverlay() {
-		continueTime();
+	final public void endGame(boolean won) {
+		pauseTimer();
+		mIsGameFinished = true;
+		mIsGamePaused = true;
+		
+		onGameEnded(won);
+		
+		showPauseOverlay();
+		
+		submitFoundTrios();
 	}
 	
-	protected void onHideHelpOverlay() {
-		continueTime();
+	final public void updateGame() {
+		if (mTimer != null) {
+			mTimer.setText(getElapsedTimeAsString(false));
+		}
+		
+		if (mCountdown != null) {
+			mCountdown.setText(getRemainingTimeAsString(false));
+		}
+		
+		onGameUpdate();
+	}
+	
+	final public boolean isGameFinished() {
+		return mIsGameFinished;
+	}
+	
+	final public boolean isGamePaused() {
+		return mIsGamePaused;
 	}
 	
 	/* Overlay triggers */
 	
 	public void onPausePressed(View v) {
 		makeClickSound();
-		showPauseOverlay();
+		pauseGame();
 	}
 	
 	public void onHelpPressed(View v) {
 		makeClickSound();
-		showHelpOverlay();
+		pauseGameForHelp();
 	}
 	
 	/* Default help overlay actions */
 	
 	public void onContinuePressed(View v) {
 		makeClickSound();
-		hideOverlays();
+		startGame();
 	}
 	
 	public void onTutorialPressed(View v) {
@@ -214,28 +330,23 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	}
 	
 	public void onTimerTick() {
-		if (mTimer != null) {
-			mTimer.setText(getElapsedTimeAsString(false));
-		}
-		
-		if (mCountdown != null) {
-			mCountdown.setText(getRemainingTimeAsString(false));
-		}
+		updateGame();
 	}
 	
-	public void startTimer() {
+	private void resetTimer() {
+		mTime.setElapsedTime(0L);
+		mTime.pause();
+	}
+	
+	private void startTimer() {
 		mTime.start(mTime.getElapsedTime());
-	}
-	
-	public void continueTime() {
-		mTime.unpause();
 	}
 	
 	public void setCountdown(Long time) {
 		mTime.setCountdown(time);
 	}
 	
-	public void pauseTimer() {
+	private void pauseTimer() {
 		mTime.pause();
 	}
 	
@@ -243,36 +354,6 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		mTime.addTime(time);
 	}
 	
-	/* Game Triggers */
-	
-	final public void resetGame() {
-		mIsGameFinished = false;
-		onGameReset();
-	}
-	
-	final public void finishGame() {
-		mIsGameFinished = true;
-		onGameFinished();
-		submitFoundTrios();
-	}
-	
-	final public void resign() {
-		mIsGameFinished = true;
-		onGameResign();
-		submitFoundTrios();
-	}
-	
-	final public boolean isGameFinished() {
-		return mIsGameFinished;
-	}
-	
-	public void onGameResign() {
-		
-	}
-	
-	abstract public void onGameFinished();
-	abstract public void onGameReset();
-
 	/* Utils */
 	
 	public void inform(String message) {
@@ -363,5 +444,19 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		
 		mTrios.clear();
 	}
+	
+	/* Events */
+	public void onPauseOverlayShow() {}
+	public void onPauseOverlayHide() {}
+	public void onHelpOverlayShow() {}
+	public void onHelpOverlayHide() {}
+	public void onEndingOverlayShow() {}
+
+	public void onGameReset() {}
+	public void onGameStarted() {}
+	public void onGameEnded(boolean won) {}
+	public void onGameUpdate() {}
+	public void onGamePaused() {}
+	public void onGameInit() {}
 	
 }
