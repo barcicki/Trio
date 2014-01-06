@@ -339,7 +339,6 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	public void onTutorialPressed(View v) {
 		makeClickSound();
-		setMusicContinue(true);
 		Intent intent = new Intent(this, TutorialActivity.class);
 		startActivity(intent);
 	}

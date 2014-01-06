@@ -184,7 +184,6 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		makeClickSound();
 
 		if (type.equals(MenuDescriptionType.CLASSIC)) {
-			setMusicContinue(true);
 			Intent intent = new Intent(HomeActivity.this,ClassicGameActivity.class);
 			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
 			startActivity(intent);
@@ -224,7 +223,6 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		}
 
 		if (intent != null) {
-			setMusicContinue(true);
 			startActivity(intent);
 		}
 

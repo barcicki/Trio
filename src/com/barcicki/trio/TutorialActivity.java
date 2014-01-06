@@ -89,7 +89,6 @@ public class TutorialActivity extends TrioActivity {
 
 	public void onQuitPressed(View v) {
 		makeClickSound();
-		setMusicContinue(true);
 		finish();
 	}
 	

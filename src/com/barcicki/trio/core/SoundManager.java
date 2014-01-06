@@ -1,5 +1,8 @@
 package com.barcicki.trio.core;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,7 +12,7 @@ import android.util.SparseIntArray;
 import com.barcicki.trio.R;
 
 public class SoundManager {
-
+	
 	public static int SOUND_BACKGROUND = 1;
 	public static int SOUND_CLICK = 2;
 	public static int SOUND_FAIL = 3;
@@ -26,12 +29,15 @@ public class SoundManager {
 	private MediaPlayer mBackgroundPlayer;
 
 	private boolean mLoadedSounds = false;
-
+	
+	private ArrayList<Activity> mActivities = new ArrayList<Activity>();
+	
 	private SoundManager(Context context) {
 		mContext = context;
 		mSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
 		mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 		mBackgroundPlayer = null;
+		mActivities.clear();
 	}
 
 	public static SoundManager getInstance(Context context) {
@@ -53,6 +59,30 @@ public class SoundManager {
 	public void addSound(int index, int soundId) {
 		mSoundPoolMap.put(index, mSoundPool.load(mContext, soundId, 1));
 	}
+	
+	public void registerActivityForBackgroundPlayback(Activity activity) {
+		if (!mActivities.contains(activity)) {
+			mActivities.add(activity);
+		}
+		
+		updateBackgroundPlaybackStatus();
+	}
+	
+	public void unregisterActivtyForBackgroundPlayback(Activity activity) {
+		if (mActivities.contains(activity)) {
+			mActivities.remove(activity);
+		}
+		
+		updateBackgroundPlaybackStatus();
+	}
+	
+	public void updateBackgroundPlaybackStatus() {
+		if (!TrioSettings.isMusicEnabled() || mActivities.size() == 0) {
+			pauseBackground();
+		} else {
+			playBackground();
+		}
+	}
 
 	public void playBackground() {
 		if (mBackgroundPlayer == null) {
@@ -68,12 +98,6 @@ public class SoundManager {
 	public void pauseBackground() {
 		if (mBackgroundPlayer != null && mBackgroundPlayer.isPlaying()) {
 			mBackgroundPlayer.pause();
-		}
-	}
-
-	public void stopBackground() {
-		if (mBackgroundPlayer != null) {
-			mBackgroundPlayer.stop();
 		}
 	}
 

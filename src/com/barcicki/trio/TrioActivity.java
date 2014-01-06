@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.barcicki.trio.core.CardViewResources;
 import com.barcicki.trio.core.SoundManager;
@@ -18,7 +17,6 @@ import com.google.example.games.basegameutils.BaseGameActivity;
 public class TrioActivity extends BaseGameActivity {	
 	
 	private SoundManager mSoundManager;
-	private boolean mSoundContinue = false;
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -32,19 +30,18 @@ public class TrioActivity extends BaseGameActivity {
 	}
 	
 	@Override
-	protected void onResume() {
-		playBackgroundMusic();
-		mSoundContinue = false;
-		updateMusicButtonStatus();
-		super.onResume();
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if (hasFocus) {
+			getSoundManager().registerActivityForBackgroundPlayback(this);
+			updateMusicButtonStatus();
+		}
+		super.onWindowFocusChanged(hasFocus);
 	}
 	
 	@Override
-	protected void onPause() {
-		if (getSoundManager().isBackgroundPlaying() && !mSoundContinue) {
-			getSoundManager().pauseBackground();
-		}
-		super.onPause();
+	protected void onStop() {
+		getSoundManager().unregisterActivtyForBackgroundPlayback(this);
+		super.onStop();
 	}
 	
 	@Override
@@ -53,13 +50,7 @@ public class TrioActivity extends BaseGameActivity {
 		inflater.inflate(R.menu.menu, menu);
 
 		MenuItem item = menu.findItem(R.id.mute);
-		if (getSoundManager().isBackgroundPlaying()) {
-			item.setTitle(R.string.settings_mute);
-			item.setIcon(android.R.drawable.ic_media_pause);
-		} else {
-			item.setTitle(R.string.settings_unmute);
-			item.setIcon(android.R.drawable.ic_media_play);
-		}
+		updateMenuMusicButtonStatus(item);
 
 		return true;
 	}
@@ -77,35 +68,17 @@ public class TrioActivity extends BaseGameActivity {
 			openSettingsActvity();
 			return true;
 		case R.id.mute:
-			if (!getSoundManager().isBackgroundPlaying()) {
-				TrioSettings.setMusicEnabled(true);
-				playBackgroundMusic();
-				item.setTitle(R.string.settings_mute);
-				item.setIcon(android.R.drawable.ic_media_pause);
-			} else {
-				TrioSettings.setMusicEnabled(false);
-				getSoundManager().pauseBackground();
-				item.setTitle(R.string.settings_unmute);
-				item.setIcon(android.R.drawable.ic_media_play);
-			}
+			TrioSettings.setMusicEnabled(!TrioSettings.isMusicEnabled());
+			getSoundManager().updateBackgroundPlaybackStatus();
+			updateMusicButtonStatus();
+			updateMenuMusicButtonStatus(item);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 	
-	public void playBackgroundMusic() {
-		if (TrioSettings.isMusicEnabled()) {
-			getSoundManager().playBackground();
-		}
-	}
-	
-	public void setMusicContinue(boolean value) {
-		mSoundContinue = value;
-	}
-	
 	public void startHomeActivity() {
-		setMusicContinue(true);
 		Intent intent = new Intent(this, HomeActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(intent);
@@ -136,6 +109,16 @@ public class TrioActivity extends BaseGameActivity {
 		makeSound(SoundManager.SOUND_SUCCESS);
 	}
 	
+	private void updateMenuMusicButtonStatus(MenuItem item) {
+		if (getSoundManager().isBackgroundPlaying()) {
+			item.setTitle(R.string.settings_mute);
+			item.setIcon(android.R.drawable.ic_media_pause);
+		} else {
+			item.setTitle(R.string.settings_unmute);
+			item.setIcon(android.R.drawable.ic_media_play);
+		}
+	}
+	
 	private void updateMusicButtonStatus() {
 		Button musicButton = (Button) findViewById(R.id.buttonMusicSwitch);
 		if (musicButton != null) {
@@ -148,15 +131,8 @@ public class TrioActivity extends BaseGameActivity {
 	}
 	
 	public void onMusicButtonPressed(View v) {
-		boolean musicStatus = TrioSettings.isMusicEnabled();
-		
-		if (musicStatus) {
-			if (getSoundManager().isBackgroundPlaying()) getSoundManager().pauseBackground();
-		} else if (!getSoundManager().isBackgroundPlaying()){
-			getSoundManager().playBackground();
-		}
-		
-		TrioSettings.setMusicEnabled(!musicStatus);
+		TrioSettings.setMusicEnabled(!TrioSettings.isMusicEnabled());
+		getSoundManager().updateBackgroundPlaybackStatus();
 		updateMusicButtonStatus();
 	}
 	
@@ -173,12 +149,6 @@ public class TrioActivity extends BaseGameActivity {
 		overridePendingTransition(R.anim.pull_bottom, R.anim.push_top);
 	}
 	
-	@Override
-	protected void onDestroy() {
-//		mSoundManager.release();
-		super.onDestroy();
-	}
-
 	public void onSignInFailed() {
 	}
 
