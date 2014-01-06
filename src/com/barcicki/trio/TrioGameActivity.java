@@ -42,6 +42,8 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	
 	private boolean mIsGamePaused = true;
 	private boolean mIsGameFinished = false;
+	
+	public final static String START_GAME_IMMEDIATELY = "START_GAME_IMMEDIATELY";
 				
 	@Override
 	protected void onCreate(Bundle savedInstance) {
@@ -75,15 +77,29 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		
 		resetGame();
 		
-		onGameInit();
-		
-		if (savedInstance == null) {
-			startGame();		
+		if (!hasSeenHelp()) {
+			pauseGameForHelp();
+			setSeenHelp();
+		} else if (shouldStartGame()) {
+			startGame();
+		} else {
+			pauseGame();
 		}
 	}
 	
 	abstract public int getContentView();
 	abstract public int[] getHelpFragments();
+	
+	public boolean shouldStartGame() {
+		Bundle params = getIntent().getExtras();
+		if (params != null) {
+			return params.getBoolean(START_GAME_IMMEDIATELY, false);
+		}
+		return false;
+	}
+	
+	abstract protected boolean hasSeenHelp();
+	abstract protected void setSeenHelp();
 	
 	private void setHelpFragments(int[] resId) {
 		if (mHelpOverlay != null) {
@@ -115,38 +131,34 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		}
 	}
 	
-	private void pauseGameIfNeeded() {
-		if (!isHelpOverlayVisible() && !isPauseOverlayVisible()) {
-			pauseGame();
-		}
-	}
-	
 	@Override
 	protected void onPause() {
-		pauseGameIfNeeded();
+		pauseGame();
 		super.onPause();
 	}
 	
 	@Override
 	protected void onStop() {
-		pauseGameIfNeeded();
+		pauseGame();
 		super.onStop();
 	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		pauseGameIfNeeded();
+		pauseGame();
 		outState.putBoolean(IS_GAME_FINISHED_KEY, mIsGameFinished);
 		super.onSaveInstanceState(storeGame(outState));
 	}
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		resetGame(savedInstanceState);
+		
 		if (savedInstanceState != null) {
 			mIsGameFinished = savedInstanceState.getBoolean(IS_GAME_FINISHED_KEY, false);
 		}
-		restoreGame(savedInstanceState);
-		pauseGameIfNeeded();
+		
+		pauseGame();
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 	
@@ -176,34 +188,37 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	private void showPauseOverlay() {
 		if (!isPauseOverlayVisible()) {
 			mPauseOverlay.setVisibility(View.VISIBLE);
-			
-			if (isGameFinished()) {
-				onEndingOverlayShow();
-			} else {
-				onPauseOverlayShow();
-			}
+		}
+		
+		if (isGameFinished()) {
+			onEndingOverlayShow();
+		} else {
+			onPauseOverlayShow();
 		}
 	}
 	
 	private void hidePauseOverlay() {
 		if (isPauseOverlayVisible()) {
 			mPauseOverlay.setVisibility(View.INVISIBLE);
-			onPauseOverlayHide();
 		}
+		
+		onPauseOverlayHide();
 	}
 	
 	private void showHelpOverlay() {
 		if (!isHelpOverlayVisible()) {
 			mHelpOverlay.setVisibility(View.VISIBLE);
-			onHelpOverlayShow();
 		}
+
+		onHelpOverlayShow();
 	}
 	
 	private void hideHelpOverlay() {
 		if (isHelpOverlayVisible()) {
 			mHelpOverlay.setVisibility(View.INVISIBLE);
-			onHelpOverlayHide();
 		}
+		
+		onHelpOverlayHide();
 	}
 	
 	/* Game controls */
@@ -225,14 +240,20 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	 */
 	abstract public Bundle storeGame(Bundle stateToModify);
 	
-	final public void resetGame() {
+	final public void resetGame(Bundle savedInstanceState) {
 		resetTimer();
 		mIsGameFinished = false;
 		mIsGamePaused = true;
 		
-		restoreGame(null);
+		restoreGame(savedInstanceState);
+		
+		updateGame();
 		
 		onGameReset();
+	}
+	
+	final public void resetGame() {
+		resetGame(null);
 	}
 	
 	final public void startGame() {
@@ -415,7 +436,7 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	public void submitFoundTrios() {
 		int triosFound = mTrios.size();
 		
-		if (isSignedIn() && triosFound > 0) {
+		if (triosFound > 0 && isSignedIn()) {
 			
 			GamesClient client = getGamesClient();
 			
@@ -457,6 +478,5 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	public void onGameEnded(boolean won) {}
 	public void onGameUpdate() {}
 	public void onGamePaused() {}
-	public void onGameInit() {}
 	
 }

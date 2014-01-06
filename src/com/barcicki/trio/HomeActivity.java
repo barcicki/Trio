@@ -185,8 +185,9 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 
 		if (type.equals(MenuDescriptionType.CLASSIC)) {
 			setMusicContinue(true);
-			startActivity(new Intent(HomeActivity.this,
-					ClassicGameActivity.class));
+			Intent intent = new Intent(HomeActivity.this,ClassicGameActivity.class);
+			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
+			startActivity(intent);
 		} else if (type.equals(MenuDescriptionType.PLAY_GAMES)) {
 			runPlayGamesIntent(getGamesClient().getAllLeaderboardsIntent());
 		}
@@ -200,15 +201,18 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		case CLASSIC:
 			TrioSettings.setSavedGamePresence(false);
 			intent = new Intent(HomeActivity.this, ClassicGameActivity.class);
+			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
 			break;
 		case HELP:
 			intent = new Intent(HomeActivity.this, TutorialActivity.class);
 			break;
 		case SPEED:
 			intent = new Intent(HomeActivity.this, SpeedGameActivity.class);
+			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
 			break;
 		case TRIPLE:
 			intent = new Intent(HomeActivity.this, PracticeGameActivity.class);
+			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
 			break;
 		case PLAY_GAMES:
 			if (isSignedIn()) {

@@ -60,15 +60,19 @@ public class SpeedGameActivity extends TrioGameActivity {
 	}
 	
 	@Override
+	protected boolean hasSeenHelp() {
+		return TrioSettings.hasSeenSpeedHelp();
+	}
+	
+	@Override
+	protected void setSeenHelp() {
+		TrioSettings.setSeenSpeedHelp(true);
+	}
+	
+	@Override
 	public void onGameStarted() {
 		super.onGameStarted();
-		
-		if (!TrioSettings.hasSeenSpeedHelp()) {
-			pauseGameForHelp();
-			TrioSettings.setSeenSpeedHelp(true);
-		} else {
-			mCardGrid.hideReverse();
-		}
+		mCardGrid.hideReverse();
 	}
 	
 	@Override

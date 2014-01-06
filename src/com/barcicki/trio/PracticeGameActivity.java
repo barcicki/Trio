@@ -68,15 +68,19 @@ public class PracticeGameActivity extends TrioGameActivity {
 	}
 	
 	@Override
+	protected boolean hasSeenHelp() {
+		return TrioSettings.hasSeenTripleHelp();
+	}
+	
+	@Override
+	protected void setSeenHelp() {
+		TrioSettings.setSeenTripleHelp(true);
+	}
+	
+	@Override
 	public void onGameStarted() {
 		super.onGameStarted();
-		
-		if (!TrioSettings.hasSeenTripleHelp()) {
-			pauseGameForHelp();
-			TrioSettings.setSeenTripleHelp(true);
-		} else {
-			mCardGrid.hideReverse();
-		}
+		mCardGrid.hideReverse();
 	}
 	
 	@Override

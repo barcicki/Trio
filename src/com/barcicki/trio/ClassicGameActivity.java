@@ -36,7 +36,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 	int gHintsRemained = NUMBER_OF_HINTS;
 	boolean gRestoredGame = false;
 
-	boolean mIsAlreadyRestored = false; 
 	CardGrid mCardGrid;
 	
 	final static int[] HELP_FRAGMENTS = {
@@ -45,25 +44,6 @@ public class ClassicGameActivity extends TrioGameActivity {
 		R.layout.help_classic_fragment3
 	};
 
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		setContentView(R.layout.classic);
-//		super.onCreate(savedInstanceState);
-//
-//
-//		
-//		resetGame();
-//		
-//		if (!restoreSavedGame()) {
-//			mTrio.newGame();
-//		}
-//
-//		startGame();
-//
-//		
-//
-//	}
-	
 	@Override
 	public int getContentView() {
 		return R.layout.classic;
@@ -85,17 +65,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 	}
 	
 	@Override
-	public void onGameInit() {
-		super.onGameInit();
-		mIsAlreadyRestored = restoreSavedGame();
-	}
-	
-	@Override
 	public void restoreGame(Bundle game) {
-		if (mIsAlreadyRestored) {
-			return;
-		}
-		
 		if (!restoreSavedGame()) {
 			mTrio.newGame();
 			
@@ -115,20 +85,23 @@ public class ClassicGameActivity extends TrioGameActivity {
 	@Override
 	public void onGameReset() {
 		super.onGameReset();
-		
 		mCardGrid.setCards(mTrio.getTable());
+	}
+	
+	@Override
+	protected boolean hasSeenHelp() {
+		return TrioSettings.hasSeenClassicHelp();
+	}
+	
+	@Override
+	protected void setSeenHelp() {
+		TrioSettings.setSeenClassicHelp(true);
 	}
 	
 	@Override
 	public void onGameStarted() {
 		super.onGameStarted();
-		
-		if (!TrioSettings.hasSeenClassicHelp()) {
-			pauseGameForHelp();
-			TrioSettings.setSeenClassicHelp(true);
-		} else {
-			mCardGrid.hideReverse();
-		}
+		mCardGrid.hideReverse();
 	}
 	
 	@Override
