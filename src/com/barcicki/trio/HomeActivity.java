@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
 import com.barcicki.trio.views.MenuDescription;
@@ -86,8 +87,10 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 		((MenuDescriptionPlaceholder) findViewById(R.id.menuSwitcher))
 				.setGestureListener(this);
 		
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		Log.d("DENSITY", metrics.density + " " + metrics.densityDpi);
+		if (Trio.LOCAL_LOGD) {
+			DisplayMetrics metrics = getResources().getDisplayMetrics();
+			Log.d("DENSITY", metrics.density + " " + metrics.densityDpi);
+		}
 		
 	}
 

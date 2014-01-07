@@ -57,7 +57,8 @@ public class GameTime {
 		mTimeHandler.postDelayed(mTimeTick, delay);
 		mIsTicking = true;
 
-		Log.d("TIMER", "Starting at " + delay + " elapsed: " + previouslyElapsedTime);
+		if (Trio.LOCAL_LOGD) 
+			Log.d("TIMER", "Starting at " + delay + " elapsed: " + previouslyElapsedTime);
 	}
 
 	public void start() {

@@ -1,5 +1,7 @@
 package com.barcicki.trio.views;
 
+import com.barcicki.trio.core.Trio;
+
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
@@ -51,7 +53,8 @@ public class MenuDescriptionPlaceholder extends RelativeLayout {
 				diff = Math.round(event.getY() - mStartScroll);
 				mIsScrolling = Math.abs(diff) > SWIPE_MIN_DISTANCE;
 				
-				Log.d("EVENT", "moving! " + diff);
+				if (Trio.LOCAL_LOGD)
+					Log.d("EVENT", "moving! " + diff);
 				
 				if (mListener != null) {
 					mListener.onMoving(diff, mIsScrolling);
@@ -64,10 +67,10 @@ public class MenuDescriptionPlaceholder extends RelativeLayout {
 				if (mIsScrolling) {
 					if (mListener != null) {
 						if (diff > 0) {
-							Log.d("EVENT", "up!");
+							if (Trio.LOCAL_LOGD) Log.d("EVENT", "up!");
 							mListener.onUp(diff);
 						} else {
-							Log.d("EVENT", "down!");
+							if (Trio.LOCAL_LOGD) Log.d("EVENT", "down!");
 							mListener.onDown(diff);
 						}
 					}
