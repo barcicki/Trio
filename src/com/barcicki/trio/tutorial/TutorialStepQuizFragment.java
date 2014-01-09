@@ -41,7 +41,7 @@ public class TutorialStepQuizFragment extends Fragment {
 	private CardView mCardB;
 	private CardView mCardToGuess;
 	
-	private ArrayList<CardView> mOptions = new ArrayList<CardView>();
+	final private ArrayList<CardView> mOptions = new ArrayList<CardView>();
 	
 	private TrioActivity mActivity;
 
@@ -67,6 +67,7 @@ public class TutorialStepQuizFragment extends Fragment {
 		mCardB = (CardView) getView().findViewById(R.id.card2);
 		mCardToGuess = (CardView) getView().findViewById(R.id.card3);
 		
+		mOptions.clear();
 		for (int id : new int[] {
 			R.id.card4,
 			R.id.card5,
@@ -79,7 +80,6 @@ public class TutorialStepQuizFragment extends Fragment {
 
 		attachListeners();
 		showSet();
-		
 	}
 
 	private void attachListeners() {
@@ -279,6 +279,7 @@ public class TutorialStepQuizFragment extends Fragment {
 	}
 
 	public void showSet() {
+		
 		int size = mSets.size();
 		if (mCurrentSet <= 0) {
 			mCurrentSet = 0;
@@ -298,14 +299,6 @@ public class TutorialStepQuizFragment extends Fragment {
 		summary.setText((mCurrentSet + 1) + "/" + size);
 
 		TrioSet quiz = mSets.get(mCurrentSet);
-
-		// if (mCardA.getCard() != null) {
-		// mCardA.animateSwitchCard(quiz.getCardA());
-		// mCardB.animateSwitchCard(quiz.getCardB());
-		// } else {
-		// mCardA.setCard(quiz.getCardA());
-		// mCardB.setCard(quiz.getCardB());
-		// }
 
 		mCardA.setCard(quiz.getCardA());
 		mCardB.setCard(quiz.getCardB());
@@ -327,32 +320,16 @@ public class TutorialStepQuizFragment extends Fragment {
 			cards.shuffle();
 		}
 		
-		for (int i = 0, count = mOptions.size(); i < count; i++) {
-			CardView view = mOptions.get(i);
-			view.setCard(cards.get(i));
-			view.setSelected(false);
+		if (mOptions.size() == cards.size()) {
+			int i = 0;
+			for (CardView view : mOptions) {
+				view.setCard(cards.get(i++));
+				view.setSelected(false);
+			}
+		} else {
+			Log.e("Trio Tutorial", "Some weird problem " + mOptions.size() + " " + cards.size());
 		}
-
-		// if (mOptionA.getCard() != null) {
-		// mOptionA.animateSwitchCard(cards.get(0));
-		// mOptionB.animateSwitchCard(cards.get(1));
-		// mOptionC.animateSwitchCard(cards.get(2));
-		// mOptionD.animateSwitchCard(cards.get(3));
-		// mOptionE.animateSwitchCard(cards.get(4));
-		// } else {
-//		mOptionA.setCard(cards.get(0));
-//		mOptionA.setSelected(false);
-//		mOptionB.setCard(cards.get(1));
-//		mOptionB.setSelected(false);
-//		mOptionC.setCard(cards.get(2));
-//		mOptionC.setSelected(false);
-//		mOptionD.setCard(cards.get(3));
-//		mOptionD.setSelected(false);
-//		mOptionE.setCard(cards.get(4));
-//		mOptionE.setSelected(false);
-
-		// }
-
+		
 		if (Trio.LOCAL_LOGV) {
 			Log.v("Trio Tutorial", "CurrentSet" + mCurrentSet);
 		}

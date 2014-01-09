@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.barcicki.trio"
-    android:versionCode="22"
+    android:versionCode="23"
     android:versionName="2.1" >
 
     <uses-sdk
@@ -49,6 +49,7 @@
         <activity
             android:name="com.barcicki.trio.HomeActivity"
             android:screenOrientation="landscape"
+            android:launchMode="singleTask"
             android:theme="@style/app_loader_theme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

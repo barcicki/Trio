@@ -49,7 +49,12 @@ public class CardView extends ImageView  {
 
 	public void setCard(Card card) {
 		this.card = card;
-		this.cardCache = null;
+		
+		if (cardCache != null) {
+			cardCache.recycle();
+		}
+		cardCache = null;
+		
 		invalidate();
 		refreshDrawableState();		
 	}
@@ -105,8 +110,8 @@ public class CardView extends ImageView  {
 					matrix.postScale(ratio, ratio);
 					
 					cacheCanvas.drawBitmap(Bitmap.createBitmap(square, 0, 0, square.getWidth(), square.getHeight(), matrix, false), x_offset, y_offset, CardViewResources.getBitmapPaint());
-					cacheCanvas = drawCard(cacheCanvas, card, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
-						
+					
+					drawCard(cacheCanvas, card, (int) (square.getWidth() * ratio), (int) (square.getHeight() * ratio), x_offset, y_offset);
 			}
 			
 			if (this.cardCache != null && this.overdraw && getWidth() > 0 && getHeight() > 0) {

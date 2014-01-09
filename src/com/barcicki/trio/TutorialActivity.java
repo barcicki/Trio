@@ -39,7 +39,7 @@ public class TutorialActivity extends TrioActivity {
 		mTutorialAdapter.addFragment(TutorialStepQuizFragment.class);
 		
 		mTutorialPager = (ViewPager) findViewById(R.id.tutorialHolder);
-		mTutorialPager.setOffscreenPageLimit(11);
+		mTutorialPager.setOffscreenPageLimit(3);
 		mTutorialPager.setAdapter(mTutorialAdapter);
 		
 		mTutorialIndicator = (CirclePageIndicator) findViewById(R.id.indicator);

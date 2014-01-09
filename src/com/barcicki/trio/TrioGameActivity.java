@@ -186,14 +186,16 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 	}
 
 	private void showPauseOverlay() {
-		if (!isPauseOverlayVisible()) {
-			mPauseOverlay.setVisibility(View.VISIBLE);
-		}
-		
-		if (isGameFinished()) {
-			onEndingOverlayShow();
-		} else {
-			onPauseOverlayShow();
+		if (!isHelpOverlayVisible()) {
+			if (!isPauseOverlayVisible()) {
+				mPauseOverlay.setVisibility(View.VISIBLE);
+			}
+			
+			if (isGameFinished()) {
+				onEndingOverlayShow();
+			} else {
+				onPauseOverlayShow();
+			}
 		}
 	}
 	

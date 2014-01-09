@@ -84,6 +84,11 @@ public class PracticeGameActivity extends TrioGameActivity {
 	}
 	
 	@Override
+	public void onGamePaused() {
+		mCardGrid.showReverse();
+	}
+	
+	@Override
 	public Bundle storeGame(Bundle stateToModify) {
 		List<String> foundTrio = new ArrayList<String>();
 		for (CardList trio : gFoundTrios) {
