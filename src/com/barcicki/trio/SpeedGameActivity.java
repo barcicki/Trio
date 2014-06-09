@@ -18,6 +18,8 @@ import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.views.CardView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
 public class SpeedGameActivity extends TrioGameActivity {
 	
@@ -144,13 +146,15 @@ public class SpeedGameActivity extends TrioGameActivity {
 	@Override
 	public void onGameEnded(boolean won) {
 		super.onGameEnded(won);
-		
+				
 		if (isSignedIn() && won) {
-			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_amateur), 1);
-			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_pro), 1);
-			getGamesClient().incrementAchievement(getString(R.string.achievement_speed_guru), 1);
 			
-			getGamesClient().submitScore(getString(R.string.leaderboard_speed_trio), gTriosFound);
+			GoogleApiClient client = getApiClient();
+			Games.Achievements.increment(client, getString(R.string.achievement_speed_amateur), 1);
+			Games.Achievements.increment(client, getString(R.string.achievement_speed_pro), 1);
+			Games.Achievements.increment(client, getString(R.string.achievement_speed_guru), 1);
+			
+			Games.Leaderboards.submitScore(client, getString(R.string.leaderboard_speed_trio), gTriosFound);
 		}
 	}
 

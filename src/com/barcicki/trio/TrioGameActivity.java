@@ -21,7 +21,10 @@ import com.barcicki.trio.core.HelpAdapter;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.Trio.TrioStatus;
 import com.barcicki.trio.core.TrioSettings;
-import com.google.android.gms.games.GamesClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.achievement.Achievement;
+import com.google.android.gms.games.achievement.Achievements;
 import com.viewpagerindicator.CirclePageIndicator;
 
 abstract public class TrioGameActivity extends TrioActivity implements GameTimeListener {
@@ -439,28 +442,29 @@ abstract public class TrioGameActivity extends TrioActivity implements GameTimeL
 		
 		if (triosFound > 0 && isSignedIn()) {
 			
-			GamesClient client = getGamesClient();
+			GoogleApiClient client = getApiClient();
 			
 			Collections.sort(mTrios);
 			long bestTime = mTrios.get(0);
 			
-			client.incrementAchievement(getString(R.string.achievement_novice), triosFound);
-			client.incrementAchievement(getString(R.string.achievement_amateur), triosFound);
-			client.incrementAchievement(getString(R.string.achievement_professional), triosFound);
-			client.incrementAchievement(getString(R.string.achievement_expert), triosFound);
 			
-			client.submitScore(getString(R.string.leaderboard_fastest_trio), bestTime);
+			Games.Achievements.increment(client, getString(R.string.achievement_novice), triosFound);
+			Games.Achievements.increment(client, getString(R.string.achievement_amateur), triosFound);
+			Games.Achievements.increment(client, getString(R.string.achievement_professional), triosFound);
+			Games.Achievements.increment(client, getString(R.string.achievement_expert), triosFound);
+			
+			Games.Leaderboards.submitScore(client, getString(R.string.leaderboard_fastest_trio), bestTime);
 			
 			if (bestTime < 1000L) {
-				client.unlockAchievement(getString(R.string.achievement_faster_then_light));				
+				Games.Achievements.unlock(client, getString(R.string.achievement_faster_then_light));				
 			} 
 			
 			if (bestTime < 3000L) {
-				client.unlockAchievement(getString(R.string.achievement_faster_than_lightning));
+				Games.Achievements.unlock(client, getString(R.string.achievement_faster_than_lightning));
 			}
 			
 			if (bestTime < 5000L) {
-				client.unlockAchievement(getString(R.string.achievement_faster_than_rocket));
+				Games.Achievements.unlock(client, getString(R.string.achievement_faster_than_rocket));
 			}
 		}
 		

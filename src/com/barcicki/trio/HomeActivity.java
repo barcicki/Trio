@@ -24,7 +24,8 @@ import com.barcicki.trio.views.MenuDescription.MenuDescriptionType;
 import com.barcicki.trio.views.MenuDescriptionButton;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder;
 import com.barcicki.trio.views.MenuDescriptionPlaceholder.MenuDescriptionGestureListener;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.games.Games;
 
 public class HomeActivity extends TrioActivity implements OnClickListener,
 		MenuDescriptionListener, MenuDescriptionGestureListener {
@@ -191,7 +192,7 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			intent.putExtra(TrioGameActivity.START_GAME_IMMEDIATELY, true);
 			startActivity(intent);
 		} else if (type.equals(MenuDescriptionType.PLAY_GAMES)) {
-			runPlayGamesIntent(getGamesClient().getAllLeaderboardsIntent());
+			runPlayGamesIntent(Games.Leaderboards.getAllLeaderboardsIntent(getApiClient()));
 		}
 	}
 
@@ -218,7 +219,7 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 			break;
 		case PLAY_GAMES:
 			if (isSignedIn()) {
-				runPlayGamesIntent(getGamesClient().getAchievementsIntent());
+				runPlayGamesIntent(Games.Achievements.getAchievementsIntent(getApiClient()));
 			} else {
 				beginUserInitiatedSignIn();
 			}
@@ -232,17 +233,16 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 	}
 	
 	private void runPlayGamesIntent(final Intent intent) {
-		if (getGamesClient().isConnected()) {
+		if (getApiClient().isConnected()) {
 			startActivityForResult(intent, 1);
 		} else {
-			getGamesClient().registerConnectionCallbacks(new ConnectionCallbacks() {
-				public void onDisconnected() {}
+			getApiClient().registerConnectionCallbacks(new ConnectionCallbacks() {
+				public void onConnectionSuspended(int cause) {}
 				public void onConnected(Bundle connectionHint) {
+					getApiClient().unregisterConnectionCallbacks(this);
 					startActivityForResult(intent, 1);
-					getGamesClient().unregisterConnectionCallbacks(this);
 				}
 			});
-			getGamesClient().connect();
 		}
 	}
 
@@ -322,6 +322,10 @@ public class HomeActivity extends TrioActivity implements OnClickListener,
 	
 	private void updatePlayGamesStatus() {
 		mPlayGamesMenu.update();
+	}
+	
+	public boolean isSignedIn() {
+		return super.isSignedIn();
 	}
 	
 	@Override

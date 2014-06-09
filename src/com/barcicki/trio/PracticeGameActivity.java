@@ -22,6 +22,8 @@ import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.views.CardView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
 public class PracticeGameActivity extends TrioGameActivity {
 	private static final String	TRIO_LIST_DELIMITER	= ";";
@@ -179,11 +181,12 @@ public class PracticeGameActivity extends TrioGameActivity {
 		mHasWon = won;
 		
 		if (isSignedIn() && mHasWon) {
-			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_amateur), 1);
-			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_pro), 1);
-			getGamesClient().incrementAchievement(getString(R.string.achievement_triple_guru), 1);
+			GoogleApiClient client = getApiClient();
+			Games.Achievements.increment(client, getString(R.string.achievement_triple_amateur), 1);
+			Games.Achievements.increment(client, getString(R.string.achievement_triple_pro), 1);
+			Games.Achievements.increment(client, getString(R.string.achievement_triple_guru), 1);
 
-			getGamesClient().submitScore(getString(R.string.leaderboard_triple_trio), getElapsedTime());
+			Games.Leaderboards.submitScore(client, getString(R.string.leaderboard_triple_trio), getElapsedTime());
 		}
 	}
 	

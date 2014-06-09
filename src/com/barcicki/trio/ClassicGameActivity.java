@@ -18,6 +18,8 @@ import com.barcicki.trio.core.CardList;
 import com.barcicki.trio.core.Trio;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.views.CardView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
 public class ClassicGameActivity extends TrioGameActivity {
 	private final static int NUMBER_OF_HINTS = 10;
@@ -108,12 +110,17 @@ public class ClassicGameActivity extends TrioGameActivity {
 	public void onGameEnded(boolean won) {
 		super.onGameEnded(won);
 		
-		if (won && isSignedIn()) {
-			getGamesClient().unlockAchievement(getString(R.string.achievement_classic_amateur));
-			getGamesClient().incrementAchievement(getString(R.string.achievement_classic_pro), 1);
-			getGamesClient().incrementAchievement(getString(R.string.achievement_classic_guru), 1);
+		if (won) {
+			TrioSettings.setSavedGamePresence(false);
 			
-			getGamesClient().submitScore(getString(R.string.leaderboard_classic_trio), getElapsedTime());
+			if (isSignedIn()) {
+				GoogleApiClient client = getApiClient();
+				Games.Achievements.unlock(client, getString(R.string.achievement_classic_amateur));
+				Games.Achievements.increment(client, getString(R.string.achievement_classic_pro), 1);
+				Games.Achievements.increment(client, getString(R.string.achievement_classic_guru), 1);
+				
+				Games.Leaderboards.submitScore(client, getString(R.string.leaderboard_classic_trio), getElapsedTime());
+			}
 		}
 	}
 	@Override
@@ -423,6 +430,7 @@ public class ClassicGameActivity extends TrioGameActivity {
 
 	public void onPressedNewGame(View v) {
 		makeClickSound();
+		TrioSettings.setSavedGamePresence(false);
 		mTrio.newGame();
 		resetGame();
 		startGame();

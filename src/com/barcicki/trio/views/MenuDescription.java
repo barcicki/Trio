@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.barcicki.trio.HomeActivity;
 import com.barcicki.trio.R;
 import com.barcicki.trio.core.TrioSettings;
 import com.barcicki.trio.core.Utils;
@@ -128,7 +129,7 @@ public class MenuDescription extends FrameLayout {
 	}
 	
 	private void renderPlayGamesDescription() {
-		if (((BaseGameActivity) getContext()).isSignedIn()) {
+		if (((HomeActivity) getContext()).isSignedIn()) {
 			updateViews(R.drawable.menu_play_games_label, R.string.menu_description_play_games, R.string.menu_description_button_achievements, R.string.menu_description_button_leaderbaords);	
 		} else {
 			updateViews(R.drawable.menu_play_games_label, R.string.menu_description_play_games, R.string.menu_description_button_sign_in);
