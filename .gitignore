@@ -38,3 +38,8 @@ gen/
 ehthumbs.db
 Icon?
 Thumbs.db
+*.prefs
+.settings/org.eclipse.jdt.core.prefs
+project.properties
+gen/com/viewpagerindicator/R.java
+gen/com/barcicki/trio/R.java
