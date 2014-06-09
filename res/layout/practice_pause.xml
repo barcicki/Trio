@@ -43,17 +43,6 @@
                 android:paddingTop="15dp"
                 android:text="@string/game_challenge_new_game" />
 
-            <Button
-                android:id="@+id/gameRestart"
-                style="@style/nice_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:onClick="onPressedRestartGame"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/pause_restart"
-                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout

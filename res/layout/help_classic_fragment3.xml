@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" >
-
+
         <TextView
             android:id="@+id/textView1"
             style="@style/dark_shadow"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:src="@drawable/help_classic_end" />
     </LinearLayout>
-
+
     <TextView
         android:id="@+id/TextView01"
         style="@style/dark_shadow"

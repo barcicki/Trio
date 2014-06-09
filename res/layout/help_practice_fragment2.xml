@@ -7,8 +7,9 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="2">
-
+        android:layout_height="fill_parent"
+        android:layout_weight="2" >
+
         <TextView
             android:id="@+id/TextView01"
             style="@style/dark_shadow"
@@ -19,19 +20,19 @@
             android:text="@string/help_classic_2"
             android:textColor="@color/white"
             android:textSize="@dimen/pause_desc_size" />
-
+
         <ImageView
             android:id="@+id/ImageView01"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/help_classic_1" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="1">
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -39,7 +40,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/help_practice_2" />
-
+
         <TextView
             android:id="@+id/TextView03"
             style="@style/dark_shadow"
@@ -50,7 +51,6 @@
             android:text="@string/help_practice_2"
             android:textColor="@color/white"
             android:textSize="@dimen/pause_desc_size" />
-
     </LinearLayout>
 
 </LinearLayout>

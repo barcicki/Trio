@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" >
-
+
         <TextView
             android:id="@+id/textView1"
             style="@style/dark_shadow"
@@ -20,16 +20,15 @@
             android:text="@string/help_practice_3"
             android:textColor="@color/yellow"
             android:textSize="@dimen/pause_desc_size" />
-
+
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/help_practice_end" />
-
     </LinearLayout>
-
+
     <TextView
         android:id="@+id/TextView01"
         style="@style/dark_shadow"

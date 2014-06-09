@@ -7,14 +7,16 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:layout_weight="0.5">
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5" >
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/help_classic_screen" android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:src="@drawable/help_classic_screen" />
+
         <TextView
             android:id="@+id/TextView02"
             style="@style/dark_shadow"
@@ -25,9 +27,8 @@
             android:text="@string/help_classic_1"
             android:textColor="@color/white"
             android:textSize="@dimen/pause_desc_size" />
-
     </LinearLayout>
-
+
     <TextView
         android:id="@+id/TextView01"
         style="@style/dark_shadow"
